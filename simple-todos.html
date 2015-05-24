@@ -1,0 +1,64 @@
+<head>
+  <title>simple-todos</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+  <h1 align="center">Welcome to Meteor!</h1>
+  
+  <div class="button-container">
+       {{> buttons}}
+  </div>
+
+  <div class="reset">
+       {{> reset}}
+
+  </div> 
+
+</body>
+
+<!--  TEMPLATES -->
+
+<template name="buttons">
+    {{> button1 }}
+    {{> button2 }}
+    {{> button3 }}
+    {{> button4 }}
+    {{> button5 }}
+    {{> button6 }}
+    {{> button7 }}
+    {{> button8 }}
+    {{> button9 }}
+    <p>You've pressed {{counter}} times.</p>
+</template>
+
+<template name="button1">
+  <button>Kick</button>
+</template>
+  <template name="button2">
+  <button>Hat</button>
+</template>
+  <template name="button3">
+  <button>Snare</button>
+</template>
+  <template name="button4">
+  <button>Hat</button>
+</template>
+  <template name="button5">
+  <button>Kick A</button>
+</template>
+  <template name="button6">
+  <button>Hat A</button>
+</template>
+  <template name="button7">
+  <button>Snare A</button>
+</template>
+  <template name="button8">
+  <button>Hat A</button>
+</template>
+  <template name="button9">
+  <button>Kick B</button>
+</template>
+  <template name="reset">
+  <button>Reset</button>
+</template>
