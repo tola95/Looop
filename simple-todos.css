@@ -1,0 +1,22 @@
+/* CSS declarations go here */
+.button-container {
+    width: 400px;
+    float: middle;
+    background: gray;
+    overflow-y: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.button-container > button {
+    width: 100px;
+    height: 100px;
+    float: left;
+    background: lightgray;   
+    margin: 15px;
+}
+
+.reset {
+	float: right;
+}
+   
