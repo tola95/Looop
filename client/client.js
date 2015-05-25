@@ -17,3 +17,9 @@ Template.button.events({
     // Play corresponding audio file
     template.find('audio').play();  }
 }); 
+
+
+// Make sign in require username instead of email
+Accounts.ui.config({
+  passwordSignupFields: "USERNAME_ONLY"
+});
