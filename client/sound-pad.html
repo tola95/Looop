@@ -11,11 +11,8 @@
        {{> buttons}}
   </div>
 
-  <div class="reset">
-       {{> reset}}
-  </div> 
-
 </body>
+
 
 <template name="buttons">
     {{> button text="Kick" audio_file=audio_file1 }}
@@ -27,7 +24,6 @@
     {{> button text="Snare A" audio_file=audio_file7 }}
     {{> button text="Hat A" audio_file=audio_file8 }}
     {{> button text="Kick B" audio_file=audio_file9 }}
-    <p>You've pressed {{counter}} times.</p>
 </template>
 
 <template name="button">
@@ -35,8 +31,4 @@
   <audio class="audio" src={{audio_file}}>
     Your browser does not support the <code>audio</code> element.
   </audio>
-</template>
-
-<template name="reset">
-  <button>Reset</button>
 </template>
