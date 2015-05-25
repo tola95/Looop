@@ -1,0 +1,38 @@
+<head>
+  <title>Sound Pad</title>
+</head>
+
+<body>
+  <div class="login">
+    {{> loginButtons}}
+  </div>
+  
+  <div class="banner">
+    <h1 align="center">Welcome to SoundPad!</h1>
+  </div>
+
+  <div class="button-container">
+    {{> buttons}}
+  </div>
+
+</body>
+
+
+<template name="buttons">
+    {{> button text="Kick" audio_file=audio_file1 }}
+    {{> button text="Hat" audio_file=audio_file2 }}
+    {{> button text="Snare" audio_file=audio_file3 }}
+    {{> button text="Hat" audio_file=audio_file4 }}
+    {{> button text="Kick A" audio_file=audio_file5 }}
+    {{> button text="Hat A" audio_file=audio_file6 }}
+    {{> button text="Snare A" audio_file=audio_file7 }}
+    {{> button text="Hat A" audio_file=audio_file8 }}
+    {{> button text="Kick B" audio_file=audio_file9 }}
+</template>
+
+<template name="button">
+  <button>{{text}}</button>
+  <audio class="audio" src={{audio_file}}>
+    Your browser does not support the <code>audio</code> element.
+  </audio>
+</template>
