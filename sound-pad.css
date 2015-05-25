@@ -1,22 +1,77 @@
 /* CSS declarations go here */
+
+@font-face {
+    font-family: "mFont";
+    src: url("/Fonts/AvenirNextLTPro-Bold.woff") format('woff');
+}
+
+@font-face {
+    font-family: "smallFont";
+    src: url("/Fonts/AvenirNextLTPro-Demi.woff") format('woff');
+}
+
+.banner {
+    width:100%;
+    font-family: "mFont";
+    font-size: 25px;
+}
+
+
 .button-container {
-    width: 400px;
+    width: 370px;
+    height: 370px;
     float: middle;
-    background: gray;
+    background: #2E2E2E;
     overflow-y: auto;
     margin-left: auto;
     margin-right: auto;
 }
 
-.button-container > button {
+.button-container button {
     width: 100px;
     height: 100px;
-    float: left;
-    background: lightgray;   
-    margin: 15px;
+    margin: 10px;
+    -moz-box-shadow:inset 0px 1px 3px 0px #424242;
+    -webkit-box-shadow:inset 0px 1px 3px 0px #424242;
+    box-shadow:inset 0px 1px 3px 0px #424242;
+    background-color:#D8D8D8;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:5px;
+    border:1px solid #424242;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family: "smallFont";
+    font-size:10px;
+    font-weight:bold;
+    padding:20px;
+    text-decoration:none;
+}
+
+#login-buttons a {
+    font-family: "mFont";
+    text-decoration: none;
+}
+
+.button-container button:active {
+    padding: 20px;
+    position:relative;
+    background-color: red;
+    top:1px;
+    -webkit-box-shadow: inset 0 0 30px #f00, 0 0 30px #f00;
+    -moz-box-shadow: inset 0 0 30px #f00, 0 0 30px #f00;
+    box-shadow: inset 0 0 30px #f00, 0 0 30px #f00;
+    background: #f56565;
 }
 
 .reset {
 	float: right;
 }
+
+.login {
+    width:80px;
+}
+
+
    

@@ -3,12 +3,16 @@
 </head>
 
 <body>
-  {{> loginButtons}}
+  <div class="login">
+    {{> loginButtons}}
+  </div>
   
-  <h1 align="center">Welcome to Meteor!</h1>
+  <div class="banner">
+    <h1 align="center">Welcome to SoundPad!</h1>
+  </div>
 
   <div class="button-container">
-       {{> buttons}}
+    {{> buttons}}
   </div>
 
   <div class="reset">
@@ -18,16 +22,15 @@
 </body>
 
 <template name="buttons">
-    {{> button text="Kick" audio_file=audio_file1 }}
-    {{> button text="Hat" audio_file=audio_file2 }}
-    {{> button text="Snare" audio_file=audio_file3 }}
-    {{> button text="Hat" audio_file=audio_file4 }}
-    {{> button text="Kick A" audio_file=audio_file5 }}
-    {{> button text="Hat A" audio_file=audio_file6 }}
-    {{> button text="Snare A" audio_file=audio_file7 }}
-    {{> button text="Hat A" audio_file=audio_file8 }}
-    {{> button text="Kick B" audio_file=audio_file9 }}
-    <p>You've pressed {{counter}} times.</p>
+    {{> button text="KICK" audio_file=audio_file1 }}
+    {{> button text="HAT" audio_file=audio_file2 }}
+    {{> button text="SNARE" audio_file=audio_file3 }}
+    {{> button text="HAT" audio_file=audio_file4 }}
+    {{> button text="KICK A" audio_file=audio_file5 }}
+    {{> button text="HAT A" audio_file=audio_file6 }}
+    {{> button text="SNARE A" audio_file=audio_file7 }}
+    {{> button text="HAT A" audio_file=audio_file8 }}
+    {{> button text="KICK B" audio_file=audio_file9 }}
 </template>
 
 <template name="button">
