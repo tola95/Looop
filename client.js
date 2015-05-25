@@ -6,22 +6,23 @@ if (Meteor.isClient) {
     counter: function () {
       return Session.get('counter');
     },
-    audio_file1: "http://developer.mozilla.org/@api/deki/files/2926/=AudioTest_(1).ogg",
-    audio_file2: "http://developer.mozilla.org/@api/deki/files/2926/=AudioTest_(1).ogg",
-    audio_file3: "http://developer.mozilla.org/@api/deki/files/2926/=AudioTest_(1).ogg",
-    audio_file4: "http://developer.mozilla.org/@api/deki/files/2926/=AudioTest_(1).ogg",
-    audio_file5: "http://developer.mozilla.org/@api/deki/files/2926/=AudioTest_(1).ogg",
-    audio_file6: "http://developer.mozilla.org/@api/deki/files/2926/=AudioTest_(1).ogg",
-    audio_file7: "http://developer.mozilla.org/@api/deki/files/2926/=AudioTest_(1).ogg",
-    audio_file8: "http://developer.mozilla.org/@api/deki/files/2926/=AudioTest_(1).ogg",
-    audio_file9: "http://developer.mozilla.org/@api/deki/files/2926/=AudioTest_(1).ogg",
+
+    /* Piano notes by http://www.freesound.org/people/jobro/
+       Attribution license: http://creativecommons.org/licenses/by/3.0/ */
+    audio_file1: "sounds/piano/piano-36.wav",
+    audio_file2: "sounds/piano/piano-33.wav",
+    audio_file3: "sounds/piano/piano-34.wav",
+    audio_file4: "sounds/piano/piano-35.wav",
+    audio_file5: "sounds/piano/piano-36.wav",
+    audio_file6: "sounds/piano/piano-37.wav",
+    audio_file7: "sounds/piano/piano-38.wav",
+    audio_file8: "sounds/piano/piano-39.wav",
+    audio_file9: "sounds/piano/piano-40.wav",
   });
 
   Template.buttons.events({
     'click button': function (e, template) {
-      // increment the counter when button is clicked
-      Session.set('counter', Session.get('counter')+1);
-      
+      // Play corresponding audio file
       template.find('audio').play();
     }
   });

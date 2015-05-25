@@ -1,17 +1,11 @@
 <head>
   <title>Sound Pad</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
   {{> loginButtons}}
   
   <h1 align="center">Welcome to Meteor!</h1>
-
-  <!-- Piano notes by http://www.freesound.org/people/jobro/ !-->
-<!--   <audio controls src="sounds/piano/piano-32.wav" autoplay>
-    Your browser does not support the <code>audio</code> element.
-  </audio> -->
 
   <div class="button-container">
        {{> buttons}}
@@ -24,20 +18,20 @@
 </body>
 
 <template name="buttons">
-    {{> button audio_file=audio_file1 }}
-    {{> button audio_file=audio_file2 }}
-    {{> button audio_file=audio_file3 }}
-    {{> button audio_file=audio_file4 }}
-    {{> button audio_file=audio_file5 }}
-    {{> button audio_file=audio_file6 }}
-    {{> button audio_file=audio_file7 }}
-    {{> button audio_file=audio_file8 }}
-    {{> button audio_file=audio_file9 }}
+    {{> button text="Kick" audio_file=audio_file1 }}
+    {{> button text="Hat" audio_file=audio_file2 }}
+    {{> button text="Snare" audio_file=audio_file3 }}
+    {{> button text="Hat" audio_file=audio_file4 }}
+    {{> button text="Kick A" audio_file=audio_file5 }}
+    {{> button text="Hat A" audio_file=audio_file6 }}
+    {{> button text="Snare A" audio_file=audio_file7 }}
+    {{> button text="Hat A" audio_file=audio_file8 }}
+    {{> button text="Kick B" audio_file=audio_file9 }}
     <p>You've pressed {{counter}} times.</p>
 </template>
 
 <template name="button">
-  <button>Kick</button>
+  <button>{{text}}</button>
   <audio class="audio" src={{audio_file}}>
     Your browser does not support the <code>audio</code> element.
   </audio>
