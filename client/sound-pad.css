@@ -31,9 +31,9 @@
     width: 100px;
     height: 100px;
     margin: 10px;
-    -moz-box-shadow:inset 0px 1px 3px 0px #424242;
-    -webkit-box-shadow:inset 0px 1px 3px 0px #424242;
-    box-shadow:inset 0px 1px 3px 0px #424242;
+    -moz-box-shadow:inset 0px 4px 5px 0px #424242;
+    -webkit-box-shadow:inset 0px 4px 5px 0px #424242;
+    box-shadow:inset 0px 0px 0px 0px #424242;
     background-color:#D8D8D8;
     -moz-border-radius:6px;
     -webkit-border-radius:6px;
@@ -41,12 +41,11 @@
     border:1px solid #424242;
     display:inline-block;
     cursor:pointer;
-    color:#ffffff;
+    color:#3B5957;
     font-family: "smallFont";
-    font-size:10px;
-    font-weight:bold;
+    font-size:12px;
     padding:20px;
-    text-decoration:none;
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, .5);
 }
 
 #login-buttons a {
@@ -54,7 +53,7 @@
     text-decoration: none;
 }
 
-.button-container button:active {
+.button-container button:active, .button-container .active-button{
     padding: 20px;
     position:relative;
     background-color: red;

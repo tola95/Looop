@@ -19,19 +19,19 @@
 
 
 <template name="buttons">
-    {{> button text="Kick" audio_file=audio_file1 }}
-    {{> button text="Hat" audio_file=audio_file2 }}
-    {{> button text="Snare" audio_file=audio_file3 }}
-    {{> button text="Hat" audio_file=audio_file4 }}
-    {{> button text="Kick A" audio_file=audio_file5 }}
-    {{> button text="Hat A" audio_file=audio_file6 }}
-    {{> button text="Snare A" audio_file=audio_file7 }}
-    {{> button text="Hat A" audio_file=audio_file8 }}
-    {{> button text="Kick B" audio_file=audio_file9 }}
+    {{> button id="key-85" text="KICK" audio_file=audio_file1 }}
+    {{> button id="key-73" text="HAT" audio_file=audio_file2 }}
+    {{> button id="key-79" text="SNARE" audio_file=audio_file3 }}
+    {{> button id="key-74" text="HAT" audio_file=audio_file4 }}
+    {{> button id="key-75" text="KICK A" audio_file=audio_file5 }}
+    {{> button id="key-76" text="HAT A" audio_file=audio_file6 }}
+    {{> button id="key-78" text="SNARE A" audio_file=audio_file7 }}
+    {{> button id="key-77" text="HAT A" audio_file=audio_file8 }}
+    {{> button id="key-188" text="KICK B" audio_file=audio_file9 }}
 </template>
 
 <template name="button">
-  <button>{{text}}</button>
+  <button id={{id}}>{{text}}</button>
   <audio class="audio" src={{audio_file}}>
     Your browser does not support the <code>audio</code> element.
   </audio>
