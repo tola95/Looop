@@ -13,7 +13,7 @@ Template.buttons.helpers({
 });
 
 Template.button.events({
-  'click button': function (e, template) {
+  'click': function (e, template) {
     // Play corresponding audio file
     template.find('audio').play();
   }
@@ -36,3 +36,9 @@ document.onkeyup = function(event) {
     button.className = "";
   }
 };
+
+
+// Make sign in require username instead of email
+Accounts.ui.config({
+  passwordSignupFields: "USERNAME_ONLY"
+});
