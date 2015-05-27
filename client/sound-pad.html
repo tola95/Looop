@@ -11,6 +11,34 @@
     <h1 align="center">Welcome to SoundPad!</h1>
   </div>
 
+
+  <form class="choose_sound">
+    <select id="button_choice">
+      <option value="1">Button 1</option>
+      <option value="2">Button 2</option>
+      <option value="3">Button 3</option>
+      <option value="4">Button 4</option>
+      <option value="5">Button 5</option>
+      <option value="6">Button 6</option>
+      <option value="7">Button 7</option>
+      <option value="8">Button 8</option>
+      <option value="9">Button 9</option>
+    </select>
+
+    <select id="sound_choice">
+      <option value="A1">Piano A</option>
+      <option value="B1">Piano B</option>
+      <option value="C1">Piano C</option>
+      <option value="D1">Piano D</option>
+      <option value="E1">Piano E</option>
+      <option value="F1">Piano F</option>
+      <option value="G1">Piano G</option>
+    </select>
+
+    <input id="choice_submit" type="button" value="Submit">
+  </form>
+
+
   <div class="button-container">
     {{> buttons}}
   </div>
@@ -19,20 +47,23 @@
 
 
 <template name="buttons">
-    {{> button id="key-85" text="KICK" audio_file=audio_file1 }}
-    {{> button id="key-73" text="HAT" audio_file=audio_file2 }}
-    {{> button id="key-79" text="SNARE" audio_file=audio_file3 }}
-    {{> button id="key-74" text="HAT" audio_file=audio_file4 }}
-    {{> button id="key-75" text="KICK A" audio_file=audio_file5 }}
-    {{> button id="key-76" text="HAT A" audio_file=audio_file6 }}
-    {{> button id="key-78" text="SNARE A" audio_file=audio_file7 }}
-    {{> button id="key-77" text="HAT A" audio_file=audio_file8 }}
-    {{> button id="key-188" text="KICK B" audio_file=audio_file9 }}
+    {{> soundpad_button id="key-85" text="KICK" audio_file=audio_file1 }}
+    {{> soundpad_button id="key-73" text="HAT" audio_file=audio_file2 }}
+    {{> soundpad_button id="key-79" text="SNARE" audio_file=audio_file3 }}
+    {{> soundpad_button id="key-74" text="HAT" audio_file=audio_file4 }}
+    {{> soundpad_button id="key-75" text="KICK A" audio_file=audio_file5 }}
+    {{> soundpad_button id="key-76" text="HAT A" audio_file=audio_file6 }}
+    {{> soundpad_button id="key-78" text="SNARE A" audio_file=audio_file7 }}
+    {{> soundpad_button id="key-77" text="HAT A" audio_file=audio_file8 }}
+    {{> soundpad_button id="key-188" text="KICK B" audio_file=audio_file9 }}
+    
 </template>
 
-<template name="button">
+<template name="soundpad_button">
   <button id={{id}}>{{text}}</button>
   <audio class="audio" src={{audio_file}}>
     Your browser does not support the <code>audio</code> element.
   </audio>
 </template>
+
+
