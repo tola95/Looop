@@ -1,21 +1,42 @@
+// $(document).ready() {
+//   lowLag.init({'urlPrefix':'plucks/'});
+//   lowLag.load(['pluck.mp3', 'pluck.ogg'],'pluck');
+// };
+
 Template.buttons.helpers({
   /* Piano notes by http://www.freesound.org/people/jobro/
      Attribution license: http://creativecommons.org/licenses/by/3.0/ */
-  audio_file1: "/sounds/piano/piano-32.wav",
-  audio_file2: "/sounds/piano/piano-33.wav",
-  audio_file3: "/sounds/piano/piano-34.wav",
-  audio_file4: "/sounds/piano/piano-35.wav",
-  audio_file5: "/sounds/piano/piano-36.wav",
-  audio_file6: "/sounds/piano/piano-37.wav",
-  audio_file7: "/sounds/piano/piano-38.wav",
-  audio_file8: "/sounds/piano/piano-39.wav",
-  audio_file9: "/sounds/piano/piano-40.wav",
+  audio_file1: "/sounds/drums/Hat-03.wav",
+  audio_file2: "/sounds/drums/Crash-04.wav",
+  audio_file3: "/sounds/drums/Kick-01.mp3",
+  audio_file4: "/sounds/drums/Rim-01.wav",
+  audio_file5: "/sounds/drums/SdSt-04.wav",
+  audio_file6: "/sounds/drums/Snr-02.wav",
+  audio_file7: "/sounds/drums/Tom-05.wav",
+  audio_file8: "/sounds/drums/Tom-01.wav",
+  audio_file9: "/sounds/drums/OpHat-01.wav",
 });
 
+
+var dispatchMouseEvent = function(target, var_args) {
+  var e = document.createEvent("MouseEvents");
+  // If you need clientX, clientY, etc., you can call
+  // initMouseEvent instead of initEvent
+  e.initEvent.apply(e, Array.prototype.slice.call(arguments, 1));
+  target.dispatchEvent(e);
+};
+
 Template.button.events({
-  'click': function (e, template) {
+  'mousedown': function (e, template) {
     // Play corresponding audio file
-    template.find('audio').play();
+    var audio = template.find('audio');
+    if (!audio.paused) {
+      var clone = audio.cloneNode(true);
+      clone.play();
+      return;
+    }
+    audio.load();
+    audio.play();
   }
 });
 
@@ -24,7 +45,7 @@ document.onkeydown = function(event) {
   var button = document.getElementById("key-" + key);
   if (button) {
     button.className = button.className + " active-button";
-    button.click();
+    dispatchMouseEvent(button, 'mousedown', true, true);
   }
 };
  
