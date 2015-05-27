@@ -25,8 +25,8 @@ populate = function() {
     "drum1": ["piano/piano-C4", "piano/piano-Db4", "piano/piano-D4", "piano/piano-Eb4", "piano/piano-E4", 
       "piano/piano-F4", "piano/piano-Gb4", "piano/piano-G4", "piano/piano-Ab4"],
 
-    "drum2": ["piano/piano-C4", "piano/piano-Db4", "piano/piano-D4", "piano/piano-Eb4", "piano/piano-E4", 
-      "piano/piano-F4", "piano/piano-Gb4", "piano/piano-G4", "piano/piano-Ab4"],
+    "drum2": ["piano/piano-C3", "piano/piano-Db3", "piano/piano-D3", "piano/piano-Eb3", "piano/piano-E3", 
+      "piano/piano-F3", "piano/piano-Gb3", "piano/piano-G3", "piano/piano-Ab3"],
 
     "grandPiano": ["piano/piano-C4", "piano/piano-Db4", "piano/piano-D4", "piano/piano-Eb4", "piano/piano-E4", 
       "piano/piano-F4", "piano/piano-Gb4", "piano/piano-G4", "piano/piano-Ab4", "piano/piano-A5", 
@@ -43,7 +43,7 @@ populate = function() {
 
   for (instrument in instrumentSounds) {
     for (var i=0; i<instrumentSounds[instrument].length; i++) {
-      instrumentSounds[instrument][i] = "/sounds/" + instrumentSounds[instrument][i] ;
+      instrumentSounds[instrument][i] = "/sounds/" + instrumentSounds[instrument][i] + ".wav";
     }
   }
 
@@ -66,13 +66,6 @@ Template.buttons.helpers({
   audio_file9: function () { return Session.get("audio_file9"); },
 });
 
-/*
-  Get the button that was clicked
-  Get its id (instrument)
-  Have a setDrumNotes function and a setPianoNotes function - take instrument
-  Get the tracks from the database based on the instrument
-  Loop over the array of file paths and sets the audio source variables
-*/
 
 Template.body.events({
   'click #choice_submit': function() {
@@ -120,31 +113,51 @@ Accounts.ui.config({
 
 
 Template.menu.events = {
-    'click #drum1': function() {
-      document.getElementById("buttoncontainer").style.display = "block";
-      document.getElementById("p-wrapper").style.display = "none";
-    },
+  'click #drum1': function() {
+    document.getElementById("buttoncontainer").style.display = "block";
+    document.getElementById("p-wrapper").style.display = "none";
+  },
 
-    'click #drum2': function() {
-      document.getElementById("buttoncontainer").style.display = "block";
-      document.getElementById("p-wrapper").style.display = "none";
-    },
+  'click #drum2': function() {
+    document.getElementById("buttoncontainer").style.display = "block";
+    document.getElementById("p-wrapper").style.display = "none";
+  },
 
-    'click #grandpiano': function() {
-      document.getElementById("p-wrapper").style.display = "block";
-      document.getElementById("buttoncontainer").style.display = "none";
-    },
+  'click #grandpiano': function() {
+    document.getElementById("p-wrapper").style.display = "block";
+    document.getElementById("buttoncontainer").style.display = "none";
+  },
 
-    'click #churchorgan': function() {
-      document.getElementById("p-wrapper").style.display = "block";
-      document.getElementById("buttoncontainer").style.display = "none";
-    },
+  'click #churchorgan': function() {
+    document.getElementById("p-wrapper").style.display = "block";
+    document.getElementById("buttoncontainer").style.display = "none";
+  },
 
-    'click #drumcontainer': function() {
-      document.getElementById("drums").style.display = "block";
-    },
+  'click #drumcontainer': function() {
+    document.getElementById("drums").style.display = "block";
+  },
 
-    'click #keycontainer': function() {
-      document.getElementById("keys").style.display = "block";
+  'click #keycontainer': function() {
+    document.getElementById("keys").style.display = "block";
+  },
+
+  // Update the audio sources
+  'click button': function(event) {
+    var button = event.target;
+    sounds = getInstrumentSounds(button.id);
+    if (hasClass(button, "keyboard")) {
+      updatePianoSounds(sounds);
+    } else {
+      updateDrumSounds(sounds);
     }
   }
+}
+
+// Updates the buttons to play the tracks with the given paths
+updateDrumSounds = function(paths) {
+  for (var i = 0; i<paths.length; i++) {
+    Session.set("audio_file" + (i+1), paths[i]);
+  }
+
+}
+
