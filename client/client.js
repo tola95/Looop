@@ -63,3 +63,33 @@ document.onkeyup = function(event) {
 Accounts.ui.config({
   passwordSignupFields: "USERNAME_ONLY"
 });
+
+Template.menu.events = {
+    'click #drum1': function() {
+      document.getElementById("buttoncontainer").style.display = "block";
+      document.getElementById("p-wrapper").style.display = "none";
+    },
+
+    'click #drum2': function() {
+      document.getElementById("buttoncontainer").style.display = "block";
+      document.getElementById("p-wrapper").style.display = "none";
+    },
+
+    'click #grandpiano': function() {
+      document.getElementById("p-wrapper").style.display = "block";
+      document.getElementById("buttoncontainer").style.display = "none";
+    },
+
+    'click #churchorgan': function() {
+      document.getElementById("p-wrapper").style.display = "block";
+      document.getElementById("buttoncontainer").style.display = "none";
+    },
+
+    'click #drumcontainer': function() {
+      document.getElementById("drums").style.display = "block";
+    },
+
+    'click #keycontainer': function() {
+      document.getElementById("keys").style.display = "block";
+    }
+  }
