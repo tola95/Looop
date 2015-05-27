@@ -11,6 +11,7 @@
     <h1 align="center">Welcome to SoundPad!</h1>
   </div>
 
+  <button id="populate" onclick="populate()">Populate database</button>
 
   <form class="choose_sound">
     <select id="button_choice">
@@ -38,15 +39,17 @@
     <input id="choice_submit" type="button" value="Submit">
   </form>
 
+  {{> menu}}
 
-  <div class="button-container">
-    {{> buttons}}
-  </div>
+  {{> buttons}}
+
+  {{> keys}}
 
 </body>
 
 
 <template name="buttons">
+<div id="buttoncontainer" class="button-container">
     {{> soundpad_button id="key-85" text="KICK" audio_file=audio_file1 }}
     {{> soundpad_button id="key-73" text="HAT" audio_file=audio_file2 }}
     {{> soundpad_button id="key-79" text="SNARE" audio_file=audio_file3 }}
@@ -56,7 +59,7 @@
     {{> soundpad_button id="key-78" text="SNARE A" audio_file=audio_file7 }}
     {{> soundpad_button id="key-77" text="HAT A" audio_file=audio_file8 }}
     {{> soundpad_button id="key-188" text="KICK B" audio_file=audio_file9 }}
-    
+  </div>
 </template>
 
 <template name="soundpad_button">
@@ -67,3 +70,58 @@
 </template>
 
 
+<template name="keys">
+ <div id="p-wrapper">
+  <ul id="piano">
+    <li><div class="anchor"></div></li>
+    <li><div class="anchor"></div><span></span></li>
+    <li><div class="anchor"></div><span></span></li>
+    <li><div class="anchor"></div></li>
+    <li><div class="anchor"></div><span></span></li>
+    <li><div class="anchor"></div><span></span></li>
+    <li><div class="anchor"></div><span></span></li>
+    <li><div class="anchor"></div></li>
+    <li><div class="anchor"></div><span></span></li>
+    <li><div class="anchor"></div><span></span></li>
+    <li><div class="anchor"></div></li>
+    <li><div class="anchor"></div><span></span></li>
+    <li><div class="anchor"></div><span></span></li>
+    <li><div class="anchor"></div><span></span></li>
+    <li><div class="anchor"></div></li>
+    <li><div class="anchor"></div><span></span></li>
+    <li><div class="anchor"></div><span></span></li>
+    <li><div class="anchor"></div></li>
+    <li><div class="anchor"></div><span></span></li>
+    <li><div class="anchor"></div><span></span></li>
+    <li><div class="anchor"></div><span></span></li>
+    <li><div class="anchor"></div></li>
+    <li><div class="anchor"></div><span></span></li>
+    <li><div class="anchor"></div><span></span></li>
+  </ul>
+ </div>
+</template>
+
+
+<template name="menu">
+    <div id="sidebar-wrapper">
+      <ul class="sidebar-nav">
+        <li class="sidebar-brand" style="color:red" align="center">
+          INSTRUMENTS
+        </li>
+        <li id="drumcontainer" class="item" style="color:white"><span>Drums</span>
+          <ul id="drums" style="display:none;">
+            <button id="drum1">Drum 1</button>
+            <button id="drum2">Drum 2</button>
+          </ul>
+        </li>
+       
+        <li id="keycontainer" class="item" style="color:white"><span>Keys</span>
+          <ul id="keys" style="display:none;">
+            <button id="grandpiano">Grand Piano</button>
+            <button id="churchorgan">Church Organ</button>
+          </ul>
+        </li>
+  
+      </ul>
+    </div>
+  </template>

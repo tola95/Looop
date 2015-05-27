@@ -2,14 +2,10 @@
 Sounds = new Mongo.Collection("sounds");
 
 Meteor.methods({
-	addSound: function (name, path) {
-		Tasks.insert({
-			name: name,
-			path: path
+	addSound: function (name, paths) {
+		Sounds.insert({
+			instrument: name,
+			paths: paths
 		});
-	},
-
-	getSoundPath: function(sound) {
-		return "/sounds/piano/piano-" + sound + ".wav";
 	}
-})
+});
