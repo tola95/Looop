@@ -10,12 +10,37 @@
     src: url("/Fonts/AvenirNextLTPro-Demi.woff") format('woff');
 }
 
-.banner {
-    width:100%;
-    font-family: "mFont";
-    font-size: 25px;
+@font-face {
+    font-family: "thinFont";
+    src: url("/Fonts/AvenirNextLTPro-Regular.woff") format('woff');
 }
 
+@font-face {
+    font-family: "autoFont";
+    src: url("/Fonts/bulletto_killa/bk.woff") format('woff');
+}
+
+
+.banner {
+  width:100%;
+  font-size: 15px;
+  background-color: #1D1D1D ;
+  height: 60px;
+  color: #E94418;
+  padding-left: 20px;
+  padding-top: 5px;
+}
+
+.banner h1 {
+  font-family: "autoFont";
+  margin-right: 50px;
+  padding-top: 5px;
+  padding-left: 35px;
+}
+
+.navButton:hover {
+  cursor: hand;
+}
 
 .button-container {
     width: 368px;
@@ -52,9 +77,16 @@
     text-shadow: 0px 1px 0px rgba(255, 255, 255, .5);
 }
 
+.login {
+  float: right;
+}
+
 #login-buttons a {
-    font-family: "mFont";
+    font-family: "thinFont";
     text-decoration: none;
+    font-size: 15px;
+    color: #E94418;
+    padding: 5px;
 }
 
 .button-container button:active, .button-container .active-button{
@@ -105,8 +137,6 @@
 #item {
     border-color: black;
 }
-
-
 
 /* Keyboard */
 
@@ -286,4 +316,4 @@ ul#piano li span:active {
 }
 
 
-   
+

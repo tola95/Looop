@@ -58,6 +58,23 @@ document.onkeyup = function(event) {
   }
 };
 
+var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
+    showLeft = document.getElementById( 'showLeft' ),
+    body = document.body;
+
+showLeft.onclick = function() {
+  classie.toggle( this, 'active' );
+  classie.toggle( menuLeft, 'cbp-spmenu-open' );
+  disableOther( 'showLeft' );
+};
+
+showLeftPush.onclick = function() {
+  classie.toggle( this, 'active' );
+  classie.toggle( body, 'cbp-spmenu-push-toright' );
+  classie.toggle( menuLeft, 'cbp-spmenu-open' );
+  disableOther( 'showLeftPush' );
+};
+
 
 // Make sign in require username instead of email
 Accounts.ui.config({
