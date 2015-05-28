@@ -60,10 +60,18 @@ Template.drum_buttons.helpers({
   audio_file9: function () { return Session.get("audio_file9"); },
 });
 
+
 Template.soundpad_button.events({
-  'click': function (e, template) {
+  'mousedown': function (e, template) {
     // Play corresponding audio file
-    template.find('audio').play();
+    var audio = template.find('audio');
+    if (!audio.paused) {
+      var clone = audio.cloneNode(true);
+      clone.play();
+      return;
+    }
+    audio.load();
+    audio.play();
   }
 });
 
@@ -74,7 +82,7 @@ document.onkeydown = function(event) {
   var button = document.getElementById("key-" + key);
   if (button) {
     button.className = button.className + " active-button";
-    button.click();
+    dispatchMouseEvent(button, 'mousedown', true, true);
   }
 };
  
