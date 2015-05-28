@@ -25,14 +25,12 @@ populate = function() {
     "grandpiano": ["piano/piano-C4", "piano/piano-Db4", "piano/piano-D4", "piano/piano-Eb4", "piano/piano-E4", 
       "piano/piano-F4", "piano/piano-Gb4", "piano/piano-G4", "piano/piano-Ab4", "piano/piano-A5", 
       "piano/piano-Bb5", "piano/piano-B5", "piano/piano-C5", "piano/piano-Db5", "piano/piano-D5", 
-      "piano/piano-Eb5", "piano/piano-E5", "piano/piano-F5", "piano/piano-Gb5", "piano/piano-G5", 
-      "piano/piano-Ab5", "piano/piano-A6", "piano/piano-Bb6", "piano/piano-B6"],
+      "piano/piano-Eb5", "piano/piano-E5"],
 
     "churchorgan": ["piano/piano-C4", "piano/piano-Db4", "piano/piano-D4", "piano/piano-Eb4", "piano/piano-E4", 
       "piano/piano-F4", "piano/piano-Gb4", "piano/piano-G4", "piano/piano-Ab4", "piano/piano-A5", 
       "piano/piano-Bb5", "piano/piano-B5", "piano/piano-C5", "piano/piano-Db5", "piano/piano-D5", 
-      "piano/piano-Eb5", "piano/piano-E5", "piano/piano-F5", "piano/piano-Gb5", "piano/piano-G5", 
-      "piano/piano-Ab5", "piano/piano-A6", "piano/piano-Bb6", "piano/piano-B6"]
+      "piano/piano-Eb5", "piano/piano-E5"]
   };
 
   for (instrument in instrumentSounds) {
@@ -166,13 +164,6 @@ Template.keys.helpers({
   key15: function() { return Session.get("key15"); },
   key16: function() { return Session.get("key16"); },
   key17: function() { return Session.get("key17"); },
-  key18: function() { return Session.get("key18"); },
-  key19: function() { return Session.get("key19"); },
-  key20: function() { return Session.get("key20"); },
-  key21: function() { return Session.get("key21"); },
-  key22: function() { return Session.get("key22"); },
-  key23: function() { return Session.get("key23"); },
-  key24: function() { return Session.get("key24"); }
 });
 
 Template.keys.events({
