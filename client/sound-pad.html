@@ -13,42 +13,16 @@
 
   <button id="populate" onclick="populate()">Populate database</button>
 
-  <form class="choose_sound">
-    <select id="button_choice">
-      <option value="1">Button 1</option>
-      <option value="2">Button 2</option>
-      <option value="3">Button 3</option>
-      <option value="4">Button 4</option>
-      <option value="5">Button 5</option>
-      <option value="6">Button 6</option>
-      <option value="7">Button 7</option>
-      <option value="8">Button 8</option>
-      <option value="9">Button 9</option>
-    </select>
-
-    <select id="sound_choice">
-      <option value="A1">Piano A</option>
-      <option value="B1">Piano B</option>
-      <option value="C1">Piano C</option>
-      <option value="D1">Piano D</option>
-      <option value="E1">Piano E</option>
-      <option value="F1">Piano F</option>
-      <option value="G1">Piano G</option>
-    </select>
-
-    <input id="choice_submit" type="button" value="Submit">
-  </form>
-
   {{> menu}}
 
-  {{> buttons}}
+  {{> drum_buttons}}
 
   {{> keys}}
 
 </body>
 
 
-<template name="buttons">
+<template name="drum_buttons">
 <div id="buttoncontainer" class="button-container">
     {{> soundpad_button id="key-85" text="KICK" audio_file=audio_file1 }}
     {{> soundpad_button id="key-73" text="HAT" audio_file=audio_file2 }}
@@ -63,7 +37,11 @@
 </template>
 
 <template name="soundpad_button">
-  <button id={{id}}>{{text}}</button>
+  <button class="playable" id={{id}}>{{text}}</button>
+  {{> audio_tag audio_file=audio_file}}
+</template>
+
+<template name="audio_tag">
   <audio class="audio" src={{audio_file}}>
     Your browser does not support the <code>audio</code> element.
   </audio>
@@ -73,20 +51,50 @@
 <template name="keys">
  <div id="p-wrapper">
   <ul id="piano">
-    <li><div class="anchor"></div></li>
-    <li><div class="anchor"></div><span></span></li>
-    <li><div class="anchor"></div><span></span></li>
-    <li><div class="anchor"></div></li>
-    <li><div class="anchor"></div><span></span></li>
-    <li><div class="anchor"></div><span></span></li>
-    <li><div class="anchor"></div><span></span></li>
-    <li><div class="anchor"></div></li>
-    <li><div class="anchor"></div><span></span></li>
-    <li><div class="anchor"></div><span></span></li>
-    <li><div class="anchor"></div></li>
-    <li><div class="anchor"></div><span></span></li>
-    <li><div class="anchor"></div><span></span></li>
-    <li><div class="anchor"></div><span></span></li>
+    <li><div class="anchor playable"> {{> audio_tag audio_file=key1}} </div></li>
+    <li>
+      <div class="anchor playable"> {{> audio_tag audio_file=key3}} </div>
+      <span class="playable"> {{> audio_tag audio_file=key2}} </span>
+    </li>
+    <li>
+      <div class="anchor playable"> {{> audio_tag audio_file=key5}} </div>
+      <span class="playable"> {{> audio_tag audio_file=key4}} </span> 
+    </li>
+    <li><div class="anchor playable"> {{> audio_tag audio_file=key6}} </div></li>
+    <li>
+      <div class="anchor playable"> {{> audio_tag audio_file=key8}} </div>
+      <span class="playable"> {{> audio_tag audio_file=key7}} </span>
+    </li>
+    <li>
+      <div class="anchor playable"> {{> audio_tag audio_file=key10}} </div>
+      <span class="playable"> {{> audio_tag audio_file=key9}} </span>
+    </li>
+    <li>
+      <div class="anchor playable"> {{> audio_tag audio_file=key12}} </div>
+      <span class="playable"> {{> audio_tag audio_file=key11}} </span>
+    </li>
+    <li><div class="anchor playable"> {{> audio_tag audio_file=key13}} </div></li>
+    <li>
+      <div class="anchor playable"> {{> audio_tag audio_file=key15}} </div>
+      <span class="playable"> {{> audio_tag audio_file=key14}} </span>
+    </li>
+    <li>
+      <div class="anchor playable"> {{> audio_tag audio_file=key17}} </div>
+      <span class="playable"> {{> audio_tag audio_file=key16}} </span>
+    </li>
+    <li><div class="anchor playable"> {{> audio_tag audio_file=key18}} </div></li>
+    <li>
+      <div class="anchor playable"> {{> audio_tag audio_file=key20}} </div>
+      <span class="playable"> {{> audio_tag audio_file=key19}} </span>
+    </li>
+    <li>
+      <div class="anchor playable"> {{> audio_tag audio_file=key22}} </div>
+      <span class="playable"> {{> audio_tag audio_file=key21}} </span>
+    </li>
+    <li>
+      <div class="anchor playable"> {{> audio_tag audio_file=key24}} </div>
+      <span class="playable"> {{> audio_tag audio_file=key23}} </span>
+    </li>
     <li><div class="anchor"></div></li>
     <li><div class="anchor"></div><span></span></li>
     <li><div class="anchor"></div><span></span></li>
@@ -116,9 +124,9 @@
         </li>
        
         <li id="keycontainer" class="item" style="color:white"><span>Keys</span>
-          <ul class="keyboard" id="keys" style="display:none;">
-            <button id="grandpiano">Grand Piano</button>
-            <button id="churchorgan">Church Organ</button>
+          <ul id="keys" style="display:none;">
+            <button class="keyboard" id="grandpiano">Grand Piano</button>
+            <button class="keyboard" id="churchorgan">Church Organ</button>
           </ul>
         </li>
   
