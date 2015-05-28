@@ -103,22 +103,12 @@ Accounts.ui.config({
 
 // Respond to events in the instrument menu
 Template.menu.events = {
-  'click #drum1': function() {
+  'click .drum_options ': function() {
     document.getElementById("buttoncontainer").style.display = "block";
     document.getElementById("p-wrapper").style.display = "none";
   },
 
-  'click #drum2': function() {
-    document.getElementById("buttoncontainer").style.display = "block";
-    document.getElementById("p-wrapper").style.display = "none";
-  },
-
-  'click #grandpiano': function() {
-    document.getElementById("p-wrapper").style.display = "block";
-    document.getElementById("buttoncontainer").style.display = "none";
-  },
-
-  'click #churchorgan': function() {
+  'click .keyboard_options': function() {
     document.getElementById("p-wrapper").style.display = "block";
     document.getElementById("buttoncontainer").style.display = "none";
   },
@@ -135,7 +125,7 @@ Template.menu.events = {
   'click button': function(event) {
     var button = event.target;
     sounds = getInstrumentSounds(button.id);
-    if (hasClass(button, "keyboard")) {
+    if (hasClass(button, "keyboard_options")) {
       updatePianoSounds(sounds);
     } else {
       updateDrumSounds(sounds);
