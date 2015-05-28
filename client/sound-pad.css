@@ -103,7 +103,30 @@
 }
 
 #item {
+    border-style: solid;
     border-color: black;
+}
+
+/* Recording Panel */
+.recording-panel {
+    float: middle;
+    position: absolute;
+    bottom: 0;
+    width: 400px;
+    height: 50px;
+    background: #333333;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Oxygen Mono', Tahoma, Arial, sans-serif;
+}
+
+.recording-panel button {
+    float: middle;
+    width: 80px
+    height: 80px;
+    font-family: 'Oxygen Mono', Tahoma, Arial, sans-serif;
+    margin: 10px;
+    display:inline-block;
 }
 
 
