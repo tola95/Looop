@@ -11,9 +11,11 @@
     <h1 align="center">Welcome to SoundPad!</h1>
   </div>
 
+  <button id="populate" onclick="populate()">Populate database</button>
+
   {{> menu}}
 
-  {{> buttons}}
+  {{> drum_buttons}}
 
   {{> keys}}
 
@@ -22,58 +24,70 @@
 </body>
 
 
-<template name="buttons">
-  <div id="buttoncontainer" class="button-container">
-    {{> button id="key-85" text="KICK" audio_file=audio_file1 }}
-    {{> button id="key-73" text="HAT" audio_file=audio_file2 }}
-    {{> button id="key-79" text="SNARE" audio_file=audio_file3 }}
-    {{> button id="key-74" text="HAT" audio_file=audio_file4 }}
-    {{> button id="key-75" text="KICK A" audio_file=audio_file5 }}
-    {{> button id="key-76" text="HAT A" audio_file=audio_file6 }}
-    {{> button id="key-78" text="SNARE A" audio_file=audio_file7 }}
-    {{> button id="key-77" text="HAT A" audio_file=audio_file8 }}
-    {{> button id="key-188" text="KICK B" audio_file=audio_file9 }}
+<template name="drum_buttons">
+<div id="buttoncontainer" class="button-container">
+    {{> soundpad_button id="key-85" text="KICK" audio_file=audio_file1 }}
+    {{> soundpad_button id="key-73" text="HAT" audio_file=audio_file2 }}
+    {{> soundpad_button id="key-79" text="SNARE" audio_file=audio_file3 }}
+    {{> soundpad_button id="key-74" text="HAT" audio_file=audio_file4 }}
+    {{> soundpad_button id="key-75" text="KICK A" audio_file=audio_file5 }}
+    {{> soundpad_button id="key-76" text="HAT A" audio_file=audio_file6 }}
+    {{> soundpad_button id="key-78" text="SNARE A" audio_file=audio_file7 }}
+    {{> soundpad_button id="key-77" text="HAT A" audio_file=audio_file8 }}
+    {{> soundpad_button id="key-188" text="KICK B" audio_file=audio_file9 }}
   </div>
 </template>
 
-<template name="button">
-  <button id={{id}}>{{text}}</button>
+<template name="soundpad_button">
+  <button class="playable" id={{id}}>{{text}}</button>
+  {{> audio_tag audio_file=audio_file}}
+</template>
+
+<template name="audio_tag">
   <audio class="audio" src={{audio_file}}>
     Your browser does not support the <code>audio</code> element.
   </audio>
 </template>
 
+
 <template name="keys">
- <div id="p-wrapper" style="display:none;">
+ <div id="p-wrapper">
   <ul id="piano">
-    <li><div class="anchor"></div></li>
-    <li><div class="anchor"></div><span></span></li>
-    <li><div class="anchor"></div><span></span></li>
-    <li><div class="anchor"></div></li>
-    <li><div class="anchor"></div><span></span></li>
-    <li><div class="anchor"></div><span></span></li>
-    <li><div class="anchor"></div><span></span></li>
-    <li><div class="anchor"></div></li>
-    <li><div class="anchor"></div><span></span></li>
-    <li><div class="anchor"></div><span></span></li>
-    <li><div class="anchor"></div></li>
-    <li><div class="anchor"></div><span></span></li>
-    <li><div class="anchor"></div><span></span></li>
-    <li><div class="anchor"></div><span></span></li>
-    <li><div class="anchor"></div></li>
-    <li><div class="anchor"></div><span></span></li>
-    <li><div class="anchor"></div><span></span></li>
-    <li><div class="anchor"></div></li>
-    <li><div class="anchor"></div><span></span></li>
-    <li><div class="anchor"></div><span></span></li>
-    <li><div class="anchor"></div><span></span></li>
-    <li><div class="anchor"></div></li>
-    <li><div class="anchor"></div><span></span></li>
-    <li><div class="anchor"></div><span></span></li>
-   
+    <li><div class="anchor playable"> {{> audio_tag audio_file=key1}} </div></li>
+    <li>
+      <div class="anchor playable"> {{> audio_tag audio_file=key3}} </div>
+      <span class="playable"> {{> audio_tag audio_file=key2}} </span>
+    </li>
+    <li>
+      <div class="anchor playable"> {{> audio_tag audio_file=key5}} </div>
+      <span class="playable"> {{> audio_tag audio_file=key4}} </span> 
+    </li>
+    <li><div class="anchor playable"> {{> audio_tag audio_file=key6}} </div></li>
+    <li>
+      <div class="anchor playable"> {{> audio_tag audio_file=key8}} </div>
+      <span class="playable"> {{> audio_tag audio_file=key7}} </span>
+    </li>
+    <li>
+      <div class="anchor playable"> {{> audio_tag audio_file=key10}} </div>
+      <span class="playable"> {{> audio_tag audio_file=key9}} </span>
+    </li>
+    <li>
+      <div class="anchor playable"> {{> audio_tag audio_file=key12}} </div>
+      <span class="playable"> {{> audio_tag audio_file=key11}} </span>
+    </li>
+    <li><div class="anchor playable"> {{> audio_tag audio_file=key13}} </div></li>
+    <li>
+      <div class="anchor playable"> {{> audio_tag audio_file=key15}} </div>
+      <span class="playable"> {{> audio_tag audio_file=key14}} </span>
+    </li>
+    <li>
+      <div class="anchor playable"> {{> audio_tag audio_file=key17}} </div>
+      <span class="playable"> {{> audio_tag audio_file=key16}} </span>
+    </li>
   </ul>
  </div>
 </template>
+
 
 <template name="menu">
     <div id="sidebar-wrapper">
@@ -83,15 +97,15 @@
         </li>
         <li id="drumcontainer" class="item" style="color:white"><span>Drums</span>
           <ul id="drums" style="display:none;">
-            <input type="button" id="drum1" value="Drum 1" />
-            <input type="button" id="drum2" value="Drum 2" />
+            <button class="drum_options" id="drum1">Drum 1</button>
+            <button class="drum_options" id="drum2">Drum 2</button>
           </ul>
         </li>
        
         <li id="keycontainer" class="item" style="color:white"><span>Keys</span>
           <ul id="keys" style="display:none;">
-            <input type="button" id="grandpiano" value="Grand Piano" />
-            <input type="button" id="churchorgan" value="Church Organ" />
+            <button class="keyboard_options" id="grandpiano">Grand Piano</button>
+            <button class="keyboard_options" id="churchorgan">Church Organ</button>
           </ul>
         </li>
   
