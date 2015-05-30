@@ -1,10 +1,11 @@
-// Database to hold saved recordings
-Recordings = new Mongo.Collection("recordings");
+// Database to hold the various available sounds
+Sounds = new Mongo.Collection("sounds");
 
 Meteor.methods({
-	addRecording: function() {
-		// Verify the user is logged in
-		// Add recording to DB
+	addSound: function (name, paths) {
+		Sounds.insert({
+			instrument: name,
+			paths: paths
+		});
 	}
-
 });

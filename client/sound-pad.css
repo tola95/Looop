@@ -24,18 +24,20 @@
 .banner {
   width:100%;
   font-size: 15px;
-  background-color: #1D1D1D ;
+  background-color: #1D1D1D;
   height: 60px;
   color: #E94418;
   padding-left: 20px;
   padding-top: 5px;
 }
 
-.banner h1 {
+.banner .logo h1 {
   font-family: "autoFont";
   margin-right: 50px;
+  margin-left: 50px;
   padding-top: 5px;
-  padding-left: 35px;
+  padding-left: 50px;
+  z-index: 2000;
 }
 
 .navButton:hover {
@@ -174,6 +176,7 @@ a:hover {
 
 /* Piano Wrapper */
 #p-wrapper {
+  display: none;
   margin-top: 100px;
   float: middle;
   background:#000;
@@ -182,8 +185,8 @@ a:hover {
   background:-ms-linear-gradient(-60deg,#000,#333,#000,#666,#333 70%);
   background:-o-linear-gradient(-60deg,#000,#333,#000,#666,#333 70%);
   background:linear-gradient(-60deg,#000,#333,#000,#666,#333 70%);
-  width:560px;
-  height: 200px;
+  width: 500px;
+  height: 250px;
   position:relative;
   -webkit-box-shadow:0 2px 0px #666,0 3px 0px #555,0 4px 0px #444,0 6px 6px #000,inset 0 -1px 1px rgba(255,255,255,0.5),inset 0 -4px 5px #000;
   -moz-box-shadow:0 2px 0px #666,0 3px 0px #555,0 4px 0px #444,0 6px 6px #000,inset 0 -1px 1px rgba(255,255,255,0.5),inset 0 -4px 5px #000;
@@ -204,7 +207,7 @@ a:hover {
 ul#piano {
   display:block;
   width:100%;
-  height:240px;
+  height:300px;
   border-top:2px solid #222;
 }
 
@@ -213,13 +216,13 @@ ul#piano li {
   float:left;
   display:inline;
   background:#aaa;
-  width:40px;
+  width:50px;
   position:relative;
 }
 
 ul#piano li a,ul#piano li div.anchor {
   display:block;
-  height:220px;
+  height:275px;
   background:#fff;
   background:-webkit-linear-gradient(-30deg,#f5f5f5,#fff);
   background:-moz-linear-gradient(-30deg,#f5f5f5,#fff);
@@ -241,14 +244,14 @@ ul#piano li a:active,ul#piano li div.anchor:active {
   box-shadow:0 2px 2px rgba(0,0,0,0.4);
   position:relative;
   top:2px;
-  height:216px;
+  height:270px;
 }
 
 ul#piano li a:active:before,ul#piano li div.anchor:active:before {
   content:"";
   width:0px;
   height:0px;
-  border-width:216px 5px 0px;
+  border-width:270px 5px 0px;
   border-style:solid;
   border-color:transparent transparent transparent rgba(0,0,0,0.1);
   position:absolute;
@@ -260,7 +263,7 @@ ul#piano li a:active:after,ul#piano li div.anchor:active:after {
   content:"";
   width:0px;
   height:0px;
-  border-width:216px 5px 0px;
+  border-width:270px 5px 0px;
   border-style:solid;
   border-color:transparent rgba(0,0,0,0.1) transparent transparent;
   position:absolute;
@@ -273,8 +276,8 @@ ul#piano li span {
   position:absolute;
   top:0px;
   left:-12px;
-  width:20px;
-  height:120px;
+  width:25px;
+  height:150px;
   background:#333;
   background:-webkit-linear-gradient(-20deg,#333,#000,#333);
   background:-moz-linear-gradient(-20deg,#333,#000,#333);
@@ -295,7 +298,7 @@ ul#piano li span {
 
 ul#piano li span:active {
   border-bottom-width:2px;
-  height:123px;
+  height:153px;
   -webkit-box-shadow:inset 0px -1px 1px rgba(255,255,255,0.4),0 1px 0px rgba(0,0,0,0.8),0 2px 2px rgba(0,0,0,0.4),0 -1px 0px #000;
   -moz-box-shadow:inset 0px -1px 1px rgba(255,255,255,0.4),0 1px 0px rgba(0,0,0,0.8),0 2px 2px rgba(0,0,0,0.4),0 -1px 0px #000;
   box-shadow:inset 0px -1px 1px rgba(255,255,255,0.4),0 1px 0px rgba(0,0,0,0.8),0 2px 2px rgba(0,0,0,0.4),0 -1px 0px #000;
@@ -315,5 +318,119 @@ ul#piano li span:active {
   to {opacity:1;}
 }
 
+.login {
+  float: right;
+  width: 250px;
+  margin-top: 15px;
+  margin-right: 20px;
+}
+
+#login-buttons {
+  width: 250px;
+}
+
+.login a {
+  float: right;
+}
+
+#sidebar {
+  z-index: 3000;
+  float: left;
+}
+
+/* General styles for all menus */
+.cbp-spmenu {
+  background: #1D1D1D;
+  position: fixed;
+  opacity: 0.6;
+}
+
+.cbp-spmenu h3 {
+
+  color: #afdefa;
+  font-size: 1.9em;
+  padding: 20px;
+  margin: 0;
+  font-weight: 300;
+  background: #0d77b6;
+}
+
+.cbp-spmenu a {
+  display: block;
+  color: #fff;
+  font-size: 1.1em;
+  font-weight: 300;
+}
+
+.cbp-spmenu a:hover {
+  background: #258ecd;
+}
+
+.cbp-spmenu a:active {
+  background: #afdefa;
+  color: #47a3da;
+}
+
+/* Orientation-dependent styles for the content of the menu */
+
+.cbp-spmenu-vertical {
+  width: 240px;
+  height: 100%;
+  top: 0;
+  z-index: 50;
+}
+
+.cbp-spmenu-vertical a {
+  border-bottom: 1px solid #258ecd;
+  padding: 1em;
+}
 
 
+/* Vertical menu that slides from the left or right */
+
+.cbp-spmenu-left {
+  left: -280px;
+}
+
+.cbp-spmenu-left.cbp-spmenu-open {
+  left: 0px;
+}
+
+/* Push classes applied to the body */
+
+.cbp-spmenu-push {
+  overflow-x: hidden;
+  position: relative;
+  left: 0;
+}
+
+.cbp-spmenu-push-toright {
+  left: 280px;
+}
+
+/* Transitions */
+
+.cbp-spmenu,
+.cbp-spmenu-push {
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+/* Example media queries */
+
+@media screen and (max-height: 26.375em){
+
+  .cbp-spmenu-vertical {
+    font-size: 90%;
+    width: 280px;
+  }
+
+  .cbp-spmenu-right {
+    right: -280px;
+  }
+
+  .cbp-spmenu-push-toright {
+    left: 280px;
+  }
+}
