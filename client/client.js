@@ -2,18 +2,16 @@ var STARTING_DRUM = "drum1",
     STARTING_KEYBOARD = "grandpiano",
     drumpadOn = true;
 
-// Set the default drum and keyboard notes
-window.onload = function() {
+// Once the Sounds DB is ready, set the default drum and keyboard notes
+var soundsDB = Meteor.subscribe("sounds", function() {
   updateDrumSounds(getInstrumentSounds(STARTING_DRUM));
   updatePianoSounds(getInstrumentSounds(STARTING_KEYBOARD));
-};
-
+});
 
 // Retrieves the array of paths for the given instrument from the database
 getInstrumentSounds = function(instrument) {
-  return Sounds.findOne({instrument: instrument}).paths;
+  return Sounds.findOne({"instrument": instrument}).paths;
 }  
-
 
 populate = function() {
   var instruments = ["drum1", "drum2", "grandpiano", "churchorgan"];
