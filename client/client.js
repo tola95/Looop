@@ -1,14 +1,21 @@
 var STARTING_DRUM = "drum1";
 var STARTING_KEYBOARD = "grandpiano";
+var audioController = null;
 
 // Set the default drum and keyboard notes
 window.onload = function() {
   updateDrumSounds(getInstrumentSounds(STARTING_DRUM));
   updatePianoSounds(getInstrumentSounds(STARTING_KEYBOARD));
+  audioController = new AudioControl();
+  Template.body.events({
+  'click #record': audioController.record(),
+  'click #stop': audioController.stopRecording(),
+});
 }
 
 // Retrieves the array of paths for the given instrument from the database
 getInstrumentSounds = function(instrument) {
+  console.log("instrument = "+instrument);
   return Sounds.findOne({instrument: instrument}).paths;
 }  
 
@@ -44,6 +51,8 @@ populate = function() {
     Meteor.call("addSound", instrument, instrumentSounds[instrument]);
   }
 };
+
+
 
 
 Template.drum_buttons.helpers({
