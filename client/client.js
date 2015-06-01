@@ -1,6 +1,8 @@
 var STARTING_DRUM = "drum1",
     STARTING_KEYBOARD = "grandpiano",
     drumpadOn = true;
+    drumcont = 0;
+    keycont = 0;
 
 // Once the Sounds DB is ready, set the default drum and keyboard notes
 var soundsDB = Meteor.subscribe("sounds", function() {
@@ -125,11 +127,23 @@ Template.menu.events = {
   },
 
   'click #drumcontainer': function() {
-    document.getElementById("drums").style.display = "block";
+    if (drumcont == 0) {
+      document.getElementById("drums").style.display = "block";
+      drumcont = 1;
+    } else {
+      document.getElementById("drums").style.display = "none";
+      drumcont = 0;
+    }
   },
 
   'click #keycontainer': function() {
-    document.getElementById("keys").style.display = "block";
+    if (drumcont == 0) {
+      document.getElementById("keys").style.display = "block";
+      drumcont = 1;
+    } else {
+      document.getElementById("keys").style.display = "none";
+      drumcont = 0;
+    }
   },
 
   // Update the audio sources
