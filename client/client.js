@@ -1,5 +1,7 @@
 var STARTING_DRUM = "drum1";
 var STARTING_KEYBOARD = "grandpiano";
+var drumcont = 0;
+var keycont = 0;
 
 // Set the default drum and keyboard notes
 window.onload = function() {
@@ -111,12 +113,25 @@ Template.menu.events = {
     document.getElementById("buttoncontainer").style.display = "none";
   },
 
+  
   'click #drumcontainer': function() {
-    document.getElementById("drums").style.display = "block";
+    if (drumcont == 0) {
+      document.getElementById("drums").style.display = "block";
+      drumcont = 1;
+    } else {
+      document.getElementById("drums").style.display = "none";
+      drumcont = 0;
+    }
   },
 
   'click #keycontainer': function() {
-    document.getElementById("keys").style.display = "block";
+    if (drumcont == 0) {
+      document.getElementById("keys").style.display = "block";
+      drumcont = 1;
+    } else {
+      document.getElementById("keys").style.display = "none";
+      drumcont = 0;
+    }
   },
 
   // Update the audio sources

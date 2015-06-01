@@ -95,14 +95,14 @@
         <li class="sidebar-brand" style="color:red" align="center">
           INSTRUMENTS
         </li>
-        <li id="drumcontainer" class="item" style="color:white"><span>Drums</span>
+        <li id="drumcontainer" class="item" style="color:white"><a href='#'><span>Drums</span>
           <ul id="drums" style="display:none;">
             <button class="drum_options" id="drum1">Drum 1</button>
             <button class="drum_options" id="drum2">Drum 2</button>
           </ul>
         </li>
        
-        <li id="keycontainer" class="item" style="color:white"><span>Keys</span>
+        <li id="keycontainer" class="item" style="color:white"><a href='#'><span>Keys</span>
           <ul id="keys" style="display:none;">
             <button class="keyboard_options" id="grandpiano">Grand Piano</button>
             <button class="keyboard_options" id="churchorgan">Church Organ</button>
@@ -113,27 +113,17 @@
     </div>
   </template>
 
-  <template name="recordingPanel">
-    <div id="Recording-Panel" class="recording-panel">
-      <button>Previous</button>
-      <button>Rewind</button>
-      <button>Play</button>
-      <button>Record</button>
-      <button>FastForward</button>
-      <button>Next</button>
-    </div>
-  </template>
 
   <template name="sequencer">
     <div id="sequencer" class="sequencer">
       <h2>Sequencer</h2>
       <div id="Recording-Panel" class="recording-panel">
-      <button>Previous</button>
-      <button>Rewind</button>
-      <button>Play</button>
-      <button>Record</button>
-      <button>FastForward</button>
-      <button>Next</button>
+      <button class="RPButton" id="previous">Previous</button>
+      <button class="RPButton">Rewind</button>
+      <button class="RPButton">Play</button>
+      <button class="RPButton">Record</button>
+      <button class="RPButton">FastForward</button>
+      <button class="RPButton">Next</button>
     </div>
     </div>
   </template>

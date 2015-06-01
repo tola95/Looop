@@ -108,23 +108,12 @@
 }
 
 /* Recording Panel */
-.recording-panel {
-    position: absolute;
-    bottom: 0;
-    float: middle;
-    background: #333333;
-    height: 100px;
-    margin: 0 auto;
-    margin-left: auto;
-    margin-right: auto;
-    display: inline-block;
-    font-family: 'Oxygen Mono', Tahoma, Arial, sans-serif;
-}
 
-.recording-panel button {
-    width: 80px
-    height: 80px;
-    font-family: 'Oxygen Mono', Tahoma, Arial, sans-serif;
+
+.sequencer .recording-panel .RPButton {
+    width: 200px
+    height: 200px;
+    /*font-family: 'Oxygen Mono', Tahoma, Arial, sans-serif; */
 }
 
 /* Sequencer */
@@ -134,7 +123,7 @@
     float: middle;
     width: 1000px;
     height: 800px;
-    background: transparent;
+    background: #333333;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
