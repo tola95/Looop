@@ -5,9 +5,10 @@
 
 <body class="cbp-smenu-push">
   <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left cbp-sp" id="cbp-spmenu-s1">
+    <div class="sidemenu">
+      {{> menu}}
+    </div>
   </nav>
-  
-  
   <div class="banner">
     <div class="main">
       <section>
@@ -23,8 +24,6 @@
   </div>
 
   <button id="populate" onclick="populate()">Populate database</button>
-  
-  {{> menu}}
 
   {{> drum_buttons}}
 

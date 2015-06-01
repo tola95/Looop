@@ -37,7 +37,7 @@
   margin-left: 50px;
   padding-top: 5px;
   padding-left: 50px;
-  z-index: 2000;
+  z-index: 60;
 }
 
 .navButton:hover {
@@ -334,8 +334,13 @@ ul#piano li span:active {
 }
 
 #sidebar {
-  z-index: 3000;
+  z-index: 90;
   float: left;
+  position: fixed;
+}
+
+.cbp-spmenu .sidemenu {
+  opacity: 1;
 }
 
 /* General styles for all menus */
