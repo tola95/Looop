@@ -10,6 +10,8 @@ AudioControl = function() {
 		this.sources[i].connect(this.gainNode);
 	};
 
+	this.gainNode.connect(this.context.destination);
+
 	this.record = function() {
 		this.recorder.record();
 	};
@@ -17,7 +19,7 @@ AudioControl = function() {
 	this.stopRecording = function() {
 		this.recorder.stop();
 		var control = this;
-		this.recorder.exportWAV(function(buffers) {
+		this.recorder.getBuffer(function(buffers) {
 			var newSource = control.context.createBufferSource();
 		    var newBuffer = control.context.createBuffer( 2, buffers[0].length, control.context.sampleRate );
 		    newBuffer.getChannelData(0).set(buffers[0]);
@@ -26,7 +28,6 @@ AudioControl = function() {
 
 		    newSource.connect( control.context.destination );
 		    newSource.start(0);
-		    console.log("started");
 		});
 	};
 
