@@ -1,25 +1,42 @@
 <head>
   <title>Sound Pad</title>
+
 </head>
 
-<body>
-  <div class="login">
-    {{> loginButtons}}
-  </div>
-  
+<body class="cbp-smenu-push">
+  <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left cbp-sp" id="cbp-spmenu-s1">
+    <div class="sidemenu">
+      {{> menu}}
+    </div>
+  </nav>
   <div class="banner">
-    <h1 align="center">Welcome to SoundPad!</h1>
+    <div class="main">
+      <section>
+        <button id="sidebar">Show</button>
+      </section>
+    </div>
+    <div class="login">
+      {{> loginButtons}}
+    </div>
+    <div class="logo">
+      <h1>Loop</h1>
+    </div>
   </div>
 
   <button id="populate" onclick="populate()">Populate database</button>
 
-  {{> menu}}
-
   {{> drum_buttons}}
 
   {{> keys}}
+  <script>
+    var menuLeft = document.getElementById('cbp-spmenu-s1'),
+        showLeft = document.getElementById('sidebar');
 
-  {{> sequencer}}
+    showLeft.onclick = function() {
+      classie.toggle( this, 'active');
+      classie.toggle( menuLeft, 'cbp-spmenu-open');
+    }
+  </script>
 
 </body>
 
@@ -53,7 +70,7 @@
 <template name="keys">
  <div id="p-wrapper">
   <ul id="piano">
-    <li><div class="anchor playable"> {{> audio_tag audio_file=key1}} </div></li>
+    <li><div id="pkey-65" class="anchor playable"> {{> audio_tag audio_file=key1}} </div></li>
     <li>
       <div class="anchor playable"> {{> audio_tag audio_file=key3}} </div>
       <span class="playable"> {{> audio_tag audio_file=key2}} </span>
@@ -90,19 +107,22 @@
 
 
 <template name="menu">
+  <div class="container">
+    
+  </div>
     <div id="sidebar-wrapper">
       <ul class="sidebar-nav">
         <li class="sidebar-brand" style="color:red" align="center">
           INSTRUMENTS
         </li>
-        <li id="drumcontainer" class="item" style="color:white"><a href='#'><span>Drums</span>
+        <li id="drumcontainer" class="item" style="color:white"><span>Drums</span>
           <ul id="drums" style="display:none;">
             <button class="drum_options" id="drum1">Drum 1</button>
             <button class="drum_options" id="drum2">Drum 2</button>
           </ul>
         </li>
        
-        <li id="keycontainer" class="item" style="color:white"><a href='#'><span>Keys</span>
+        <li id="keycontainer" class="item" style="color:white"><span>Keys</span>
           <ul id="keys" style="display:none;">
             <button class="keyboard_options" id="grandpiano">Grand Piano</button>
             <button class="keyboard_options" id="churchorgan">Church Organ</button>
@@ -113,18 +133,4 @@
     </div>
   </template>
 
-
-  <template name="sequencer">
-    <div id="sequencer" class="sequencer">
-      <h2>Sequencer</h2>
-      <div id="Recording-Panel" class="recording-panel">
-      <button class="RPButton" id="previous">Previous</button>
-      <button class="RPButton">Rewind</button>
-      <button class="RPButton">Play</button>
-      <button class="RPButton">Record</button>
-      <button class="RPButton">FastForward</button>
-      <button class="RPButton">Next</button>
-    </div>
-    </div>
-  </template>
-
+  

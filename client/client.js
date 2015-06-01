@@ -1,13 +1,15 @@
-var STARTING_DRUM = "drum1";
-var STARTING_KEYBOARD = "grandpiano";
-var drumcont = 0;
-var keycont = 0;
+var STARTING_DRUM = "drum1",
+    STARTING_KEYBOARD = "grandpiano",
+    drumpadOn = true;
+    drumcont = 0;
+    keycont = 0;
 
 // Set the default drum and keyboard notes
 window.onload = function() {
   updateDrumSounds(getInstrumentSounds(STARTING_DRUM));
   updatePianoSounds(getInstrumentSounds(STARTING_KEYBOARD));
-}
+};
+
 
 // Retrieves the array of paths for the given instrument from the database
 getInstrumentSounds = function(instrument) {
@@ -79,21 +81,33 @@ Template.soundpad_button.events({
 // Simulate button press on corresponding key press
 document.onkeydown = function(event) {
   var key = event.keyCode;
-  var button = document.getElementById("key-" + key);
+  if (drumpadOn) {
+    var button = document.getElementById("key-" + key);
+    if(button) {
+      button.className = button.className + " active-button";
+    }
+  } else {
+    // alert(key);
+    var button = document.getElementById("pkey-" + key);
+    button.className = button.className + " div.anchor:active";
+  }
   if (button) {
-    button.className = button.className + " active-button";
     dispatchMouseEvent(button, 'mousedown', true, true);
   }
 };
  
 document.onkeyup = function(event) {
   var key = event.keyCode;
-  var button = document.getElementById("key-" + key);
+  if (drumpadOn) {
+    var button = document.getElementById("key-" + key);
+    
+  } else {
+    var button = document.getElementById("pkey-" + key);
+  }
   if (button) {
     button.className = "";
   }
 };
-
 
 // Make sign in require username instead of email
 Accounts.ui.config({
@@ -109,11 +123,11 @@ Template.menu.events = {
   },
 
   'click .keyboard_options': function() {
+    drumpadOn = false;
     document.getElementById("p-wrapper").style.display = "block";
     document.getElementById("buttoncontainer").style.display = "none";
   },
 
-  
   'click #drumcontainer': function() {
     if (drumcont == 0) {
       document.getElementById("drums").style.display = "block";
@@ -182,9 +196,88 @@ Template.keys.helpers({
 });
 
 Template.keys.events({
-  'click .playable': function(e, template) {
+  'mousedown .playable': function(e, template) {
     var audio = e.target.getElementsByClassName("audio")[0];
+    if (!audio.paused) {
+      var clone = audio.cloneNode(true);
+      clone.play();
+      return;
+    }
+    audio.load();
     audio.play();
   }
 });
 
+
+
+
+/*!
+ * classie - class helper functions
+ * from bonzo https://github.com/ded/bonzo
+ * 
+ * classie.has( elem, 'my-class' ) -> true/false
+ * classie.add( elem, 'my-new-class' )
+ * classie.remove( elem, 'my-unwanted-class' )
+ * classie.toggle( elem, 'my-class' )
+ */
+
+/*jshint browser: true, strict: true, undef: true */
+
+( function( window ) {
+
+'use strict';
+
+// class helper functions from bonzo https://github.com/ded/bonzo
+
+function classReg( className ) {
+  return new RegExp("(^|\\s+)" + className + "(\\s+|$)");
+}
+
+// classList support for class management
+// altho to be fair, the api sucks because it won't accept multiple classes at once
+var hasClass, addClass, removeClass;
+
+if ( 'classList' in document.documentElement ) {
+  hasClass = function( elem, c ) {
+    return elem.classList.contains( c );
+  };
+  addClass = function( elem, c ) {
+    elem.classList.add( c );
+  };
+  removeClass = function( elem, c ) {
+    elem.classList.remove( c );
+  };
+}
+else {
+  hasClass = function( elem, c ) {
+    return classReg( c ).test( elem.className );
+  };
+  addClass = function( elem, c ) {
+    if ( !hasClass( elem, c ) ) {
+      elem.className = elem.className + ' ' + c;
+    }
+  };
+  removeClass = function( elem, c ) {
+    elem.className = elem.className.replace( classReg( c ), ' ' );
+  };
+}
+
+function toggleClass( elem, c ) {
+  var fn = hasClass( elem, c ) ? removeClass : addClass;
+  fn( elem, c );
+}
+
+window.classie = {
+  // full names
+  hasClass: hasClass,
+  addClass: addClass,
+  removeClass: removeClass,
+  toggleClass: toggleClass,
+  // short names
+  has: hasClass,
+  add: addClass,
+  remove: removeClass,
+  toggle: toggleClass
+};
+
+})( window );

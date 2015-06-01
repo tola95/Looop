@@ -10,12 +10,39 @@
     src: url("/Fonts/AvenirNextLTPro-Demi.woff") format('woff');
 }
 
-.banner {
-    width:100%;
-    font-family: "mFont";
-    font-size: 25px;
+@font-face {
+    font-family: "thinFont";
+    src: url("/Fonts/AvenirNextLTPro-Regular.woff") format('woff');
 }
 
+@font-face {
+    font-family: "autoFont";
+    src: url("/Fonts/bulletto_killa/bk.woff") format('woff');
+}
+
+
+.banner {
+  width:100%;
+  font-size: 15px;
+  background-color: #1D1D1D;
+  height: 60px;
+  color: #E94418;
+  padding-left: 20px;
+  padding-top: 5px;
+}
+
+.banner .logo h1 {
+  font-family: "autoFont";
+  margin-right: 50px;
+  margin-left: 50px;
+  padding-top: 5px;
+  padding-left: 50px;
+  z-index: 60;
+}
+
+.navButton:hover {
+  cursor: hand;
+}
 
 .button-container {
     width: 368px;
@@ -52,9 +79,16 @@
     text-shadow: 0px 1px 0px rgba(255, 255, 255, .5);
 }
 
+.login {
+  float: right;
+}
+
 #login-buttons a {
-    font-family: "mFont";
+    font-family: "thinFont";
     text-decoration: none;
+    font-size: 15px;
+    color: #E94418;
+    padding: 5px;
 }
 
 .button-container button:active, .button-container .active-button{
@@ -69,7 +103,7 @@
 }
 
 .reset {
-	float: right;
+    float: right;
 }
 
 .login {
@@ -103,31 +137,7 @@
 }
 
 #item {
-    border-style: solid;
     border-color: black;
-}
-
-/* Recording Panel */
-
-
-.sequencer .recording-panel .RPButton {
-    width: 200px
-    height: 200px;
-    /*font-family: 'Oxygen Mono', Tahoma, Arial, sans-serif; */
-}
-
-/* Sequencer */
-
-.sequencer {
-    margin-top: 100px;
-    float: middle;
-    width: 1000px;
-    height: 800px;
-    background: #333333;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    position: relative;
 }
 
 /* Keyboard */
@@ -322,4 +332,110 @@ ul#piano li span:active {
 .login a {
   float: right;
 }
-   
+
+#sidebar {
+  z-index: 90;
+  float: left;
+  position: fixed;
+}
+
+.cbp-spmenu .sidemenu {
+  opacity: 1;
+}
+
+/* General styles for all menus */
+.cbp-spmenu {
+  background: #1D1D1D;
+  position: fixed;
+  opacity: 0.6;
+}
+
+.cbp-spmenu h3 {
+
+  color: #afdefa;
+  font-size: 1.9em;
+  padding: 20px;
+  margin: 0;
+  font-weight: 300;
+  background: #0d77b6;
+}
+
+.cbp-spmenu a {
+  display: block;
+  color: #fff;
+  font-size: 1.1em;
+  font-weight: 300;
+}
+
+.cbp-spmenu a:hover {
+  background: #258ecd;
+}
+
+.cbp-spmenu a:active {
+  background: #afdefa;
+  color: #47a3da;
+}
+
+/* Orientation-dependent styles for the content of the menu */
+
+.cbp-spmenu-vertical {
+  width: 240px;
+  height: 100%;
+  top: 0;
+  z-index: 50;
+}
+
+.cbp-spmenu-vertical a {
+  border-bottom: 1px solid #258ecd;
+  padding: 1em;
+}
+
+
+/* Vertical menu that slides from the left or right */
+
+.cbp-spmenu-left {
+  left: -280px;
+}
+
+.cbp-spmenu-left.cbp-spmenu-open {
+  left: 0px;
+}
+
+/* Push classes applied to the body */
+
+.cbp-spmenu-push {
+  overflow-x: hidden;
+  position: relative;
+  left: 0;
+}
+
+.cbp-spmenu-push-toright {
+  left: 280px;
+}
+
+/* Transitions */
+
+.cbp-spmenu,
+.cbp-spmenu-push {
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+/* Example media queries */
+
+@media screen and (max-height: 26.375em){
+
+  .cbp-spmenu-vertical {
+    font-size: 90%;
+    width: 280px;
+  }
+
+  .cbp-spmenu-right {
+    right: -280px;
+  }
+
+  .cbp-spmenu-push-toright {
+    left: 280px;
+  }
+}
