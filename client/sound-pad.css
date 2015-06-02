@@ -114,18 +114,17 @@
 
 #sidebar-wrapper {
   z-index: 2000;
-  opacity: 1;
-  background: #333333;
   margin: 30px;
   height: 200px;
   width: 200px;
   border-width: 1px;
-  margin-top: 80px;
+  margin-top: 10px;
   font-family: 'smallFont', Tahoma, Arial, sans-serif;
 }
 
 .sidebar-brand {
   background-color: #E94418;
+  margin: 10px;
 }
 
 .sidebar-brand .text {
@@ -140,9 +139,6 @@
     animation:taufik 2s;
 }
 
-#item {
-    border-color: black;
-}
 
 /* Keyboard */
 
@@ -339,6 +335,7 @@ ul#piano li span:active {
 
 #sidebar {
   z-index: 90;
+  margin-top: 10px;
   float: left;
   position: fixed;
 }
@@ -348,11 +345,12 @@ ul#piano li span:active {
 .cbp-spmenu {
   z-index: 2000;
   position: absolute;
+  margin-top: 60px;
   background: #1D1D1D;
   top: 0;
   left: 0;
   position: fixed;
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 .cbp-spmenu h3 {
