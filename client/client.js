@@ -1,5 +1,6 @@
 var STARTING_DRUM = "drum1",
     STARTING_KEYBOARD = "grandpiano",
+
     drumpadOn = true,
     drumcont = 0,
     keycont = 0,
@@ -97,9 +98,9 @@ document.onkeydown = function(event) {
       button.className = button.className + " active-button";
     }
   } else {
-    // alert(key);
     var button = document.getElementById("pkey-" + key);
-    button.className = button.className + " div.anchor:active";
+    if(button)
+      button.className = button.className + " div.anchor:active";
   }
   if (button) {
     dispatchMouseEvent(button, 'mousedown', true, true);
@@ -110,12 +111,15 @@ document.onkeyup = function(event) {
   var key = event.keyCode;
   if (drumpadOn) {
     var button = document.getElementById("key-" + key);
-    
   } else {
     var button = document.getElementById("pkey-" + key);
   }
   if (button) {
-    button.className = "";
+    if (drumpadOn) {
+      button.className = "";
+    } else {
+    button.className = "anchor playable";
+    }
   }
 };
 

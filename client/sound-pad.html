@@ -4,13 +4,6 @@
 </head>
 
 <body class="cbp-smenu-push">
-
-  <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left cbp-sp" id="cbp-spmenu-s1">
-    <div class="sidemenu">
-      {{> menu}}
-    </div>
-    
-  </nav>
   <div class="banner">
     <div class="main">
       <section>
@@ -24,6 +17,13 @@
       <h1>Loop</h1>
     </div>
   </div>
+
+  <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left cbp-sp" id="cbp-spmenu-s1">
+    <div class="sidemenu">
+      {{> menu}}
+    </div>
+    
+  </nav>
 
   <button id="populate" onclick="populate()">Populate database</button>
 
@@ -77,34 +77,34 @@
   <ul id="piano">
     <li><div id="pkey-65" class="anchor playable"> {{> audio_tag audio_file=key1}} </div></li>
     <li>
-      <div class="anchor playable"> {{> audio_tag audio_file=key3}} </div>
-      <span class="playable"> {{> audio_tag audio_file=key2}} </span>
+      <div id="pkey-83" class="anchor playable"> {{> audio_tag audio_file=key3}} </div>
+      <span id="pkey-87" class="playable"> {{> audio_tag audio_file=key2}} </span>
     </li>
     <li>
-      <div class="anchor playable"> {{> audio_tag audio_file=key5}} </div>
-      <span class="playable"> {{> audio_tag audio_file=key4}} </span> 
+      <div id="pkey-68" class="anchor playable"> {{> audio_tag audio_file=key5}} </div>
+      <span id="pkey-69" class="playable"> {{> audio_tag audio_file=key4}} </span> 
     </li>
-    <li><div class="anchor playable"> {{> audio_tag audio_file=key6}} </div></li>
+    <li><div id="pkey-70" class="anchor playable"> {{> audio_tag audio_file=key6}} </div></li>
     <li>
-      <div class="anchor playable"> {{> audio_tag audio_file=key8}} </div>
-      <span class="playable"> {{> audio_tag audio_file=key7}} </span>
-    </li>
-    <li>
-      <div class="anchor playable"> {{> audio_tag audio_file=key10}} </div>
-      <span class="playable"> {{> audio_tag audio_file=key9}} </span>
+      <div id="pkey-71" class="anchor playable"> {{> audio_tag audio_file=key8}} </div>
+      <span id="pkey-84" class="playable"> {{> audio_tag audio_file=key7}} </span>
     </li>
     <li>
-      <div class="anchor playable"> {{> audio_tag audio_file=key12}} </div>
-      <span class="playable"> {{> audio_tag audio_file=key11}} </span>
-    </li>
-    <li><div class="anchor playable"> {{> audio_tag audio_file=key13}} </div></li>
-    <li>
-      <div class="anchor playable"> {{> audio_tag audio_file=key15}} </div>
-      <span class="playable"> {{> audio_tag audio_file=key14}} </span>
+      <div id="pkey-72" class="anchor playable"> {{> audio_tag audio_file=key10}} </div>
+      <span id="pkey-89" class="playable"> {{> audio_tag audio_file=key9}} </span>
     </li>
     <li>
-      <div class="anchor playable"> {{> audio_tag audio_file=key17}} </div>
-      <span class="playable"> {{> audio_tag audio_file=key16}} </span>
+      <div id="pkey-74" class="anchor playable"> {{> audio_tag audio_file=key12}} </div>
+      <span id="pkey-85" class="playable"> {{> audio_tag audio_file=key11}} </span>
+    </li>
+    <li><div id="pkey-75" class="anchor playable"> {{> audio_tag audio_file=key13}} </div></li>
+    <li>
+      <div id="pkey-76" class="anchor playable"> {{> audio_tag audio_file=key15}} </div>
+      <span id="pkey-79" class="playable"> {{> audio_tag audio_file=key14}} </span>
+    </li>
+    <li>
+      <div id="pkey-186" class="anchor playable"> {{> audio_tag audio_file=key17}} </div>
+      <span id="pkey-80" class="playable"> {{> audio_tag audio_file=key16}} </span>
     </li>
   </ul>
  </div>

@@ -337,7 +337,6 @@ ul#piano li span:active {
   z-index: 90;
   margin-top: 10px;
   float: left;
-  position: fixed;
 }
 
 /* General styles for all menus */
@@ -349,7 +348,6 @@ ul#piano li span:active {
   background: #1D1D1D;
   top: 0;
   left: 0;
-  position: fixed;
   opacity: 0.8;
 }
 
