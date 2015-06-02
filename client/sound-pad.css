@@ -113,22 +113,26 @@
 /* Sidebar */
 
 #sidebar-wrapper {
-    background: #333333;
-    float: left;
-    margin-left: auto;
-    margin-right: auto;
-    margin: 30px;
-    height: 200px;
-    width: 200px;
-    border-style: solid;
-    border-color: black;
-    border-width: 1px;
-    font-family: 'Oxygen Mono', Tahoma, Arial, sans-serif;
+  z-index: 2000;
+  opacity: 1;
+  background: #333333;
+  margin: 30px;
+  height: 200px;
+  width: 200px;
+  border-width: 1px;
+  margin-top: 80px;
+  font-family: 'smallFont', Tahoma, Arial, sans-serif;
 }
 
 .sidebar-brand {
-    background: lightgray;
+  background-color: #E94418;
 }
+
+.sidebar-brand .text {
+  position: relative;
+  top: 50%;
+  text-align: left
+} 
 
 #keys, #drums {
     -webkit-animation:taufik 2s;
@@ -339,13 +343,14 @@ ul#piano li span:active {
   position: fixed;
 }
 
-.cbp-spmenu .sidemenu {
-  opacity: 1;
-}
-
 /* General styles for all menus */
+
 .cbp-spmenu {
+  z-index: 2000;
+  position: absolute;
   background: #1D1D1D;
+  top: 0;
+  left: 0;
   position: fixed;
   opacity: 0.6;
 }

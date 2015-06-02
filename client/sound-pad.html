@@ -4,10 +4,12 @@
 </head>
 
 <body class="cbp-smenu-push">
+
   <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left cbp-sp" id="cbp-spmenu-s1">
     <div class="sidemenu">
       {{> menu}}
     </div>
+    
   </nav>
   <div class="banner">
     <div class="main">
@@ -110,13 +112,12 @@
 
 
 <template name="menu">
-  <div class="container">
-    
-  </div>
     <div id="sidebar-wrapper">
       <ul class="sidebar-nav">
-        <li class="sidebar-brand" style="color:red" align="center">
-          INSTRUMENTS
+        <li class="sidebar-brand" style="color:white" align="center">
+          <div class="text">
+            INSTRUMENTS
+          </div>
         </li>
         <li id="drumcontainer" class="item" style="color:white"><span>Drums</span>
           <ul id="drums" style="display:none;">
