@@ -20,6 +20,93 @@
     src: url("/Fonts/bulletto_killa/bk.woff") format('woff');
 }
 
+.tracks-container {
+  margin: 100px auto 50px auto;
+  background-color: white;
+  height: 300px;
+  width: 50%;
+  float: left;
+  margin-left: 5%;
+}
+
+.tracks-container .recording h2 {
+  font-family: "mFont";
+  height: auto;
+  margin-left: 50px;
+  padding-top: 10px;
+  color: #E94418;
+  text-shadow: 0px 1px 0px rgba(255,255,255,.3), 0px -1px 0px rgba(128,128,128,.7);
+}
+
+.tracks-container .recording .tracks {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #DCDCDC;
+  background-color: #DCDCDC;
+  font-family: "thinFont";
+  color: black;
+  font-size: 18px;
+  margin-top: 20px;
+  height: 165px;
+  margin-left: 30px;
+  overflow: auto;
+}
+
+#play {
+  margin-left: 10px;
+  float:left;
+  padding-right: 10px;
+}
+
+.strip {
+  padding: 5px;
+  border-bottom-style: solid;
+  border-bottom: 1px solid white;
+
+}
+
+.load {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #DCDCDC;
+  font-family: "thinFont";
+  color: black;
+  padding-top: 4px;
+  height: 18px;
+  text-align: center;
+  font-size: 12px;
+  margin-left: 30px;
+  text-decoration: underline;
+}
+
+.tracks-container .recording .tracks .name{
+  padding-left: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.tracks .more {
+  margin-top: 10px;
+  width: 15px;
+  float: right;
+  border: none;
+  background: none;
+}
+
+.options {
+  float:right;
+}
+
+.options button {
+  width:20px;
+  height: 20px;
+}
+
+.more:hover {
+
+}
+
 
 .banner {
   width:100%;
@@ -83,15 +170,19 @@
   cursor: hand;
 }
 
+.instr_container {
+  width: 50%;
+  margin-right: 10%;
+  margin-left: 10%;
+}
+
 .button-container {
     width: 368px;
     height: 360px;
-    float: middle;
+/*    float: left;*/
     background: #2E2E2E;
     overflow-y: auto;
     margin-top: 100px;
-    margin-left: auto;
-    margin-right: auto;
     -webkit-animation:taufik 2s;
     -moz-animation:taufik 2s;
     animation:taufik 2s;

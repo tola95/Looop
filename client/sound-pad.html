@@ -27,21 +27,39 @@
     <div class="sidemenu">
       {{> menu}}
     </div>
-    <div>
-      <h4>My Recording</h4>
-      <ul id="myRecordings"></ul>
-    </div>
-    
   </nav>
+
+
 
   <button id="populate" onclick="populate()">Populate database</button>
 
   <button id="record">Record</button>
   <button id="stop">Stop</button>
 
-  {{> drum_buttons}}
+<div>
+  <div class="instr_container">
+    {{> drum_buttons}}
 
-  {{> keys}}
+    {{> keys}}
+  </div>
+
+  <div class="tracks-container">
+    <div class="recording">
+      <h2>Recordings</h2>
+      <div class="tracks">
+          {{> record_strip id="1" text="dummyyyyyyyyyyyyyy1"}}
+          {{> record_strip id="2" text="dummy2"}}
+          {{> record_strip id="3" text="dummy3"}}
+          {{> record_strip id="4" text="dummy4"}}
+          {{> record_strip id="5" text="dummy5"}}
+      </div>
+      <div type="button" class="load">
+          Load more
+      </div>
+    </div>
+  </div>
+
+</div>
   <script>
     var menuLeft = document.getElementById('cbp-spmenu-s1'),
         showLeft = document.getElementById('sidebar');
@@ -53,6 +71,23 @@
   </script>
 
 </body>
+
+<template name="record_strip">
+  <div class="strip" id={{id}}>
+    <button class="more">...</button>
+    <div class="options">
+      <button><input title="save" type="image" src="save.png" width="12px" height="12px"></button>
+      <button><input title="publish" type="image" src="globe.png" width="12px" height="12px"></button>
+      <button><input title="delete" type="image" src="delete.png" width="12px" height="12px"></button>
+
+    </div>
+      <input type="image" id="play" src="play.png" width="20px" height="20px">
+    <div class="name">
+      {{text}}
+    </div>
+    
+  </div>
+</template>
 
 
 <template name="drum_buttons">
