@@ -88,6 +88,17 @@ Template.soundpad_button.events({
   }
 });
 
+// function eventFire(el, etype){
+//   if (el.fireEvent) {
+//     el.fireEvent('on' + etype);
+
+//   } else {
+//     var evObj = document.createEvent('Events');
+//     evObj.initEvent(etype, true, false);
+//     el.dispatchEvent(evObj);
+//     console.log("here");
+//   }
+// }
 
 // Simulate button press on corresponding key press
 document.onkeydown = function(event) {
@@ -99,8 +110,6 @@ document.onkeydown = function(event) {
     }
   } else {
     var button = document.getElementById("pkey-" + key);
-    if(button)
-      button.className = button.className + " div.anchor:active";
   }
   if (button) {
     dispatchMouseEvent(button, 'mousedown', true, true);
