@@ -6,6 +6,8 @@ var STARTING_DRUM = "drum1",
     keycont = 0,
     audioController;
 
+Meteor.subscribe("userData");
+
 // Once the Sounds DB is ready, set the default drum and keyboard notes
 var soundsDB = Meteor.subscribe("sounds", function() {
   updateDrumSounds(getInstrumentSounds(STARTING_DRUM));
@@ -26,6 +28,16 @@ Template.body.events({
 getInstrumentSounds = function(instrument) {
   return Sounds.findOne({"instrument": instrument}).paths;
 }  
+
+// follow = function() {
+//   Meteor.call("follow", "JJ4siYboTGMHJ929B");
+//   Meteor.call("follow", "test");
+// }
+
+// publish = function() {
+//   Meteor.call("publishRecording", "test1");
+//   Meteor.call("publishRecording", "test2");
+// }
 
 
 Template.drum_buttons.helpers({

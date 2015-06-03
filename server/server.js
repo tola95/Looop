@@ -45,5 +45,17 @@ var addSound = function(name, paths) {
 }
 
 Meteor.publish("sounds", function() {
+	if (!Sounds) {
+		console.log("Sound not defined yet");
+	}
 	return Sounds.find();
+});
+
+Meteor.publish("userData", function () {
+  if (this.userId) {
+    return Meteor.users.find({_id: this.userId},
+                             {fields: {'followers': 1, 'following': 1, 'notifications': 1}});
+  } else {
+    this.ready();
+  }
 });
