@@ -3,6 +3,8 @@ AudioControl = function() {
 	this.gainNode = this.context.createGain();
 	this.recorder = new Recorder(this.gainNode, {workerPath: "/recorderWorker.js"});
 	this.sources = [];
+	var recIndex = 0;
+
 
 	var audio_elements = document.getElementsByTagName("AUDIO");
 	for (var i=0; i<audio_elements.length; i++) {
@@ -18,17 +20,9 @@ AudioControl = function() {
 
 	this.stopRecording = function() {
 		this.recorder.stop();
-		var control = this;
-		this.recorder.getBuffer(function(buffers) {
-			var newSource = control.context.createBufferSource();
-		    var newBuffer = control.context.createBuffer( 2, buffers[0].length, control.context.sampleRate );
-		    newBuffer.getChannelData(0).set(buffers[0]);
-		    newBuffer.getChannelData(1).set(buffers[1]);
-		    newSource.buffer = newBuffer;
+		this.createDownloadLink();
+		this.recorder.clear();
 
-		    newSource.connect( control.context.destination );
-		    newSource.start(0);
-		});
 	};
 
 	this.clearRecording = function() {

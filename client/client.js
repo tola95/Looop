@@ -19,6 +19,12 @@ window.onload = function() {
   audioController  = new AudioControl();
 }
 
+Template.body.events({
+  'click #record': function() { audioController.record(); },
+  'click #stop': function() { audioController.stopRecording(); }
+});
+
+
 // Retrieves the array of paths for the given instrument from the database
 getInstrumentSounds = function(instrument) {
   return Sounds.findOne({"instrument": instrument}).paths;
