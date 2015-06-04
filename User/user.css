@@ -1,0 +1,51 @@
+body {
+	background-image: blue;
+}
+
+#personaldetails {
+	float: left;
+	width: 300px;
+
+}
+
+#header {
+	height: 200px;
+	border: 1px solid #E94418;
+	margin-left: auto;
+	margin-right: auto;
+	z-index: 0;
+	background-image: url(Boi1da_Studio.png);
+}
+
+#photo {
+	width: 30%;
+	height: 40%;
+	border: 1px solid #E94418;
+	margin: 20px;
+	z-index: 1;
+	display: inline-block;
+	background-image: url(DSC_2266.JPG);
+
+}
+
+#bio {
+	border: 1px solid #E94418;
+	margin: 20 auto 20 auto;
+	z-index: 1;
+	font-family: 'Tahoma', Arial, sans-serif;
+	background: #333333;
+}
+
+#main {
+	border: 1px solid #E94418;
+	margin: 20 20 20 20;
+	float: left;
+	width: 800px;
+	height: 800px;
+	z-index: 1;
+	font-family: 'Tahoma', Arial, sans-serif;
+	background: #333333;
+
+}
+
+

@@ -1,7 +1,8 @@
 var STARTING_DRUM = "drum1",
     STARTING_KEYBOARD = "grandpiano",
+    DRUM_VIEW = "drum_buttons",
+    KEYBOARD_VIEW = "keys",
 
-    drumpadOn = true,
     drumcont = 0,
     keycont = 0,
     audioController;
@@ -18,12 +19,6 @@ window.onload = function() {
   audioController  = new AudioControl();
 }
 
-Template.body.events({
-  'click #record': function() { audioController.record(); },
-  'click #stop': function() { audioController.stopRecording(); }
-});
-
-
 // Retrieves the array of paths for the given instrument from the database
 getInstrumentSounds = function(instrument) {
   return Sounds.findOne({"instrument": instrument}).paths;
@@ -38,6 +33,23 @@ getInstrumentSounds = function(instrument) {
 //   Meteor.call("publishRecording", "test1");
 //   Meteor.call("publishRecording", "test2");
 // }
+
+
+Session.setDefault("activeInstrumentView", DRUM_VIEW);
+
+Template.home.helpers({
+  activeView: function () { return Session.get("activeInstrumentView"); }
+});
+
+Template.home.events({
+  'click #record': function() { audioController.record(); },
+  'click #stop': function() { audioController.stopRecording(); },
+  'click #sidebar-button': function(event) {
+    classie.toggle( event.target, 'active');
+    var menuLeft = document.getElementById('cbp-spmenu-s1')
+    classie.toggle( menuLeft, 'cbp-spmenu-open');
+  }
+});
 
 
 Template.drum_buttons.helpers({
@@ -67,11 +79,14 @@ Template.soundpad_button.events({
   }
 });
 
-
 // Simulate button press on corresponding key press
 document.onkeydown = function(event) {
+  if (event.target != document.getElementsByTagName("BODY")[0]) {
+    return;
+  }
+
   var key = event.keyCode;
-  if (drumpadOn) {
+  if (Session.get("activeInstrumentView") ==  DRUM_VIEW) {
     var button = document.getElementById("key-" + key);
     if(button) {
       button.className = button.className + " active-button";
@@ -87,14 +102,18 @@ document.onkeydown = function(event) {
 };
  
 document.onkeyup = function(event) {
+  if (event.target != document.getElementsByTagName("BODY")[0]) {
+    return;
+  }
+
   var key = event.keyCode;
-  if (drumpadOn) {
+  if (Session.get("activeInstrumentView") ==  DRUM_VIEW) {
     var button = document.getElementById("key-" + key);
   } else {
     var button = document.getElementById("pkey-" + key);
   }
   if (button) {
-    if (drumpadOn) {
+    if (Session.get("activeInstrumentView") ==  DRUM_VIEW) {
       button.className = "";
     } else {
     button.className = "anchor playable";
@@ -109,16 +128,13 @@ Accounts.ui.config({
 
 
 // Respond to events in the instrument menu
-Template.menu.events = {
+Template.instrument_menu.events = {
   'click .drum_options ': function() {
-    document.getElementById("buttoncontainer").style.display = "block";
-    document.getElementById("p-wrapper").style.display = "none";
+    Session.set("activeInstrumentView", DRUM_VIEW);
   },
 
   'click .keyboard_options': function() {
-    drumpadOn = false;
-    document.getElementById("p-wrapper").style.display = "block";
-    document.getElementById("buttoncontainer").style.display = "none";
+    Session.set("activeInstrumentView", KEYBOARD_VIEW);
   },
 
   'click #drumcontainer': function() {
