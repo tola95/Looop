@@ -5,3 +5,7 @@ Router.route('/', function () {
 Router.route('/timeline', function () {
   this.render('profile');
 });
+
+Router.route('/activity', function() {
+	this.render('activity');
+});

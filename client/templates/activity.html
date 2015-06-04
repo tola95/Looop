@@ -1,0 +1,24 @@
+<template name="activity">
+{{> banner }}
+
+<a href="/">Home</a>
+
+{{#each activities}}
+	{{> activityCard }}
+{{/each}}
+
+</template>
+
+<template name="activityCard">
+<div class="activity-card">
+	<img class="profile-photo" src="/blobbyleft.png" alt="Profile photo">
+	<span class="card-contents">
+		<div class="username">Username. {{text}}</div>
+		<div class="recording">
+			<audio controls src="sounds/drums/Crash-01.wav">
+				Your browser does not support the <code>audio</code> element.
+			</audio>
+		</div>
+	</span>
+</div>
+</template>
