@@ -1,7 +1,8 @@
 var STARTING_DRUM = "drum1",
     STARTING_KEYBOARD = "grandpiano",
-    // playing = true,
-    drumpadOn = true,
+    DRUM_VIEW = "drum_buttons",
+    KEYBOARD_VIEW = "keys",
+
     drumcont = 0,
     keycont = 0,
     audioController;
@@ -27,38 +28,21 @@ getInstrumentSounds = function(instrument) {
   return Sounds.findOne({"instrument": instrument}).paths;
 }  
 
+Session.setDefault("activeInstrumentView", DRUM_VIEW);
 
-populate = function() {
-  var instruments = ["drum1", "drum2", "grandpiano", "churchorgan"];
-  var instrumentSounds = {
-    "drum1": ["piano/piano-C4", "piano/piano-Db4", "piano/piano-D4", "piano/piano-Eb4", "piano/piano-E4", 
-      "piano/piano-F4", "piano/piano-Gb4", "piano/piano-G4", "piano/piano-Ab4"],
+Template.home.helpers({
+  activeView: function () { return Session.get("activeInstrumentView"); }
+});
 
-    "drum2": ["piano/piano-C3", "piano/piano-Db3", "piano/piano-D3", "piano/piano-Eb3", "piano/piano-E3", 
-      "piano/piano-F3", "piano/piano-Gb3", "piano/piano-G3", "piano/piano-Ab3"],
-
-    "grandpiano": ["piano/piano-C4", "piano/piano-Db4", "piano/piano-D4", "piano/piano-Eb4", "piano/piano-E4", 
-      "piano/piano-F4", "piano/piano-Gb4", "piano/piano-G4", "piano/piano-Ab4", "piano/piano-A5", 
-      "piano/piano-Bb5", "piano/piano-B5", "piano/piano-C5", "piano/piano-Db5", "piano/piano-D5", 
-      "piano/piano-Eb5", "piano/piano-E5"],
-
-    "churchorgan": ["piano/piano-C4", "piano/piano-Db4", "piano/piano-D4", "piano/piano-Eb4", "piano/piano-E4", 
-      "piano/piano-F4", "piano/piano-Gb4", "piano/piano-G4", "piano/piano-Ab4", "piano/piano-A5", 
-      "piano/piano-Bb5", "piano/piano-B5", "piano/piano-C5", "piano/piano-Db5", "piano/piano-D5", 
-      "piano/piano-Eb5", "piano/piano-E5"]
-  };
-
-  for (instrument in instrumentSounds) {
-    for (var i=0; i<instrumentSounds[instrument].length; i++) {
-      instrumentSounds[instrument][i] = "/sounds/" + instrumentSounds[instrument][i] + ".wav";
-    }
+Template.home.events({
+  'click #record': function() { audioController.record(); },
+  'click #stop': function() { audioController.stopRecording(); },
+  'click #sidebar-button': function(event) {
+    classie.toggle( event.target, 'active');
+    var menuLeft = document.getElementById('cbp-spmenu-s1')
+    classie.toggle( menuLeft, 'cbp-spmenu-open');
   }
-
-  for (var i=0; i<instruments.length; i++) {
-    var instrument = instruments[i];
-    Meteor.call("addSound", instrument, instrumentSounds[instrument]);
-  }
-};
+});
 
 
 Template.drum_buttons.helpers({
@@ -88,49 +72,44 @@ Template.soundpad_button.events({
   }
 });
 
-// document.onclick = function(event) {
-//   var t = event.target;
-//   console.log(t);
-//   if($(t).attr("id") != "login-dropdown-list" && t.textContent != "Sign in ▾") {
-//     document.getElementsByClassName('login-close-text')[0].click();
-//     playing = true;
-//   } else {
-//     playing = false;
-//   }
-// };
-
 // Simulate button press on corresponding key press
 document.onkeydown = function(event) {
-  if (playing){
-    var key = event.keyCode;
-    if (drumpadOn) {
-      var button = document.getElementById("key-" + key);
-      if(button) {
-        button.className = button.className + " active-button";
-      }
-    } else {
-      var button = document.getElementById("pkey-" + key);
+  if (event.target != document.getElementsByTagName("BODY")[0]) {
+    return;
+  }
+
+  var key = event.keyCode;
+  if (Session.get("activeInstrumentView") ==  DRUM_VIEW) {
+    var button = document.getElementById("key-" + key);
+    if(button) {
+      button.className = button.className + " active-button";
     }
-    if (button) {
-      dispatchMouseEvent(button, 'mousedown', true, true);
-    }
+  } else {
+    var button = document.getElementById("pkey-" + key);
+    if(button)
+      button.className = button.className + " div.anchor:active";
+  }
+  if (button) {
+    dispatchMouseEvent(button, 'mousedown', true, true);
   }
 };
  
 document.onkeyup = function(event) {
-  if(playing) {
-    var key = event.keyCode;
-    if (drumpadOn) {
-      var button = document.getElementById("key-" + key);
+  if (event.target != document.getElementsByTagName("BODY")[0]) {
+    return;
+  }
+
+  var key = event.keyCode;
+  if (Session.get("activeInstrumentView") ==  DRUM_VIEW) {
+    var button = document.getElementById("key-" + key);
+  } else {
+    var button = document.getElementById("pkey-" + key);
+  }
+  if (button) {
+    if (Session.get("activeInstrumentView") ==  DRUM_VIEW) {
+      button.className = "";
     } else {
-      var button = document.getElementById("pkey-" + key);
-    }
-    if (button) {
-      if (drumpadOn) {
-        button.className = "";
-      } else {
-      button.className = "anchor playable";
-      }
+    button.className = "anchor playable";
     }
   }
 };
@@ -142,16 +121,13 @@ Accounts.ui.config({
 
 
 // Respond to events in the instrument menu
-Template.menu.events = {
+Template.instrument_menu.events = {
   'click .drum_options ': function() {
-    document.getElementById("buttoncontainer").style.display = "block";
-    document.getElementById("p-wrapper").style.display = "none";
+    Session.set("activeInstrumentView", DRUM_VIEW);
   },
 
   'click .keyboard_options': function() {
-    drumpadOn = false;
-    document.getElementById("p-wrapper").style.display = "block";
-    document.getElementById("buttoncontainer").style.display = "none";
+    Session.set("activeInstrumentView", KEYBOARD_VIEW);
   },
 
   'click #drumcontainer': function() {

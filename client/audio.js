@@ -25,23 +25,7 @@ AudioControl = function() {
 
 	};
 
-	this.createDownloadLink = function() {
-		this.recorder.exportWAV(function(blob) {
-			var url = URL.createObjectURL(blob);
-			var li = document.createElement('li');
-			var au = document.createElement('audio');
-			var hf = document.createElement('a');
-
-			au.controls = true;
-			au.src = url;
-			hf.href = url;
-			hf.download = "myRecording" + ((recIndex<10)?"0":"") + recIndex + "_" + new Date().toISOString() + '.wav';
-			recIndex++;
-			hf.innerHTML = hf.download;
-			li.appendChild(au);
-			li.appendChild(hf);
-			myRecordings.appendChild(li);
-		});
-	}
-
+	this.clearRecording = function() {
+		this.recorder.clear();
+	};
 }

@@ -310,7 +310,6 @@ a:hover {
 
 /* Piano Wrapper */
 #p-wrapper {
-  display: none;
   margin-top: 100px;
   float: middle;
   background:#000;
@@ -452,7 +451,22 @@ ul#piano li span:active {
   to {opacity:1;}
 }
 
-#sidebar {
+.login {
+  float: right;
+  width: 250px;
+  margin-top: 15px;
+  margin-right: 20px;
+}
+
+#login-buttons {
+  width: 250px;
+}
+
+.login a {
+  float: right;
+}
+
+#sidebar-button {
   z-index: 90;
   margin-top: 10px;
   float: left;

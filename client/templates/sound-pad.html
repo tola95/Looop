@@ -1,37 +1,18 @@
 <head>
   <title>Loop</title>
-
 </head>
 
-<body class="cbp-smenu-push">
-  <div class="banner">
-    <div class="main">
-      <section>
-        <input type="image" id="sidebar" src="menu_icon.png" width="35px" height="35px">
-      </section>
-    </div>
-    <div class="inner-banner">
-      <div class="notif">
-        Notifications
-      </div>
-      <div class="login">
-        {{> loginButtons}}
-      </div>
-    </div>
-    <div class="logo">
-      <h1>Loop</h1>
-    </div>
-  </div>
+<template name="home">
+<body>
+  {{> banner }}
 
+  <div class="cbp-smenu-push">
   <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left cbp-sp" id="cbp-spmenu-s1">
     <div class="sidemenu">
-      {{> menu}}
+      {{> instrument_menu}}
     </div>
   </nav>
-
-
-
-  <button id="populate" onclick="populate()">Populate database</button>
+  </div>
 
   <button id="record">Record</button>
   <button id="stop">Stop</button>
@@ -62,17 +43,9 @@
 </div>
 
 </div>
-  <script>
-    var menuLeft = document.getElementById('cbp-spmenu-s1'),
-        showLeft = document.getElementById('sidebar');
-
-    showLeft.onclick = function() {
-      classie.toggle( this, 'active');
-      classie.toggle( menuLeft, 'cbp-spmenu-open');
-    }
-  </script>
-
+{{> Template.dynamic template=activeView }}
 </body>
+</template>
 
 <template name="record_strip">
   <div class="strip" id={{id}} title={{text}}>
@@ -155,7 +128,7 @@
 </template>
 
 
-<template name="menu">
+<template name="instrument_menu">
     <div id="sidebar-wrapper">
       <ul class="sidebar-nav">
         <li class="sidebar-brand" style="color:white" align="center">
