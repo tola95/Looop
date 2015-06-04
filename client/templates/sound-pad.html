@@ -4,7 +4,7 @@
 
 <template name="home">
 <body>
-  {{> banner }}
+  {{> banner homePage=true}}
 
   <div class="cbp-smenu-push">
   <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left cbp-sp" id="cbp-spmenu-s1">
@@ -16,6 +16,10 @@
 
   <button id="record">Record</button>
   <button id="stop">Stop</button>
+
+  <a href="/activity">Activity</a>
+
+  {{> Template.dynamic template=activeView }}
 
 <div>
   <div class="big-cont">
