@@ -34,5 +34,4 @@ AudioControl = function() {
 	this.clearRecording = function() {
 		this.recorder.clear();
 	};
-
 }
