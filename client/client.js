@@ -1,6 +1,6 @@
 var STARTING_DRUM = "drum1",
     STARTING_KEYBOARD = "grandpiano",
-    playing = true,
+    // playing = true,
     drumpadOn = true,
     drumcont = 0,
     keycont = 0,
@@ -88,9 +88,16 @@ Template.soundpad_button.events({
   }
 });
 
-$('html').click(function() {
-
-});
+// document.onclick = function(event) {
+//   var t = event.target;
+//   console.log(t);
+//   if($(t).attr("id") != "login-dropdown-list" && t.textContent != "Sign in ▾") {
+//     document.getElementsByClassName('login-close-text')[0].click();
+//     playing = true;
+//   } else {
+//     playing = false;
+//   }
+// };
 
 // Simulate button press on corresponding key press
 document.onkeydown = function(event) {

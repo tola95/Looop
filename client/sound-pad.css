@@ -24,9 +24,11 @@
   margin: 100px auto 50px auto;
   background-color: white;
   height: 300px;
-  width: 50%;
-  float: left;
-  margin-left: 5%;
+  width: 38%;
+  display: inline-block;
+  float: right;
+  margin-right: 20px;
+/*  float: left;*/
 }
 
 .tracks-container .recording h2 {
@@ -72,7 +74,11 @@
   visibility: visible;
 }
 
-.load {
+.big-cont {
+  width: 100%;
+}
+
+.tracks-container .recording .load {
   border-style: solid;
   border-width: 1px;
   border-color: #DCDCDC;
@@ -169,18 +175,21 @@
 }
 
 .instr_container {
-  width: 50%;
-  margin-right: 10%;
-  margin-left: 10%;
+/*  width: 50%;*/
+  width: 60%;
+  display: inline-block;
+  /*margin-right: 10%;
+  margin-left: 10%;*/
 }
 
 .button-container {
     width: 368px;
     height: 360px;
-/*    float: left;*/
     background: #2E2E2E;
     overflow-y: auto;
     margin-top: 100px;
+    margin-right: auto;
+    margin-left: auto; 
     -webkit-animation:taufik 2s;
     -moz-animation:taufik 2s;
     animation:taufik 2s;
