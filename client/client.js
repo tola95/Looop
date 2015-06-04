@@ -1,6 +1,6 @@
 var STARTING_DRUM = "drum1",
     STARTING_KEYBOARD = "grandpiano",
-
+    playing = true,
     drumpadOn = true,
     drumcont = 0,
     keycont = 0,
@@ -88,46 +88,42 @@ Template.soundpad_button.events({
   }
 });
 
-// function eventFire(el, etype){
-//   if (el.fireEvent) {
-//     el.fireEvent('on' + etype);
+$('html').click(function() {
 
-//   } else {
-//     var evObj = document.createEvent('Events');
-//     evObj.initEvent(etype, true, false);
-//     el.dispatchEvent(evObj);
-//     console.log("here");
-//   }
-// }
+});
 
 // Simulate button press on corresponding key press
 document.onkeydown = function(event) {
-  var key = event.keyCode;
-  if (drumpadOn) {
-    var button = document.getElementById("key-" + key);
-    if(button) {
-      button.className = button.className + " active-button";
+  if (playing){
+    var key = event.keyCode;
+    if (drumpadOn) {
+      var button = document.getElementById("key-" + key);
+      if(button) {
+        button.className = button.className + " active-button";
+      }
+    } else {
+      var button = document.getElementById("pkey-" + key);
     }
-  } else {
-    var button = document.getElementById("pkey-" + key);
-  }
-  if (button) {
-    dispatchMouseEvent(button, 'mousedown', true, true);
+    if (button) {
+      dispatchMouseEvent(button, 'mousedown', true, true);
+    }
   }
 };
  
 document.onkeyup = function(event) {
-  var key = event.keyCode;
-  if (drumpadOn) {
-    var button = document.getElementById("key-" + key);
-  } else {
-    var button = document.getElementById("pkey-" + key);
-  }
-  if (button) {
+  if(playing) {
+    var key = event.keyCode;
     if (drumpadOn) {
-      button.className = "";
+      var button = document.getElementById("key-" + key);
     } else {
-    button.className = "anchor playable";
+      var button = document.getElementById("pkey-" + key);
+    }
+    if (button) {
+      if (drumpadOn) {
+        button.className = "";
+      } else {
+      button.className = "anchor playable";
+      }
     }
   }
 };

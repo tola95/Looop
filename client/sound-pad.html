@@ -1,5 +1,5 @@
 <head>
-  <title>Sound Pad</title>
+  <title>Loop</title>
 
 </head>
 
@@ -73,13 +73,11 @@
 </body>
 
 <template name="record_strip">
-  <div class="strip" id={{id}}>
-    <button class="more">...</button>
+  <div class="strip" id={{id}} title={{text}}>
     <div class="options">
-      <button><input title="save" type="image" src="save.png" width="12px" height="12px"></button>
-      <button><input title="publish" type="image" src="globe.png" width="12px" height="12px"></button>
-      <button><input title="delete" type="image" src="delete.png" width="12px" height="12px"></button>
-
+      <button><img title="save" src="save.png" width="12px" height="12px;"></button>
+      <button><img title="publish" src="globe.png" width="12px" height="12px"></button>
+      <button><img title="delete" src="delete.png" width="12px" height="12px"></button>
     </div>
       <input type="image" id="play" src="play.png" width="20px" height="20px">
     <div class="name">
@@ -160,22 +158,24 @@
       <ul class="sidebar-nav">
         <li class="sidebar-brand" style="color:white" align="center">
           <div class="text">
-            INSTRUMENTS
+            <h1>INSTRUMENTS</h1>
           </div>
         </li>
-        <li id="drumcontainer" class="item" style="color:white"><span>Drums</span>
-          <ul id="drums" style="display:none;">
-            <button class="drum_options" id="drum1">Drum 1</button>
-            <button class="drum_options" id="drum2">Drum 2</button>
-          </ul>
-        </li>
+        <div class="instruments">
+          <li id="drumcontainer" class="item" style="color:white"><span>Drums</span>
+            <ul id="drums" style="display:none;">
+              <button class="drum_options" id="drum1">Drum 1</button>
+              <button class="drum_options" id="drum2">Drum 2</button>
+            </ul>
+          </li>
        
-        <li id="keycontainer" class="item" style="color:white"><span>Keys</span>
-          <ul id="keys" style="display:none;">
-            <button class="keyboard_options" id="grandpiano">Grand Piano</button>
-            <button class="keyboard_options" id="churchorgan">Church Organ</button>
-          </ul>
-        </li>
+          <li id="keycontainer" class="item" style="color:white"><span>Keys</span>
+            <ul id="keys" style="display:none;">
+              <button class="keyboard_options" id="grandpiano">Grand Piano</button>
+              <button class="keyboard_options" id="churchorgan">Church Organ</button>
+            </ul>
+          </li>
+        </div>
   
       </ul>
     </div>

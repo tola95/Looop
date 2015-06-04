@@ -62,7 +62,14 @@
   padding: 5px;
   border-bottom-style: solid;
   border-bottom: 1px solid white;
+}
 
+.strip:hover {
+  background-color: #F6B4A3;
+}
+
+.strip:hover .options {
+  visibility: visible;
 }
 
 .load {
@@ -86,25 +93,16 @@
   overflow: hidden;
 }
 
-.tracks .more {
-  margin-top: 10px;
-  width: 15px;
-  float: right;
-  border: none;
-  background: none;
-}
-
 .options {
   float:right;
+  margin-right: 5px;
+  visibility: hidden;
 }
 
 .options button {
   width:20px;
   height: 20px;
-}
-
-.more:hover {
-
+  cursor: pointer;
 }
 
 
@@ -209,8 +207,6 @@
     text-shadow: 0px 1px 0px rgba(255, 255, 255, .5);
 }
 
-
-
 .button-container button:active, .button-container .active-button{
     padding: 20px;
     position:relative;
@@ -239,22 +235,35 @@
 }
 
 .sidebar-brand {
-  background-color: #E94418;
   margin: 10px;
 }
 
 .sidebar-brand .text {
+  color: #E94418;
   position: relative;
+  margin-top: 20px;
   top: 50%;
   text-align: left
 } 
 
 #keys, #drums {
-    -webkit-animation:taufik 2s;
-    -moz-animation:taufik 2s;
-    animation:taufik 2s;
+  padding: 5px;
+  -webkit-animation:taufik 2s;
+  -moz-animation:taufik 2s;
+  animation:taufik 2s;
 }
 
+.instruments {
+  padding: 5px;
+}
+
+#drumcontainer {
+  padding: 5px;
+}
+
+#keycontainer {
+  padding: 5px;
+}
 
 /* Keyboard */
 
@@ -433,8 +442,6 @@ ul#piano li span:active {
   from {opacity:0;}
   to {opacity:1;}
 }
-
-
 
 #sidebar {
   z-index: 90;
