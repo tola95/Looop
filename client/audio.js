@@ -20,7 +20,7 @@ AudioControl = function() {
 
 	this.stopRecording = function() {
 		this.recorder.stop();
-		this.createDownloadLink();
+		//this.createDownloadLink();
 		this.recorder.clear();
 
 	};
