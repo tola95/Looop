@@ -1,4 +1,4 @@
-Recording = function(name, user, blob){
+Recording = function(name, user, blob, audioContext){
 	this.name = name;
 	this.user = user;
 	this.blob = blob;
