@@ -88,12 +88,12 @@ document.onkeydown = function(event) {
   if (Session.get("activeInstrumentView") ==  DRUM_VIEW) {
     var button = document.getElementById("key-" + key);
     if(button) {
-      button.className = button.className + " active-button";
+      classie.addClass(button, "active-button");
     }
   } else {
     var button = document.getElementById("pkey-" + key);
     if(button)
-      button.className = button.className + " div.anchor:active";
+      classie.addClass(button, "key-pressed");
   }
   if (button) {
     dispatchMouseEvent(button, 'mousedown', true, true);
@@ -113,9 +113,9 @@ document.onkeyup = function(event) {
   }
   if (button) {
     if (Session.get("activeInstrumentView") ==  DRUM_VIEW) {
-      button.className = "";
+      classie.removeClass(button, "active-button");
     } else {
-    button.className = "anchor playable";
+      classie.removeClass(button, "key-pressed");
     }
   }
 };
