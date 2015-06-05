@@ -14,8 +14,7 @@ var soundsDB = Meteor.subscribe("sounds", function() {
 });
 
 window.onload = function() {
-  audioController  = new AudioControl();
-}
+  audioController  = new AudioControl();}
 
 Template.body.events({
   'click #record': function() { audioController.record(); },
@@ -45,6 +44,9 @@ Template.home.events({
   'click #stop': function() { audioController.stopRecording(); },
   'click #sidebar-button': function(event) {
     toggle_sidebar();
+  },
+  'click #stop': function() {
+    updateSaveRecordingVisibility("block");
   }
 });
 
@@ -215,3 +217,23 @@ Template.keys.events({
     audio.play();
   }
 });
+
+
+Template.save_recording.events({
+  'click button': function() {
+    updateSaveRecordingVisibility("none");
+    document.getElementById("recording-name-input").value = "Untitled";
+  }
+});
+
+/* Sets the display style of the set recordings box. 
+  Must be passed "block" or "none" */
+updateSaveRecordingVisibility = function(visibility) {
+  elems = document.getElementsByClassName("save-recording");
+  for (var i=0; i<elems.length; i++) {
+      elems[i].style.display = visibility;
+  }
+  if (visibility == "block") {
+    document.getElementById("recording-name-input").select();
+  }  
+}

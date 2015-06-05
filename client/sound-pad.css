@@ -22,6 +22,10 @@
 
 /* Standard gray color: #D8D8D8 */ 
 
+body {
+  font-family: "thinFont", Helvetica, sans-serif;
+}
+
 button {
   -moz-box-shadow:inset 0px 4px 5px 0px #878787;
   -webkit-box-shadow:inset 0px 4px 5px 0px #878787;
@@ -603,4 +607,54 @@ ul#piano li span:active {
   .cbp-spmenu-push-toright {
     left: 280px;
   }
+}
+
+
+#save-recording-background {
+  position: absolute;
+  background-color: rgba(29,29,29, .7);
+  width: 100%;
+  height: 100%;
+  top: 0;
+}
+
+#save-recording-wrapper {
+  border: solid;
+  background-color: rgba(255, 255, 255, 1);
+  max-width: 300px;
+  height: 100px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -150px;
+  padding: 15px 20px;
+  text-align: center;
+  vertical-align: middle;
+  box-shadow: 5px 5px 3px #222;
+}
+
+.save-recording {
+  display: none;
+}
+
+.save-recording-name {
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+.save-recording-name input {
+  line-height: 24px;
+  font-size: 12px;
+}
+
+.save-recording-name h3 {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+#save-recording-okay {
+  margin-left: 20px;
+  background-color: #FF8F72;
+  border-width: 2px;
 }

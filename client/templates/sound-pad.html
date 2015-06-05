@@ -38,6 +38,7 @@
     </div>
   </div>
 
+{{> save_recording }}
 </template>
 
 <template name="record_strip">
@@ -122,29 +123,43 @@
 
 
 <template name="instrument_menu">
-    <div id="sidebar-wrapper">
-      <ul class="sidebar-nav">
-        <li class="sidebar-brand" style="color:white" align="center">
-          <div class="text">
-            <h1>INSTRUMENTS</h1>
-          </div>
-        </li>
-        <div class="instruments">
-          <li id="drumcontainer" class="item" style="color:white"><span>Drums</span>
-            <ul id="drums" style="display:none;">
-              <button class="drum_options" id="drum1">Drum 1</button>
-              <button class="drum_options" id="drum2">Drum 2</button>
-            </ul>
-          </li>
-       
-          <li id="keycontainer" class="item" style="color:white"><span>Keys</span>
-            <ul id="keys" style="display:none;">
-              <button class="keyboard_options" id="grandpiano">Grand Piano</button>
-              <button class="keyboard_options" id="churchorgan">Church Organ</button>
-            </ul>
-          </li>
+  <div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+      <li class="sidebar-brand" style="color:white" align="center">
+        <div class="text">
+          <h1>INSTRUMENTS</h1>
         </div>
-  
-      </ul>
+      </li>
+      <div class="instruments">
+        <li id="drumcontainer" class="item" style="color:white"><span>Drums</span>
+          <ul id="drums" style="display:none;">
+            <button class="drum_options" id="drum1">Drum 1</button>
+            <button class="drum_options" id="drum2">Drum 2</button>
+          </ul>
+        </li>
+     
+        <li id="keycontainer" class="item" style="color:white"><span>Keys</span>
+          <ul id="keys" style="display:none;">
+            <button class="keyboard_options" id="grandpiano">Grand Piano</button>
+            <button class="keyboard_options" id="churchorgan">Church Organ</button>
+          </ul>
+        </li>
+      </div>
+
+    </ul>
+  </div>
+</template>
+
+
+<template name="save_recording">
+  <div class="save-recording" id="save-recording-background">
+    <div class="save-recording" id="save-recording-wrapper">
+      <div class="save-recording-name">
+        <h3>Name:</h3> 
+        <input id="recording-name-input" type="text" name="track_name" value="Untitled" size=30 autofocus>
+      </div>
+      <button id="save-recording-cancel">Cancel</button>
+      <button id="save-recording-okay">Okay</button>
     </div>
-  </template>
+  </div>
+</template>
