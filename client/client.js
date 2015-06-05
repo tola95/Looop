@@ -222,8 +222,27 @@ Template.keys.events({
 Template.save_recording.events({
   'click button': function() {
     updateSaveRecordingVisibility("none");
-    document.getElementById("recording-name-input").value = "Untitled";
+    //document.getElementById("recording-name-input").value = "Untitled";
+  },
+
+  'click #save-recording-okay': function(){
+    var name = document.getElementById('recording-name-input').value;
+    audioController.recorder.getBuffer(function (blob){
+      if (Meteor.userId != null){
+        var newRecording = createNewRecordingObject(name, Meteor.userID, blob, audioController);
+        //add to the database
+      } else {
+        var newRecording = createNewRecordingObject(name, Meteor.userID, blob, audioController);
+        //add to the session Recording Object array
+      }
+    });
+    audioController.clearRecording();
+  },
+
+  'click #save-recording-cancel': function() {
+    audioController.clearRecording();
   }
+
 });
 
 /* Sets the display style of the set recordings box. 
@@ -236,4 +255,8 @@ updateSaveRecordingVisibility = function(visibility) {
   if (visibility == "block") {
     document.getElementById("recording-name-input").select();
   }  
+}
+
+createNewRecordingObject = function(name, user, blob, context){
+  return new Recording(name, user, blob, context);
 }
