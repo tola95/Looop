@@ -3,7 +3,6 @@
 </head>
 
 <template name="home">
-<body>
   {{> banner }}
 
   <div class="cbp-smenu-push">
@@ -17,32 +16,28 @@
   <button id="record">Record</button>
   <button id="stop">Stop</button>
 
-<div>
   <div class="big-cont">
     <div class="instr_container">
       {{> Template.dynamic template=activeView }}
     </div>
 
-  <div class="tracks-container">
-    <div class="recording">
-      <h2>Recordings</h2>
-      <div class="tracks">
-          {{> record_strip id="1" text="dummyyyyyyyyyyyyyy1"}}
-          {{> record_strip id="2" text="dummy2"}}
-          {{> record_strip id="3" text="dummy3"}}
-          {{> record_strip id="4" text="dummy4"}}
-          {{> record_strip id="5" text="dummy5"}}
-      </div>
-      <div type="button" class="load">
-          Load more
+    <div class="tracks-container">
+      <div class="recording">
+        <h2>Recordings</h2>
+        <div class="tracks">
+            {{> record_strip id="1" text="dummyyyyyyyyyyyyyy1"}}
+            {{> record_strip id="2" text="dummy2"}}
+            {{> record_strip id="3" text="dummy3"}}
+            {{> record_strip id="4" text="dummy4"}}
+            {{> record_strip id="5" text="dummy5"}}
+        </div>
+        <div type="button" class="load">
+            Load more
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-</div>
-
-</body>
 </template>
 
 <template name="record_strip">

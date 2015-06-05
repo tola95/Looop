@@ -34,13 +34,17 @@ Template.home.helpers({
   activeView: function () { return Session.get("activeInstrumentView"); }
 });
 
+toggle_sidebar = function() {
+  classie.toggle( event.target, 'active');
+    var menuLeft = document.getElementById('cbp-spmenu-s1')
+    classie.toggle( menuLeft, 'cbp-spmenu-open');
+}
+
 Template.home.events({
   'click #record': function() { audioController.record(); },
   'click #stop': function() { audioController.stopRecording(); },
   'click #sidebar-button': function(event) {
-    classie.toggle( event.target, 'active');
-    var menuLeft = document.getElementById('cbp-spmenu-s1')
-    classie.toggle( menuLeft, 'cbp-spmenu-open');
+    toggle_sidebar();
   }
 });
 
@@ -124,10 +128,12 @@ Accounts.ui.config({
 Template.instrument_menu.events = {
   'click .drum_options ': function() {
     Session.set("activeInstrumentView", DRUM_VIEW);
+    toggle_sidebar();
   },
 
   'click .keyboard_options': function() {
     Session.set("activeInstrumentView", KEYBOARD_VIEW);
+    toggle_sidebar();
   },
 
   'click #drumcontainer': function() {
