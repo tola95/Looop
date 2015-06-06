@@ -13,14 +13,32 @@ var soundsDB = Meteor.subscribe("sounds", function() {
   updatePianoSounds(getInstrumentSounds(STARTING_KEYBOARD));
 });
 
+Meteor.subscribe("userData", function () {
+    if (Meteor.userId()) {
+      console.log(Meteor.users.findOne({_id: Meteor.userId()}).bio);
+      var bio = Meteor.users.findOne({_id: Meteor.userId()}).bio;
+      var fullname = Meteor.users.findOne({_id: Meteor.userId()}).fullname;
+      
+      if (bio) {
+        document.getElementById('description').innerHTML = bio;
+      }
+      if (fullname) {
+        document.getElementById('fullname').innerHTML = fullname;
+      }
+    }
+});
+
 window.onload = function() {
   audioController  = new AudioControl();}
 
 Template.body.events({
   'click #record': function() { audioController.record(); },
-  'click #stop': function() { audioController.stopRecording(); }
+  'click #stop': function() { audioController.stopRecording(); },
+  'click #me': function(event) {
+    event.preventDefault();
+    window.open(event.target.href, '_blank');
+  }
 });
-
 
 // Retrieves the array of paths for the given instrument from the database
 getInstrumentSounds = function(instrument) {
@@ -125,7 +143,6 @@ Accounts.ui.config({
   passwordSignupFields: "USERNAME_ONLY"
 });
 
-
 // Respond to events in the instrument menu
 Template.instrument_menu.events = {
   'click .drum_options ': function() {
@@ -218,6 +235,46 @@ Template.keys.events({
   }
 });
 
+Template.main.events = {
+   'click #timelinebutton' : function() {
+      document.getElementById('recordings').style.display = "none";
+      document.getElementById('timeline').style.display = "block";
+   },
+
+   'click #recordingsbutton' : function() {
+      document.getElementById('recordings').style.display = "block";
+      document.getElementById('timeline').style.display = "none";
+   }
+};
+
+Template.bio.events = {
+  'click #update' : function() {
+
+    var description = document.getElementById("desc_text").value;
+    var fullname = document.getElementById("fname_text").value;
+
+    if (Meteor.userId()) {
+      Meteor.users.update({
+        _id: Meteor.userId()
+        }, {
+          $set: {"bio": description,
+                 "fullname": fullname } 
+      })
+    }
+
+    document.getElementById('description').innerHTML = Meteor.users.findOne({_id: Meteor.userId()}).bio;
+    document.getElementById('fullname').innerHTML = Meteor.users.findOne({_id: Meteor.userId()}).fullname;
+
+    document.getElementById("desc_text").value = "";
+    document.getElementById("fname_text").value = "";
+  },
+
+  'click #addProfilePic' : function() {
+
+
+  }
+};
+
 
 //Session.setDefault("sessionRecordings", new Array());
 var recentRecordings = new Array();
@@ -267,6 +324,7 @@ updateSaveRecordingVisibility = function(visibility) {
     document.getElementById("recording-name-input").select();
   }  
 }
+<<<<<<< HEAD
 
 createNewRecordingObject = function(name, user, blob, context){
   return new Recording(name, user, blob, context);
@@ -287,3 +345,5 @@ Template.body.helpers({
 // Template.record_strip.helpers({
   
 // });
+=======
+>>>>>>> 9ad89ca3e3b531a7a6d9f0f5557f45b676f94624
