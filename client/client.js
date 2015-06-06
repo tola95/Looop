@@ -219,6 +219,9 @@ Template.keys.events({
 });
 
 
+//Session.setDefault("sessionRecordings", new Array());
+var recentRecordings = new Array();
+
 Template.save_recording.events({
   'click button': function() {
     updateSaveRecordingVisibility("none");
@@ -228,12 +231,20 @@ Template.save_recording.events({
   'click #save-recording-okay': function(){
     var name = document.getElementById('recording-name-input').value;
     audioController.recorder.getBuffer(function (blob){
-      if (Meteor.userId != null){
+      if (Meteor.userId() != null){
         var newRecording = createNewRecordingObject(name, Meteor.userID, blob, audioController);
         //add to the database
       } else {
         var newRecording = createNewRecordingObject(name, Meteor.userID, blob, audioController);
-        //add to the session Recording Object array
+        //console.log(Session.get("sessionRecordings"));
+        console.log(recentRecordings);
+        //The Session gives errors on push() function don't know why!
+        //Session.set("sessionRecordings", recentRecordings.push({recording: newRecording}));
+        recentRecordings.push(newRecording);
+        console.log(recentRecordings);
+        console.log(recentRecordings[0]);
+        var aRecording = recentRecordings[0];
+        console.log(aRecording.name);
       }
     });
     audioController.clearRecording();
@@ -260,3 +271,19 @@ updateSaveRecordingVisibility = function(visibility) {
 createNewRecordingObject = function(name, user, blob, context){
   return new Recording(name, user, blob, context);
 }
+
+Template.body.helpers({
+  recordings: function () {
+    console.log(this);
+    return recentRecordings;
+  },
+
+  name: function() {
+    console.log(this);
+    return this.name;
+  }
+});
+
+// Template.record_strip.helpers({
+  
+// });

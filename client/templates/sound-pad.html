@@ -25,11 +25,14 @@
       <div class="recording">
         <h2>Recordings</h2>
         <div class="tracks">
-            {{> record_strip id="1" text="dummyyyyyyyyyyyyyy1"}}
-            {{> record_strip id="2" text="dummy2"}}
+
+          {{#each recordings}}
+            {{> record_strip}}
+          {{/each}}
+            <!--{{> record_strip id="2" text="dummy2"}}
             {{> record_strip id="3" text="dummy3"}}
             {{> record_strip id="4" text="dummy4"}}
-            {{> record_strip id="5" text="dummy5"}}
+            {{> record_strip id="5" text="dummy5"}}-->
         </div>
         <div type="button" class="load">
             Load more
@@ -42,7 +45,7 @@
 </template>
 
 <template name="record_strip">
-  <div class="strip" id={{id}} title={{text}}>
+  <div class="strip" id={{name}} title={{name}}>
     <div class="options">
       <button><img title="save" src="images/save.png" width="12px" height="12px;"></button>
       <button><img title="publish" src="images/globe.png" width="12px" height="12px"></button>
@@ -50,7 +53,7 @@
     </div>
       <input type="image" id="play" src="images/play.png" width="20px" height="20px">
     <div class="name">
-      {{text}}
+      {{name}}
     </div>
     
   </div>
