@@ -16,14 +16,12 @@ var soundsDB = Meteor.subscribe("sounds", function() {
 window.onload = function() {
   audioController  = new AudioControl();}
 
-Template.body.events({
-  'click #record': function() { audioController.record(); },
-  'click #stop': function() { audioController.stopRecording(); }
-});
-
 
 // Retrieves the array of paths for the given instrument from the database
 getInstrumentSounds = function(instrument) {
+  if (!Sounds) {
+    return;
+  }
   return Sounds.findOne({"instrument": instrument}).paths;
 }  
 
@@ -39,14 +37,25 @@ toggle_sidebar = function() {
     classie.toggle( menuLeft, 'cbp-spmenu-open');
 }
 
+Template.recording_controls.events({
+  'click #record-button': function() {
+    document.getElementById("record-button").style.display = "none";
+    document.getElementById("stop-button").style.display = "inline-block";
+    audioController.record();  
+  },
+
+  'click #stop-button': function() { 
+    audioController.stopRecording(); 
+    document.getElementById("record-button").style.display = "inline-block";
+    document.getElementById("stop-button").style.display = "none";
+    updateSaveRecordingVisibility("block");
+  }
+
+});
+
 Template.home.events({
-  'click #record': function() { audioController.record(); },
-  'click #stop': function() { audioController.stopRecording(); },
   'click #sidebar-button': function(event) {
     toggle_sidebar();
-  },
-  'click #stop': function() {
-    updateSaveRecordingVisibility("block");
   }
 });
 
@@ -162,6 +171,9 @@ Template.instrument_menu.events = {
   'click button': function(event) {
     var button = event.target;
     sounds = getInstrumentSounds(button.id);
+    if (!sounds) {
+      return;
+    }
     if (classie.has(button, "keyboard_options")) {
       updatePianoSounds(sounds);
     } else {

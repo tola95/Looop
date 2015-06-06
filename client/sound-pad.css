@@ -57,13 +57,11 @@ button:active {
   width: 40%;
   display: inline-block;
   vertical-align: top;
-  margin-top: 50px;
 }
 
 .tracks-container .recording h2 {
   font-family: "mFont";
   height: auto;
-  margin-left: 50px;
   padding-top: 10px;
   color: #E94418;
   text-shadow: 0px 1px 0px rgba(255,255,255,.3), 0px -1px 0px rgba(128,128,128,.7);
@@ -79,7 +77,6 @@ button:active {
   font-size: 18px;
   margin-top: 20px;
   height: 165px;
-  margin-left: 30px;
   overflow: auto;
 }
 
@@ -119,7 +116,6 @@ button:active {
   height: 18px;
   text-align: center;
   font-size: 12px;
-  margin-left: 30px;
   text-decoration: underline;
 }
 
@@ -164,7 +160,6 @@ button:active {
   margin-right: 50px;
   margin-left: 50px;
   padding-top: 5px;
-  z-index: 60;
 }
 
 .banner .inner-banner {
@@ -210,6 +205,16 @@ button:active {
   cursor: hand;
 }
 
+#recording-controls {
+  text-align: center;
+  width: 57%;
+  margin-bottom: 25px;
+}
+
+#stop-button {
+  display: none;
+}
+
 .instr_container {
   width: 57%;
   display: inline-block;
@@ -217,7 +222,6 @@ button:active {
 
 .button-container {
     width: 368px;
-    height: 360px;
     background: #2E2E2E;
     overflow-y: auto;
     margin-right: auto;
@@ -345,7 +349,6 @@ a:hover {
 
 /* Piano Wrapper */
 #p-wrapper {
-  margin-top: 50px;
   float: middle;
   background:#000;
   background:-webkit-linear-gradient(-60deg,#000,#333,#000,#666,#333 70%);
@@ -367,8 +370,7 @@ a:hover {
   -moz-animation:taufik 2s;
   animation:taufik 2s;
   overflow:hidden;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 10px auto 0 auto;
 }
 
 /* Tuts */
@@ -505,7 +507,6 @@ ul#piano li span:active, ul#piano li span.key-pressed {
 }
 
 #sidebar-button {
-  z-index: 90;
   margin-top: 10px;
   float: left;
 }
@@ -614,6 +615,7 @@ ul#piano li span:active, ul#piano li span.key-pressed {
 
 
 #save-recording-background {
+  z-index: 4000;
   position: absolute;
   background-color: rgba(29,29,29, .7);
   width: 100%;
@@ -622,6 +624,7 @@ ul#piano li span:active, ul#piano li span.key-pressed {
 }
 
 #save-recording-wrapper {
+  z-index: 5000;
   border: solid;
   background-color: rgba(255, 255, 255, 1);
   max-width: 300px;
