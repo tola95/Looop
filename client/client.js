@@ -19,11 +19,15 @@ window.onload = function() {
   audioController  = new AudioControl();
 }
 
-Template.body.events({
-  'click #record': function() { audioController.record(); },
-  'click #stop': function() { audioController.stopRecording(); }
-});
 
+Template.home.events({
+  'click #record': function() { audioController.record(); },
+  'click #stop': function() { 
+    audioController.stopRecording(); 
+    Meteor.call("record");
+    console.log("hello");
+  }
+});
 
 // Retrieves the array of paths for the given instrument from the database
 getInstrumentSounds = function(instrument) {
@@ -93,6 +97,8 @@ document.onkeydown = function(event) {
 
   var key = event.keyCode;
   if (Session.get("activeInstrumentView") ==  DRUM_VIEW) {
+    // Meteor.call("publishRecording", "record1");
+    // Meteor.call("follow", "pjDspNJjZDpSiPqsN");
     var button = document.getElementById("key-" + key);
     if(button) {
       button.className = button.className + " active-button";

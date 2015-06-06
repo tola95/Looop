@@ -6,6 +6,9 @@ Sounds = new Mongo.Collection("sounds");
 // Database containing Activity objects that are used to populate a user's activity feed
 Activities = new Mongo.Collection("activities");
 
+// Database containing Recorded objects by users
+Recordings = new Mongo.Collection("recordings");
+
 Meteor.methods({
 	/* Called when the user wants to follow someone.
 		followedId: userId of the person the current user wants to follow */
@@ -28,6 +31,15 @@ Meteor.methods({
 
 		// Notify followerId
 		Meteor.call("addNotification", followedId, new FollowedNotification(this.userId));
+	},
+
+	// function for adding the recording to the database when the user finishes recording
+	record: function() {
+		Recordings.insert({
+			createdBy: this.userId,
+			createdAt: new Date(),
+			// title: text;
+		});
 	},
 
 	/* Called when the current user wants to unfollow the user with id followedId */
@@ -54,6 +66,20 @@ Meteor.methods({
 		});
 	},
 
+	getActivityFeed: function(user, callback) {
+		var u = Meteor.users.findOne({_id: user}, {fields: {'activityFeed': 1}});
+		// console.log(u);
+		return u;
+	},
+
+
+
+	// getActivityFeed: function(userId) {
+	// 	var acts = Meteor.users.findOne({_id: userId}, {activityFeed: 1}).activityFeed;
+	// 	console.log("Acts" + acts);
+	// 	return acts;
+	// },
+
 	// Publishes the recording to the current user's followers by adding it to the followers' feeds
 	publishRecording: function(recordingId) {
 		if (!this.userId) {
@@ -62,9 +88,9 @@ Meteor.methods({
 
 		// TODO: Get recording out of recording DB - check creator ID (maybe??)
 
-		var activity = new RecordingActivity(recordingId);
+		var activity = new RecordingActivity(recordingId, this.user().username);
 		var activityId = Activities.insert({
-			activity: activity
+			activity: activity,
 		});
 
 		var followers = Meteor.users.findOne({_id: this.userId}).followers;
@@ -95,6 +121,9 @@ FollowedNotification = function(followerId) {
 	this.followerId = followerId;
 }
 
-RecordingActivity = function(recordingId) {
+RecordingActivity = function(recordingId, user) {
 	this.recordingId = recordingId;
+	this.postedAt = new Date();
+	this.postedBy = user;
+	this.nameOfActivity = "song";
 }

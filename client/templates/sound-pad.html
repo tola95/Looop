@@ -16,10 +16,9 @@
 
   <button id="record">Record</button>
   <button id="stop">Stop</button>
-
-  <a href="/activity">Activity</a>
-
-  {{> Template.dynamic template=activeView }}
+  {{#if currentUser}}
+    <a href="/activity">Activity</a>
+  {{/if}}
 
 <div>
   <div class="big-cont">
@@ -31,11 +30,7 @@
     <div class="recording">
       <h2>Recordings</h2>
       <div class="tracks">
-          {{> record_strip id="1" text="dummyyyyyyyyyyyyyy1"}}
-          {{> record_strip id="2" text="dummy2"}}
-          {{> record_strip id="3" text="dummy3"}}
-          {{> record_strip id="4" text="dummy4"}}
-          {{> record_strip id="5" text="dummy5"}}
+        {{> recordings}}
       </div>
       <div type="button" class="load">
           Load more
@@ -49,6 +44,15 @@
 </body>
 </template>
 
+<template name="recordings">
+  {{> record_strip id="1" text="dummyyyyyyyyyyyyyy1"}}
+  {{> record_strip id="2" text="dummy2"}}
+  {{> record_strip id="3" text="dummy3"}}
+  {{> record_strip id="4" text="dummy4"}}
+  {{> record_strip id="5" text="dummy5"}}
+</template>
+
+
 <template name="record_strip">
   <div class="strip" id={{id}} title={{text}}>
     <div class="options">
@@ -57,7 +61,7 @@
       <button><img title="delete" src="delete.png" width="12px" height="12px"></button>
     </div>
       <input type="image" id="play" src="play.png" width="20px" height="20px">
-    <div class="name">
+    <div class="name" title={{text}}>
       {{text}}
     </div>
     

@@ -2,6 +2,8 @@ Meteor.startup(function () {
 	if (Sounds.find().count() == 0) {
 		populateSounds();
 	}
+  console.log("server num acts: " + Activities.find().count());
+      console.log("server num users: " + Meteor.users.find().count());
 });
 
 // Populates Sounds DB with paths for default instruments
@@ -51,10 +53,18 @@ Meteor.publish("sounds", function() {
 	return Sounds.find();
 });
 
+Meteor.publish("recordings", function() {
+  return Recordings.find();
+});
+
+Meteor.publish("activities", function() {
+  return Activities.find();
+});
+
 Meteor.publish("userData", function () {
   if (this.userId) {
     return Meteor.users.find({_id: this.userId},
-                             {fields: {'followers': 1, 'following': 1, 'notifications': 1}});
+                             {fields: {'followers': 1, 'following': 1, 'notifications': 1, 'activityFeed': 1}});
   } else {
     this.ready();
   }
