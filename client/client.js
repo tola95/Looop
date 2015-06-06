@@ -106,7 +106,6 @@ document.onkeydown = function(event) {
   if (event.target != document.getElementsByTagName("BODY")[0]) {
     return;
   }
-
   var key = event.keyCode;
   if (Session.get("activeInstrumentView") ==  DRUM_VIEW) {
     var button = document.getElementById("key-" + key);
