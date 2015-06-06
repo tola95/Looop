@@ -324,7 +324,7 @@ updateSaveRecordingVisibility = function(visibility) {
     document.getElementById("recording-name-input").select();
   }  
 }
-<<<<<<< HEAD
+
 
 createNewRecordingObject = function(name, user, blob, context){
   return new Recording(name, user, blob, context);
@@ -345,5 +345,3 @@ Template.body.helpers({
 // Template.record_strip.helpers({
   
 // });
-=======
->>>>>>> 9ad89ca3e3b531a7a6d9f0f5557f45b676f94624
