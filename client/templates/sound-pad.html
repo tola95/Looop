@@ -3,7 +3,7 @@
 </head>
 
 <template name="home">
-  {{> banner }}
+  {{> banner homePage=true}}
 
   <div class="cbp-smenu-push">
   <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left cbp-sp" id="cbp-spmenu-s1">
@@ -15,9 +15,11 @@
 
   <button id="record">Record</button>
   <button id="stop">Stop</button>
-  <a id="me" href="/user" target="_blank">Home</a>
+  {{#if currentUser}}
+    <a href="/activity">Activity</a>
+  {{/if}}
 
-
+<div>
   <div class="big-cont">
     <div class="instr_container">
       {{> Template.dynamic template=activeView }}
@@ -38,6 +40,7 @@
       </div>
     </div>
   </div>
+  </div>
 
 {{> save_recording }}
 </template>
@@ -50,7 +53,7 @@
       <button><img title="delete" src="images/delete.png" width="12px" height="12px"></button>
     </div>
       <input type="image" id="play" src="images/play.png" width="20px" height="20px">
-    <div class="name">
+    <div class="name" title={{text}}>
       {{text}}
     </div>
     

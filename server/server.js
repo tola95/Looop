@@ -45,20 +45,25 @@ var addSound = function(name, paths) {
 }
 
 Meteor.publish("sounds", function() {
+	if (!Sounds) {
+		console.log("Sound not defined yet");
+	}
 	return Sounds.find();
 });
 
-Meteor.publish("userData", function () {
-  return Meteor.users.find(
-    {_id: this.userId},
-    {fields: {'bio': 1, 'fullname': 1}}
-  );
+Meteor.publish("recordings", function() {
+  return Recordings.find();
 });
 
-Meteor.users.allow({
-  update: function (userId, user, fields, modifier) {
-    // can only change your own documents
-    return (user._id === userId);
-   
+Meteor.publish("activities", function() {
+  return Activities.find();
+});
+
+Meteor.publish("userData", function () {
+  if (this.userId) {
+    return Meteor.users.find({_id: this.userId},
+                             {fields: {'followers': 1, 'following': 1, 'notifications': 1, 'activityFeed': 1}});
+  } else {
+    this.ready();
   }
 });

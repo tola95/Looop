@@ -31,12 +31,17 @@ Meteor.subscribe("userData", function () {
 window.onload = function() {
   audioController  = new AudioControl();}
 
-Template.body.events({
+
+Template.home.events({
   'click #record': function() { audioController.record(); },
-  'click #stop': function() { audioController.stopRecording(); },
   'click #me': function(event) {
     event.preventDefault();
     window.open(event.target.href, '_blank');
+  },
+  'click #stop': function() { 
+    audioController.stopRecording(); 
+    Meteor.call("record");
+    console.log("hello");
   }
 });
 

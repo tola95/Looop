@@ -5,3 +5,7 @@ Router.route('/', function () {
 Router.route('/user', function () {
   this.render('personal');
 });
+
+Router.route('/activity', function() {
+	this.render('activity');
+});
