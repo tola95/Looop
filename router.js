@@ -2,6 +2,10 @@ Router.route('/', function () {
   this.render('home');
 });
 
-Router.route('/timeline', function () {
-  this.render('profile');
+Router.route('/user', function () {
+  this.render('personal');
+});
+
+Router.route('/activity', function() {
+	this.render('activity');
 });

@@ -4,7 +4,7 @@ Recording = function(name, user, blob, audioContext){
 	this.blob = blob;
 	this.createdAt = new Date();
 
-	this.getBufferCallback = function () {
+	this.playRecording = function () {
 	    var newSource = audioContext.createBufferSource();
 	    var newBuffer = audioContext.createBuffer( 2, this.blob[0].length, audioContext.sampleRate );
 	    newBuffer.getChannelData(0).set(this.blob[0]);

@@ -13,9 +13,31 @@ var soundsDB = Meteor.subscribe("sounds", function() {
   updatePianoSounds(getInstrumentSounds(STARTING_KEYBOARD));
 });
 
+Meteor.subscribe("userData", function () {
+    if (Meteor.userId()) {
+      console.log(Meteor.users.findOne({_id: Meteor.userId()}).bio);
+      var bio = Meteor.users.findOne({_id: Meteor.userId()}).bio;
+      var fullname = Meteor.users.findOne({_id: Meteor.userId()}).fullname;
+      
+      if (bio) {
+        document.getElementById('description').innerHTML = bio;
+      }
+      if (fullname) {
+        document.getElementById('fullname').innerHTML = fullname;
+      }
+    }
+});
+
 window.onload = function() {
   audioController  = new AudioControl();}
 
+
+Template.home.events({
+  'click #me': function(event) {
+    event.preventDefault();
+    window.open(event.target.href, '_blank');
+  }
+});
 
 // Retrieves the array of paths for the given instrument from the database
 getInstrumentSounds = function(instrument) {
@@ -28,7 +50,12 @@ getInstrumentSounds = function(instrument) {
 Session.setDefault("activeInstrumentView", DRUM_VIEW);
 
 Template.home.helpers({
-  activeView: function () { return Session.get("activeInstrumentView"); }
+  activeView: function () { return Session.get("activeInstrumentView"); },
+
+  recordings: function () {
+    return Session.get("sessionRecordings");
+  },
+
 });
 
 toggle_sidebar = function() {
@@ -45,9 +72,10 @@ Template.recording_controls.events({
   },
 
   'click #stop-button': function() { 
-    audioController.stopRecording(); 
     document.getElementById("record-button").style.display = "inline-block";
     document.getElementById("stop-button").style.display = "none";
+    audioController.stopRecording(); 
+    Meteor.call("record");
     updateSaveRecordingVisibility("block");
   }
 
@@ -92,7 +120,6 @@ document.onkeydown = function(event) {
   if (event.target != document.getElementsByTagName("BODY")[0]) {
     return;
   }
-
   var key = event.keyCode;
   if (Session.get("activeInstrumentView") ==  DRUM_VIEW) {
     var button = document.getElementById("key-" + key);
@@ -133,7 +160,6 @@ document.onkeyup = function(event) {
 Accounts.ui.config({
   passwordSignupFields: "USERNAME_ONLY"
 });
-
 
 // Respond to events in the instrument menu
 Template.instrument_menu.events = {
@@ -230,13 +256,76 @@ Template.keys.events({
   }
 });
 
+Template.main.events = {
+   'click #timelinebutton' : function() {
+      document.getElementById('recordings').style.display = "none";
+      document.getElementById('timeline').style.display = "block";
+   },
+
+   'click #recordingsbutton' : function() {
+      document.getElementById('recordings').style.display = "block";
+      document.getElementById('timeline').style.display = "none";
+   }
+};
+
+Template.bio.events = {
+  'click #update' : function() {
+
+    var description = document.getElementById("desc_text").value;
+    var fullname = document.getElementById("fname_text").value;
+
+    if (Meteor.userId()) {
+      Meteor.users.update({
+        _id: Meteor.userId()
+        }, {
+          $set: {"bio": description,
+                 "fullname": fullname } 
+      })
+    }
+
+    document.getElementById('description').innerHTML = Meteor.users.findOne({_id: Meteor.userId()}).bio;
+    document.getElementById('fullname').innerHTML = Meteor.users.findOne({_id: Meteor.userId()}).fullname;
+
+    document.getElementById("desc_text").value = "";
+    document.getElementById("fname_text").value = "";
+  },
+
+  'click #addProfilePic' : function() {
+
+
+  }
+};
+
+
+Session.setDefault("sessionRecordings", new Array());
 
 Template.save_recording.events({
   'click button': function() {
     updateSaveRecordingVisibility("none");
-    document.getElementById("recording-name-input").value = "Untitled";
+  },
+
+  'click #save-recording-okay': function(){
+    var name = document.getElementById('recording-name-input').value;
+    audioController.recorder.getBuffer(function (blob){
+      if (Meteor.userId() != null){
+        var newRecording = createNewRecordingObject(name, Meteor.userID, blob, audioController);
+        //add to the database
+      } else {
+        var newRecording = createNewRecordingObject(name, Meteor.userID, blob, audioController);
+        var newRecordingArray = Session.get("sessionRecordings");
+        newRecordingArray.push(newRecording);
+        Session.set("sessionRecordings", newRecordingArray);
+      }
+    });
+    audioController.clearRecording();
+  },
+
+  'click #save-recording-cancel': function() {
+    audioController.clearRecording();
   }
+
 });
+
 
 /* Sets the display style of the set recordings box. 
   Must be passed "block" or "none" */
@@ -248,4 +337,9 @@ updateSaveRecordingVisibility = function(visibility) {
   if (visibility == "block") {
     document.getElementById("recording-name-input").select();
   }  
+}
+
+
+createNewRecordingObject = function(name, user, blob, context){
+  return new Recording(name, user, blob, context);
 }

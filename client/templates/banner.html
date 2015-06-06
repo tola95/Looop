@@ -1,9 +1,11 @@
 <template name="banner">
 <div class="banner">
   <div class="main">
-    <section>
-      <input type="image" id="sidebar-button" src="images/menu_icon.png" width="35px" height="35px">
-    </section>
+      {{#if homePage}}
+      <input type="image" class="upper-left_btn" id="sidebar-button" src="images/menu_icon.png" title="Sidebar menu button" width="35px" height="35px">
+      {{else}}
+      <input type="image" class="upper-left_btn" src="images/menu_icon.png" width="35px" height="35px">
+      {{/if}}
   </div>
   <div class="login">
     {{> loginButtons}}

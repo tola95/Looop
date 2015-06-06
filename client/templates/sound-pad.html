@@ -4,7 +4,7 @@
 </head>
 
 <template name="home">
-  {{> banner }}
+  {{> banner homePage=true}}
 
   <div class="cbp-smenu-push">
   <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left cbp-sp" id="cbp-spmenu-s1">
@@ -14,6 +14,11 @@
   </nav>
   </div>
 
+  {{#if currentUser}}
+    <a href="/activity">Activity</a>
+  {{/if}}
+
+<div>
   <div class="big-cont">
     {{> recording_controls}}
     <div class="instr_container">
@@ -24,11 +29,7 @@
       <div class="recording">
         <h2>Recordings</h2>
         <div class="tracks">
-            {{> record_strip id="1" text="dummyyyyyyyyyyyyyy1"}}
-            {{> record_strip id="2" text="dummy2"}}
-            {{> record_strip id="3" text="dummy3"}}
-            {{> record_strip id="4" text="dummy4"}}
-            {{> record_strip id="5" text="dummy5"}}
+            {{> record_strip}}
         </div>
         <div type="button" class="load">
             Load more
@@ -36,6 +37,7 @@
       </div>
 
     </div>
+  </div>
   </div>
 
 {{> save_recording }}
@@ -48,8 +50,8 @@
       <button><img title="publish" src="images/globe.png" width="12px" height="12px"></button>
       <button><img title="delete" src="images/delete.png" width="12px" height="12px"></button>
     </div>
-      <input type="image" id="play" src="images/play.png" title="Play recording" width="20px" height="20px">
-    <div class="name">
+      <input type="image" id="play" src="images/play.png" width="20px" height="20px">
+    <div class="name" title="Play {{text}}">
       {{text}}
     </div>
     
