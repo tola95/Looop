@@ -88,7 +88,7 @@ Meteor.methods({
 
 		// TODO: Get recording out of recording DB - check creator ID (maybe??)
 
-		var activity = new RecordingActivity(recordingId, this.user().username);
+		var activity = new RecordingActivity(recordingId, Meteor.user().username);
 		var activityId = Activities.insert({
 			activity: activity,
 		});
