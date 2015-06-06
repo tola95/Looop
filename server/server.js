@@ -8,11 +8,11 @@ Meteor.startup(function () {
 var populateSounds = function() {
   var instruments = ["drum1", "drum2", "grandpiano", "churchorgan"];
   var instrumentSounds = {
-    "drum1": ["piano/piano-C4", "piano/piano-Db4", "piano/piano-D4", "piano/piano-Eb4", "piano/piano-E4", 
-      "piano/piano-F4", "piano/piano-Gb4", "piano/piano-G4", "piano/piano-Ab4"],
+    "drum1": ["drums/Kick-01", "drums/Hat-02", "drums/Snr-02", "drums/Hat-03", "drums/Kick-02", 
+      "drums/Hat-04", "drums/Snr-03", "drums/OpHat-02", "drums/Kick-03"],
 
-    "drum2": ["piano/piano-C3", "piano/piano-Db3", "piano/piano-D3", "piano/piano-Eb3", "piano/piano-E3", 
-      "piano/piano-F3", "piano/piano-Gb3", "piano/piano-G3", "piano/piano-Ab3"],
+    "drum2": ["drums/Kick-01", "drums/Hat-02", "drums/Snr-04", "drums/Hat-03", "drums/Kick-02", 
+      "drums/Hat-04", "drums/Snr-05", "drums/OpHat-03", "drums/Kick-03"],
 
     "grandpiano": ["piano/piano-C4", "piano/piano-Db4", "piano/piano-D4", "piano/piano-Eb4", "piano/piano-E4", 
       "piano/piano-F4", "piano/piano-Gb4", "piano/piano-G4", "piano/piano-Ab4", "piano/piano-A5", 
