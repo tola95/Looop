@@ -53,7 +53,12 @@ getInstrumentSounds = function(instrument) {
 Session.setDefault("activeInstrumentView", DRUM_VIEW);
 
 Template.home.helpers({
-  activeView: function () { return Session.get("activeInstrumentView"); }
+  activeView: function () { return Session.get("activeInstrumentView"); },
+
+  recordings: function () {
+    return Session.get("sessionRecordings");
+  },
+
 });
 
 toggle_sidebar = function() {
@@ -281,13 +286,11 @@ Template.bio.events = {
 };
 
 
-//Session.setDefault("sessionRecordings", new Array());
-var recentRecordings = new Array();
+Session.setDefault("sessionRecordings", new Array());
 
 Template.save_recording.events({
   'click button': function() {
     updateSaveRecordingVisibility("none");
-    //document.getElementById("recording-name-input").value = "Untitled";
   },
 
   'click #save-recording-okay': function(){
@@ -298,15 +301,9 @@ Template.save_recording.events({
         //add to the database
       } else {
         var newRecording = createNewRecordingObject(name, Meteor.userID, blob, audioController);
-        //console.log(Session.get("sessionRecordings"));
-        console.log(recentRecordings);
-        //The Session gives errors on push() function don't know why!
-        //Session.set("sessionRecordings", recentRecordings.push({recording: newRecording}));
-        recentRecordings.push(newRecording);
-        console.log(recentRecordings);
-        console.log(recentRecordings[0]);
-        var aRecording = recentRecordings[0];
-        console.log(aRecording.name);
+        var newRecordingArray = Session.get("sessionRecordings");
+        newRecordingArray.push(newRecording);
+        Session.set("sessionRecordings", newRecordingArray);
       }
     });
     audioController.clearRecording();
@@ -317,6 +314,7 @@ Template.save_recording.events({
   }
 
 });
+
 
 /* Sets the display style of the set recordings box. 
   Must be passed "block" or "none" */
@@ -334,19 +332,3 @@ updateSaveRecordingVisibility = function(visibility) {
 createNewRecordingObject = function(name, user, blob, context){
   return new Recording(name, user, blob, context);
 }
-
-Template.body.helpers({
-  recordings: function () {
-    console.log(this);
-    return recentRecordings;
-  },
-
-  name: function() {
-    console.log(this);
-    return this.name;
-  }
-});
-
-// Template.record_strip.helpers({
-  
-// });
