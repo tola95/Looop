@@ -6,10 +6,28 @@ var STARTING_DRUM = "drum1",
     keycont = 0,
     audioController;
 
+    username = Meteor.userId();
+    url_safe_username = encodeURIComponent(username);
+
 // Once the Sounds DB is ready, set the default drum and keyboard notes
 var soundsDB = Meteor.subscribe("sounds", function() {
   updateDrumSounds(getInstrumentSounds(STARTING_DRUM));
   updatePianoSounds(getInstrumentSounds(STARTING_KEYBOARD));
+});
+
+Meteor.subscribe("userData", function () {
+    if (Meteor.userId()) {
+      console.log(Meteor.users.findOne({_id: Meteor.userId()}).bio);
+      var bio = Meteor.users.findOne({_id: Meteor.userId()}).bio;
+      var fullname = Meteor.users.findOne({_id: Meteor.userId()}).fullname;
+      
+      if (bio) {
+        document.getElementById('description').innerHTML = bio;
+      }
+      if (fullname) {
+        document.getElementById('fullname').innerHTML = fullname;
+      }
+    }
 });
 
 window.onload = function() {
@@ -18,9 +36,12 @@ window.onload = function() {
 
 Template.body.events({
   'click #record': function() { audioController.record(); },
-  'click #stop': function() { audioController.stopRecording(); }
+  'click #stop': function() { audioController.stopRecording(); },
+  'click #me': function(event) {
+    event.preventDefault();
+    window.open(event.target.href, '_blank');
+  }
 });
-
 
 // Retrieves the array of paths for the given instrument from the database
 getInstrumentSounds = function(instrument) {
@@ -85,7 +106,7 @@ document.onkeyup = function(event) {
     if (drumpadOn) {
       button.className = "";
     } else {
-    button.className = "anchor playable";
+      button.className = "anchor playable";
     }
   }
 };
@@ -94,7 +115,6 @@ document.onkeyup = function(event) {
 Accounts.ui.config({
   passwordSignupFields: "USERNAME_ONLY"
 });
-
 
 // Respond to events in the instrument menu
 Template.menu.events = {
@@ -188,3 +208,43 @@ Template.keys.events({
     audio.play();
   }
 });
+
+Template.main.events = {
+   'click #timelinebutton' : function() {
+      document.getElementById('recordings').style.display = "none";
+      document.getElementById('timeline').style.display = "block";
+   },
+
+   'click #recordingsbutton' : function() {
+      document.getElementById('recordings').style.display = "block";
+      document.getElementById('timeline').style.display = "none";
+   }
+};
+
+Template.bio.events = {
+  'click #update' : function() {
+
+    var description = document.getElementById("desc_text").value;
+    var fullname = document.getElementById("fname_text").value;
+
+    if (Meteor.userId()) {
+      Meteor.users.update({
+        _id: Meteor.userId()
+        }, {
+          $set: {"bio": description,
+                 "fullname": fullname } 
+      })
+    }
+
+    document.getElementById('description').innerHTML = Meteor.users.findOne({_id: Meteor.userId()}).bio;
+    document.getElementById('fullname').innerHTML = Meteor.users.findOne({_id: Meteor.userId()}).fullname;
+
+    document.getElementById("desc_text").value = "";
+    document.getElementById("fname_text").value = "";
+  },
+
+  'click #addProfilePic' : function() {
+
+
+  }
+};

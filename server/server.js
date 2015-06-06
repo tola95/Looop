@@ -47,3 +47,18 @@ var addSound = function(name, paths) {
 Meteor.publish("sounds", function() {
 	return Sounds.find();
 });
+
+Meteor.publish("userData", function () {
+  return Meteor.users.find(
+    {_id: this.userId},
+    {fields: {'bio': 1, 'fullname': 1}}
+  );
+});
+
+Meteor.users.allow({
+  update: function (userId, user, fields, modifier) {
+    // can only change your own documents
+    return (user._id === userId);
+   
+  }
+});
