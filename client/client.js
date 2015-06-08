@@ -31,6 +31,11 @@ Meteor.subscribe("userData", function () {
 window.onload = function() {
   audioController  = new AudioControl();}
 
+Template.banner.events({
+  'click .notifications': function() {
+    document.getElementById('notif_block').style.display = 'inline-block';
+  }
+});
 
 Template.home.events({
   'click #record': function() { audioController.record(); },

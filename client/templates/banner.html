@@ -6,12 +6,22 @@
       {{else}}
       <input type="image" class="upper-left_btn" src="images/menu_icon.png" width="35px" height="35px">
       {{/if}}
+      <div class="logo">
+      <h1>Loop</h1>
+      </div>
+      {{#if currentUser}}
+      <a href="#" class="notifications">Notifications</a>
+      
+      {{/if}}
   </div>
   <div class="login">
     {{> loginButtons}}
   </div>
-  <div class="logo">
-    <h1>Loop</h1>
-  </div>
 </div>
+
+<div id="notif_block">
+  {{> notifications}}
+</div>
+</template>
+<template name="notifications">
 </template>
