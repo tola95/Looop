@@ -322,6 +322,12 @@ Template.save_recording.events({
 
   'click #save-recording-cancel': function() {
     audioController.clearRecording();
+  },
+
+  'keypress': function(event) {
+    if (event.keyCode == 13) {
+      document.getElementById("save-recording-okay").click();
+    }
   }
 
 });
