@@ -11,15 +11,20 @@
 	margin-top: 15px;
 }
 
-.username {
+.activity_info h1 {
+	display: inline-block;
+  
+}
+
+.activity_info {
 	font-size: 20px;
 }
 
 .card-contents {
 	display: inline-block;
 	vertical-align: top;
-  	margin-top: 15px;
-  	margin-left: 20px;
+  	margin-top: 5px;
+  	margin-left: 30px;
 }
 
 .profile-photo {

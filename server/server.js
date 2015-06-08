@@ -91,20 +91,12 @@ Meteor.methods({
       $addToSet: {followers: this.userId}
     });
 
-    // Meteor.users.update({
-    //  _id: followedId
-    //  }, {
-    //    $unset: {activityFeed: "pW8Ppyy3HrdJ6MQh7"}
-    // });
-    console.log("test");
     var followedActivities = Meteor.users.findOne({_id: followedId}).activities;
-
-    console.log(followedId);
-    // Meteor.users.update({
-    //  _id: this.userId
-    //  }, {
-    //    $addToSet: {activityFeed: {$each: followedActivities}}
-    // });
+    Meteor.users.update({
+     _id: this.userId
+     }, {
+       $addToSet: {activityFeed: {$each: followedActivities}}
+    });
 
     // Notify followerId
     Meteor.call("addNotification", followedId, new FollowedNotification(this.userId));
@@ -146,17 +138,8 @@ Meteor.methods({
 
   getActivityFeed: function(user, callback) {
     var u = Meteor.users.findOne({_id: user}, {fields: {'activityFeed': 1}});
-    // console.log(u);
     return u;
   },
-
-
-
-  // getActivityFeed: function(userId) {
-  //  var acts = Meteor.users.findOne({_id: userId}, {activityFeed: 1}).activityFeed;
-  //  console.log("Acts" + acts);
-  //  return acts;
-  // },
 
   // Publishes the recording to the current user's followers by adding it to the followers' feeds
   publishRecording: function(recordingId) {

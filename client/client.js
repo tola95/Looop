@@ -111,7 +111,8 @@ document.onkeydown = function(event) {
   if (event.target != document.getElementsByTagName("BODY")[0]) {
     return;
   }
-  Meteor.call("publishRecording", "record");
+  // Meteor.call("publishRecording", "record");
+  // Meteor.call("follow", "FXdumNGxaj668xcHe");
   var key = event.keyCode;
   if (Session.get("activeInstrumentView") ==  DRUM_VIEW) {
     var button = document.getElementById("key-" + key);
