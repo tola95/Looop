@@ -1,3 +1,5 @@
+var MAX_ACTIVITY_FEED_SIZE = 50;
+
 Meteor.startup(function () {
 	if (Sounds.find().count() == 0) {
 		populateSounds();
@@ -67,3 +69,122 @@ Meteor.publish("userData", function () {
     this.ready();
   }
 });
+
+Meteor.methods({
+  /* Called when the user wants to follow someone.
+    followedId: userId of the person the current user wants to follow */
+  follow: function(followedId) {
+    if (!this.userId) {
+      // TODO: login popup
+      throw new Meteor.Error("not logged in", "Please log in to follow");
+    }
+    // console.log(Meteor.users.findOne());
+    Meteor.users.update({
+      _id: this.userId
+      }, {
+      $addToSet: {following: followedId}
+    });
+
+    Meteor.users.update({
+      _id: followedId
+      }, {
+      $addToSet: {followers: this.userId}
+    });
+
+    var followedActivities = Meteor.users.findOne({_id: followedId}).activities;
+    Meteor.users.update({
+     _id: this.userId
+     }, {
+       $addToSet: {activityFeed: {$each: followedActivities}}
+    });
+
+    // Notify followerId
+    Meteor.call("addNotification", followedId, new FollowedNotification(this.userId));
+    return 1;
+  },
+
+  // function for adding the recording to the database when the user finishes recording
+  record: function() {
+    Recordings.insert({
+      createdBy: this.userId,
+      createdAt: new Date(),
+      // title: text;
+    });
+  },
+
+  /* Called when the current user wants to unfollow the user with id followedId */
+  unfollow: function(followedId) {
+    Meteor.users.update({
+      _id: this.userId
+      }, {
+      $pull: {following: followedId}
+    });
+
+    Meteor.users.update({
+      _id: followedId
+      }, {
+      $pull: {followers: followedId}
+    });
+  },
+
+  // Adds given notification to the notifications list of the user with ID notifiedUserId
+  addNotification: function(notifiedUserId, notification) {
+    Meteor.users.update({
+      _id: notifiedUserId
+    }, {
+      $addToSet: {notifications: notification}
+    });
+  },
+
+  getActivityFeed: function(user, callback) {
+    var u = Meteor.users.findOne({_id: user}, {fields: {'activityFeed': 1}});
+    return u;
+  },
+
+  // Publishes the recording to the current user's followers by adding it to the followers' feeds
+  publishRecording: function(recordingId) {
+    if (!this.userId) {
+      throw new Meteor.Error("not logged in", "Please login to publish a recording");
+    }
+
+    // TODO: Get recording out of recording DB - check creator ID (maybe??)
+
+    var activity = new RecordingActivity(recordingId, Meteor.user().username);
+    var activityId = Activities.insert(activity);
+
+    var followers = Meteor.users.findOne({_id: this.userId}).followers;
+    if(followers) {
+      for (var i=0; i<followers.length; i++) {
+      Meteor.users.update({
+        _id: followers[i]
+        }, {
+        $push: {
+          activityFeed: {
+            $each: [activityId],
+            $slice: -MAX_ACTIVITY_FEED_SIZE
+          }
+        }
+      });
+    }
+    }
+    
+    Meteor.users.update({
+      _id: Meteor.userId()
+      } , {
+        $addToSet: {activities: activityId}
+    });
+  },
+
+  // Deletes the Activity associated with the recording
+  unpublishRecording: function(recordingId) {
+    // TODO: need Recordings DB with activity feed IDs
+    return;
+  }
+});
+
+RecordingActivity = function(recordingId, user) {
+  this.recordingId = recordingId;
+  this.postedAt = new Date();
+  this.postedBy = user;
+  this.nameOfActivity = "song";
+}

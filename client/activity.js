@@ -1,11 +1,3 @@
-// var acts = Meteor.call("getActivityFeed", Meteor.userId(), function(err, returnValue) {
-// 	return returnValue;
-// });
-
-
-
-		// console.log(followers);
-
 Meteor.subscribe("activities");
 
 Template.activity.helpers({
@@ -22,7 +14,7 @@ Template.activity.helpers({
 			return [];
 		}
 		for (var i = 0; i < activityFeed.length; i ++) {
-			var act = Activities.findOne({_id: activityFeed[i]}).activity;
+			var act = Activities.findOne({_id: activityFeed[i]});
 			activities.push(act);
 			
 		}
