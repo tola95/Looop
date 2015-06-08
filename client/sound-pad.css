@@ -173,9 +173,19 @@ button:active {
   padding: 5px;
 }
 
-.banner .activity-link {
+.banner #activity-link {
   float: right;
-  margin-top: 15px;
+  margin-top: 19px;
+  margin-right: -100px;
+  text-decoration: none;
+}
+
+.banner a {
+  color: #E94418;
+}
+
+.banner a:active {
+  color: #B82E0A;
 }
 
 .inner-banner .login {
