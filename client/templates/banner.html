@@ -7,6 +7,14 @@
       <input type="image" class="upper-left_btn" src="images/menu_icon.png" width="35px" height="35px">
       {{/if}}
   </div>
+
+  
+  {{#if homePage}}
+    {{#if currentUser}}
+      <a id="activity-link" href="/activity">Activity</a>
+    {{/if}}
+  {{/if}}
+
   <div class="login">
     {{> loginButtons}}
   </div>

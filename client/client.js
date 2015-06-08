@@ -33,20 +33,17 @@ window.onload = function() {
 
 
 Template.home.events({
-  'click #record': function() { audioController.record(); },
   'click #me': function(event) {
     event.preventDefault();
     window.open(event.target.href, '_blank');
-  },
-  'click #stop': function() { 
-    audioController.stopRecording(); 
-    Meteor.call("record");
-    console.log("hello");
   }
 });
 
 // Retrieves the array of paths for the given instrument from the database
 getInstrumentSounds = function(instrument) {
+  if (!Sounds) {
+    return;
+  }
   return Sounds.findOne({"instrument": instrument}).paths;
 }  
 
@@ -67,14 +64,26 @@ toggle_sidebar = function() {
     classie.toggle( menuLeft, 'cbp-spmenu-open');
 }
 
+Template.recording_controls.events({
+  'click #record-button': function() {
+    document.getElementById("record-button").style.display = "none";
+    document.getElementById("stop-button").style.display = "inline-block";
+    audioController.record();  
+  },
+
+  'click #stop-button': function() { 
+    document.getElementById("record-button").style.display = "inline-block";
+    document.getElementById("stop-button").style.display = "none";
+    audioController.stopRecording(); 
+    Meteor.call("record");
+    updateSaveRecordingVisibility("block");
+  }
+
+});
+
 Template.home.events({
-  'click #record': function() { audioController.record(); },
-  'click #stop': function() { audioController.stopRecording(); },
   'click #sidebar-button': function(event) {
     toggle_sidebar();
-  },
-  'click #stop': function() {
-    updateSaveRecordingVisibility("block");
   }
 });
 
@@ -190,6 +199,9 @@ Template.instrument_menu.events = {
   'click button': function(event) {
     var button = event.target;
     sounds = getInstrumentSounds(button.id);
+    if (!sounds) {
+      return;
+    }
     if (classie.has(button, "keyboard_options")) {
       updatePianoSounds(sounds);
     } else {
@@ -313,6 +325,12 @@ Template.save_recording.events({
 
   'click #save-recording-cancel': function() {
     audioController.clearRecording();
+  },
+
+  'keypress': function(event) {
+    if (event.keyCode == 13) {
+      document.getElementById("save-recording-okay").click();
+    }
   }
 
 });

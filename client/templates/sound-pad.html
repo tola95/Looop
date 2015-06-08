@@ -1,5 +1,6 @@
 <head>
   <title>Loop</title>
+  <meta name="description" contents="Free soundpad allowing you to record created music">
 </head>
 
 <template name="home">
@@ -13,14 +14,9 @@
   </nav>
   </div>
 
-  <button id="record">Record</button>
-  <button id="stop">Stop</button>
-  {{#if currentUser}}
-    <a href="/activity">Activity</a>
-  {{/if}}
-
 <div>
   <div class="big-cont">
+    {{> recording_controls}}
     <div class="instr_container">
       {{> Template.dynamic template=activeView }}
     </div>
@@ -37,6 +33,7 @@
             Load more
         </div>
       </div>
+
     </div>
   </div>
   </div>
@@ -52,14 +49,14 @@
       <button><img title="delete" src="images/delete.png" width="12px" height="12px"></button>
     </div>
       <input type="image" id="play" src="images/play.png" width="20px" height="20px">
-    <div class="name" title={{name}}>
+    <div class="name" title="Play {{name}}">
       {{name}}
     </div>
     
   </div>
 </template>
 
-
+ 
 <template name="drum_buttons">
 <div id="buttoncontainer" class="button-container">
     {{> soundpad_button id="key-85" text="KICK" audio_file=audio_file1 }}
@@ -165,4 +162,11 @@
       <button id="save-recording-okay">Okay</button>
     </div>
   </div>
+</template>
+
+<template name="recording_controls">
+  <div id="recording-controls">
+      <input id="record-button" type="image" src="images/record.png" title="Start recording" width="48px" height="48px">
+      <input id="stop-button" type="image" src="images/stop.png" title="Stop recording" width="48px" height="48px">
+    </div>
 </template>
