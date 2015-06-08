@@ -104,13 +104,18 @@ Meteor.methods({
   },
 
   // function for adding the recording to the database when the user finishes recording
-  record: function() {
-    Recordings.insert({
-      createdBy: this.userId,
-      createdAt: new Date(),
-      // title: text;
-    });
+  addRecordings: function(recording) {
+    Recordings.insert(recording);
   },
+
+  //Assuming that the delete button will only allow the user logged in to delete their recording
+  deleteRecording: function(recording) {
+    Recordings.remove(recording);
+  }
+
+  getRecordings: function(userId) {
+    Recordings.find({user: userId}, {sort: {createdAt: -1}}).limit(5);
+  }
 
   /* Called when the current user wants to unfollow the user with id followedId */
   unfollow: function(followedId) {
