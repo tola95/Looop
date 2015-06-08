@@ -111,11 +111,11 @@ Meteor.methods({
   //Assuming that the delete button will only allow the user logged in to delete their recording
   deleteRecording: function(recording) {
     Recordings.remove(recording);
-  }
+  },
 
   getRecordings: function(userId) {
     Recordings.find({user: userId}, {sort: {createdAt: -1}}).limit(5);
-  }
+  },
 
   /* Called when the current user wants to unfollow the user with id followedId */
   unfollow: function(followedId) {
