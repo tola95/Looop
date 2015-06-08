@@ -104,7 +104,7 @@ Meteor.methods({
   },
 
   // function for adding the recording to the database when the user finishes recording
-  addRecordings: function(recording) {
+  addRecording: function(recording) {
     Recordings.insert(recording);
   },
 
@@ -113,8 +113,8 @@ Meteor.methods({
     Recordings.remove(recording);
   }
 
-  getRecordings: function(userId) {
-    Recordings.find({user: userId}, {sort: {createdAt: -1}}).limit(5);
+  getRecordings: function(userId, num) {
+    Recordings.find({user: userId}, {sort: {createdAt: -1}});
   }
 
   /* Called when the current user wants to unfollow the user with id followedId */
