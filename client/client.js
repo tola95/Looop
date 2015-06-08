@@ -312,6 +312,7 @@ Template.save_recording.events({
       if (Meteor.userId() != null){
         var newRecording = createNewRecordingObject(name, Meteor.userID, blob, audioController);
         //add to the database
+        //Meteor.call()
       } else {
         var newRecording = createNewRecordingObject(name, Meteor.userID, blob, audioController);
         var newRecordingArray = Session.get("sessionRecordings");
