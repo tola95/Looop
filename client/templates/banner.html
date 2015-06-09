@@ -10,18 +10,38 @@
       <h1>Loop</h1>
       </div>
       {{#if currentUser}}
-      <a href="#" class="notifications">Notifications</a>
-      
+      <a href="#" class="notifications">
+        {{#if seenNotif}}
+        Notifications
+        {{else}}
+        Notifications <img src="images/menu_icon.png" width="5px" height="5px">
+        {{/if}}
+      </a>
       {{/if}}
   </div>
+
+  
+  {{#if homePage}}
+    {{#if currentUser}}
+      <a id="activity-link" href="/activity">Activity</a>
+    {{/if}}
+  {{/if}}
+
   <div class="login">
     {{> loginButtons}}
   </div>
 </div>
 
 <div id="notif_block">
-  {{> notifications}}
+  {{#each notifs}}
+    {{> notifications}}
+  {{/each}}
 </div>
 </template>
 <template name="notifications">
+  <div class="notif_cont">
+    {{#if typeIs 'FollowedNotification'}}
+    <b>{{followerId}}</b> is following you
+    {{/if}}
+  </div>
 </template>

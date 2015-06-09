@@ -64,7 +64,7 @@ Meteor.publish("activities", function() {
 Meteor.publish("userData", function () {
   if (this.userId) {
     return Meteor.users.find({_id: this.userId},
-                             {fields: {'followers': 1, 'following': 1, 'notifications': 1, 'activityFeed': 1}});
+                             {fields: {'followers': 1, 'following': 1, 'notifications': 1, 'activityFeed': 1, 'seenNotification': 1}});
   } else {
     this.ready();
   }
@@ -99,17 +99,22 @@ Meteor.methods({
     });
 
     // Notify followerId
-    Meteor.call("addNotification", followedId, new FollowedNotification(this.userId));
+    Meteor.call("addNotification", followedId, new FollowedNotification(Meteor.user().username));
     return 1;
   },
 
   // function for adding the recording to the database when the user finishes recording
-  record: function() {
-    Recordings.insert({
-      createdBy: this.userId,
-      createdAt: new Date(),
-      // title: text;
-    });
+  addRecordings: function(recording) {
+    Recordings.insert(recording);
+  },
+
+  //Assuming that the delete button will only allow the user logged in to delete their recording
+  deleteRecording: function(recording) {
+    Recordings.remove(recording);
+  },
+
+  getRecordings: function(userId) {
+    Recordings.find({user: userId}, {sort: {createdAt: -1}}).limit(5);
   },
 
   /* Called when the current user wants to unfollow the user with id followedId */
@@ -127,6 +132,15 @@ Meteor.methods({
     });
   },
 
+  // Updates the seenNotification field to true to denote that the user has viewed the new notifications
+  updateSeenNotification: function() {
+    Meteor.users.update({
+      _id: this.userId
+      }, {
+        $set: {seenNotification: true}
+    });
+  },
+
   // Adds given notification to the notifications list of the user with ID notifiedUserId
   addNotification: function(notifiedUserId, notification) {
     Meteor.users.update({
@@ -134,11 +148,12 @@ Meteor.methods({
     }, {
       $addToSet: {notifications: notification}
     });
-  },
 
-  getActivityFeed: function(user, callback) {
-    var u = Meteor.users.findOne({_id: user}, {fields: {'activityFeed': 1}});
-    return u;
+    Meteor.users.update({
+      _id: notifiedUserId
+    }, {
+      $set: {seenNotification: false}
+    });
   },
 
   // Publishes the recording to the current user's followers by adding it to the followers' feeds
@@ -187,4 +202,10 @@ RecordingActivity = function(recordingId, user) {
   this.postedAt = new Date();
   this.postedBy = user;
   this.nameOfActivity = "song";
+}
+
+// Notification for when one user follows another. For notifying the user being followed
+FollowedNotification = function(followerId) {
+  this.followerId = followerId;
+  this.ttype = "FollowedNotification";
 }
