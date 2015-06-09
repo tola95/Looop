@@ -33,9 +33,11 @@
             {{> record_strip}}
           {{/each }}
         </div>
-        <div type="button" class="load">
-            Load more
-        </div>
+        {{#if loadMore}}
+          <div type="button" class="load">
+              Load more
+          </div>
+        {{/if}}
       </div>
 
     </div>

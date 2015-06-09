@@ -57,6 +57,10 @@ Template.home.helpers({
 
   recordings: function () {
     return Session.get("sessionRecordings");
+  },
+
+  loadMore: function() {
+    return Session.get("sessionRecordings").length > 5;
   }
 
 });
