@@ -7,8 +7,14 @@ var STARTING_DRUM = "drum1",
     keycont = 0,
     audioController;
 
+// Retrieves the array of paths for the given instrument from the database
+var getInstrumentSounds;
+
 // Once the Sounds DB is ready, set the default drum and keyboard notes
 var soundsDB = Meteor.subscribe("sounds", function() {
+  getInstrumentSounds = function(instrument) {
+    return Sounds.findOne({"instrument": instrument}).paths;
+  } 
   updateDrumSounds(getInstrumentSounds(STARTING_DRUM));
   updatePianoSounds(getInstrumentSounds(STARTING_KEYBOARD));
 });
@@ -37,12 +43,25 @@ Meteor.subscribe("userData", function () {
 
 Meteor.subscribe("images");
 
+Session.setDefault("drumRendered", false);
 window.onload = function() {
-  audioController  = new AudioControl();}
+  audioController  = new AudioControl();
+  audioController.addAudioSources();
+}
 
-Template.body.events({
-  'click #record': function() { audioController.record(); },
-  'click #stop': function() { audioController.stopRecording(); },
+Template.banner.events({
+  'click .notifications': function() {
+    var value = document.getElementById('notif_block').style.display;
+    if (value == 'none') {
+      document.getElementById('notif_block').style.display = 'inline-block';
+    }
+    else document.getElementById('notif_block').style.display = 'none'; 
+    Meteor.call('updateSeenNotification');
+  }
+ 
+});
+
+Template.home.events({
   'click #me': function(event) {
     event.preventDefault();
     window.open(event.target.href, '_blank');
@@ -53,31 +72,45 @@ Template.body.events({
   }
 });
 
-// Retrieves the array of paths for the given instrument from the database
-getInstrumentSounds = function(instrument) {
-  return Sounds.findOne({"instrument": instrument}).paths;
-}  
+
 
 Session.setDefault("activeInstrumentView", DRUM_VIEW);
 
 Template.home.helpers({
-  activeView: function () { return Session.get("activeInstrumentView"); }
+  activeView: function () { return Session.get("activeInstrumentView"); },
+
+  recordings: function () {
+    return Session.get("sessionRecordings");
+  }
+
 });
 
 toggle_sidebar = function() {
   classie.toggle( event.target, 'active');
     var menuLeft = document.getElementById('cbp-spmenu-s1')
     classie.toggle( menuLeft, 'cbp-spmenu-open');
-}
+};
+
+Template.recording_controls.events({
+  'click #record-button': function() {
+    document.getElementById("record-button").style.display = "none";
+    document.getElementById("stop-button").style.display = "inline-block";
+    audioController.record();  
+  },
+
+  'click #stop-button': function() { 
+    document.getElementById("record-button").style.display = "inline-block";
+    document.getElementById("stop-button").style.display = "none";
+    audioController.stopRecording(); 
+    Meteor.call("record");
+    updateSaveRecordingVisibility("block");
+  }
+
+});
 
 Template.home.events({
-  'click #record': function() { audioController.record(); },
-  'click #stop': function() { audioController.stopRecording(); },
   'click #sidebar-button': function(event) {
     toggle_sidebar();
-  },
-  'click #stop': function() {
-    updateSaveRecordingVisibility("block");
   }
 });
 
@@ -94,6 +127,37 @@ Template.drum_buttons.helpers({
   audio_file9: function () { return Session.get("audio_file9"); },
 });
 
+Template.banner.helpers({
+  notifs: function() {
+    var user = Meteor.users.findOne({_id: Meteor.userId()}, {fields: {'notifications': 1}});
+    if (!user) {
+      return [];
+    }
+    var notifications = user.notifications;
+    if(!notifications) {
+      return[];
+    }
+    return notifications;
+  },
+
+  seenNotif: function() {
+    var seenArr = Meteor.users.findOne({_id: Meteor.userId()}, {fields: {'seenNotification': 1}});
+    if (!seenArr) {
+      return[];
+    } 
+    var seen = seenArr.seenNotification; 
+    if(!seen) {
+      return[];
+    }
+    return seen;
+  }
+});
+
+Template.notifications.helpers({
+  typeIs: function(type) {
+    return this.ttype == type;
+  }
+});
 
 Template.soundpad_button.events({
   'mousedown': function (e, template) {
@@ -101,6 +165,7 @@ Template.soundpad_button.events({
     var audio = template.find('audio');
     if (!audio.paused) {
       var clone = audio.cloneNode(true);
+      audioController.addSource(clone);
       clone.play();
       return;
     }
@@ -109,12 +174,14 @@ Template.soundpad_button.events({
   }
 });
 
+
 // Simulate button press on corresponding key press
 document.onkeydown = function(event) {
   if (event.target != document.getElementsByTagName("BODY")[0]) {
     return;
   }
-
+  // Meteor.call("publishRecording", "record");
+  // Meteor.call("follow", "FXdumNGxaj668xcHe");
   var key = event.keyCode;
   if (Session.get("activeInstrumentView") ==  DRUM_VIEW) {
     var button = document.getElementById("key-" + key);
@@ -156,15 +223,20 @@ Accounts.ui.config({
   passwordSignupFields: "USERNAME_ONLY"
 });
 
+
 // Respond to events in the instrument menu
 Template.instrument_menu.events = {
-  'click .drum_options ': function() {
+  'click .drum_options ': function(event, template) {
     Session.set("activeInstrumentView", DRUM_VIEW);
+    document.getElementById("p-wrapper").style.display = "none";
+    document.getElementById("buttoncontainer").style.display = "block";
     toggle_sidebar();
   },
 
-  'click .keyboard_options': function() {
+  'click .keyboard_options': function(event, template) {
     Session.set("activeInstrumentView", KEYBOARD_VIEW);
+    document.getElementById("p-wrapper").style.display = "block";
+    document.getElementById("buttoncontainer").style.display = "none";
     toggle_sidebar();
   },
 
@@ -192,6 +264,9 @@ Template.instrument_menu.events = {
   'click button': function(event) {
     var button = event.target;
     sounds = getInstrumentSounds(button.id);
+    if (!sounds) {
+      return;
+    }
     if (classie.has(button, "keyboard_options")) {
       updatePianoSounds(sounds);
     } else {
@@ -240,6 +315,7 @@ Template.keys.events({
     var audio = e.target.getElementsByClassName("audio")[0];
     if (!audio.paused) {
       var clone = audio.cloneNode(true);
+      audioController.addSource(clone);
       clone.play();
       return;
     }
@@ -267,7 +343,6 @@ Template.details.events = {
     var fullname = document.getElementById("fname_text").value;
     var genres = document.getElementById("genres_text").value;
 
-
     if (Meteor.userId()) {
       Meteor.users.update({
         _id: Meteor.userId()
@@ -283,6 +358,8 @@ Template.details.events = {
     document.getElementById('fullname').innerHTML = Meteor.users.findOne({_id: Meteor.userId()}).fullname;
     document.getElementById("genres").innerHTML = Meteor.users.findOne({_id: Meteor.userId()}).genres;
 
+    document.getElementById("desc_text").value = "";
+    document.getElementById("fname_text").value = "";
   },
 
 
@@ -303,10 +380,38 @@ Template.details.events = {
 };
 
 
+Session.setDefault("sessionRecordings", new Array());
+
 Template.save_recording.events({
   'click button': function() {
     updateSaveRecordingVisibility("none");
-    document.getElementById("recording-name-input").value = "Untitled";
+  },
+
+  'click #save-recording-okay': function(){
+    var name = document.getElementById('recording-name-input').value;
+    audioController.recorder.getBuffer(function (blob){
+      if (Meteor.userId() != null){
+        var newRecording = createNewRecordingObject(name, Meteor.userID, blob, audioController);
+        //add to the database
+        //Meteor.call()
+      } else {
+        var newRecording = createNewRecordingObject(name, Meteor.userID, blob, audioController);
+        var newRecordingArray = Session.get("sessionRecordings");
+        newRecordingArray.push(newRecording);
+        Session.set("sessionRecordings", newRecordingArray);
+      }
+    });
+    audioController.clearRecording();
+  },
+
+  'click #save-recording-cancel': function() {
+    audioController.clearRecording();
+  },
+
+  'keypress': function(event) {
+    if (event.keyCode == 13) {
+      document.getElementById("save-recording-okay").click();
+    }
   }
 });
 
@@ -322,3 +427,7 @@ updateSaveRecordingVisibility = function(visibility) {
   }  
 }
 
+
+createNewRecordingObject = function(name, user, blob, context){
+  return new Recording(name, user, blob, context);
+}

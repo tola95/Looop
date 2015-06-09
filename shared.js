@@ -1,20 +1,10 @@
 // Database to hold the various available sounds
 Sounds = new Mongo.Collection("sounds");
 
-Meteor.methods({
-	/* Called when the user wants to follow someone.
-		followedId: userId of the person the current user wants to follow */
-	follow: function(followedId) {
-		if (!this.userId) {
-			// TODO: login popup
-			throw new Meteor.Error("not logged in", "Please log in to follow");
-		}
-		Meteor.users.update({
-			_id: this.userId
-			}, {
-			$addToSet: {following: [followedId]}
-		});
+// Database containing Activity objects that are used to populate a user's activity feed
+Activities = new Mongo.Collection("activities");
 
+<<<<<<< HEAD
 		Meteor.users.update({
 			_id: followedId
 			}, {
@@ -58,3 +48,7 @@ FollowedNotification = function(followerId) {
 var Images = new FS.Collection("images", {
     stores: [new FS.Store.FileSystem("images", {path: "~/uploads"})]
   });
+=======
+// Database containing Recorded objects by users
+Recordings = new Mongo.Collection("recordings");
+>>>>>>> af4a8c06817d973aed94577a31fe119189dba5a2
