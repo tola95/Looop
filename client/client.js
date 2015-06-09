@@ -40,6 +40,17 @@ window.onload = function() {
   audioController.addAudioSources();
 }
 
+Template.banner.events({
+  'click .notifications': function() {
+    var value = document.getElementById('notif_block').style.display;
+    if (value == 'none') {
+      document.getElementById('notif_block').style.display = 'inline-block';
+    }
+    else document.getElementById('notif_block').style.display = 'none'; 
+    Meteor.call('updateSeenNotification');
+  }
+ 
+});
 
 Template.home.events({
   'click #me': function(event) {
@@ -107,6 +118,37 @@ Template.drum_buttons.helpers({
   audio_file9: function () { return Session.get("audio_file9"); },
 });
 
+Template.banner.helpers({
+  notifs: function() {
+    var user = Meteor.users.findOne({_id: Meteor.userId()}, {fields: {'notifications': 1}});
+    if (!user) {
+      return [];
+    }
+    var notifications = user.notifications;
+    if(!notifications) {
+      return[];
+    }
+    return notifications;
+  },
+
+  seenNotif: function() {
+    var seenArr = Meteor.users.findOne({_id: Meteor.userId()}, {fields: {'seenNotification': 1}});
+    if (!seenArr) {
+      return[];
+    } 
+    var seen = seenArr.seenNotification; 
+    if(!seen) {
+      return[];
+    }
+    return seen;
+  }
+});
+
+Template.notifications.helpers({
+  typeIs: function(type) {
+    return this.ttype == type;
+  }
+});
 
 Template.soundpad_button.events({
   'mousedown': function (e, template) {

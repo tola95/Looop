@@ -16,7 +16,6 @@ Template.activity.helpers({
 		for (var i = 0; i < activityFeed.length; i ++) {
 			var act = Activities.findOne({_id: activityFeed[i]});
 			activities.push(act);
-			
 		}
 
 		return activities;
