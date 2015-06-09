@@ -41,12 +41,15 @@ window.onload = function() {
 }
 
 Template.banner.events({
-  'click .notifications': function() {
+  'click #notifications-wrapper': function() {
     var value = document.getElementById('notif_block').style.display;
-    if (value == 'none') {
+    console.log(document.getElementById('notif_block').style.display);
+    if (value == 'inline-block') {
+      document.getElementById('notif_block').style.display = 'none'; 
+    }
+    else {
       document.getElementById('notif_block').style.display = 'inline-block';
     }
-    else document.getElementById('notif_block').style.display = 'none'; 
     Meteor.call('updateSeenNotification');
   }
  
@@ -120,6 +123,7 @@ Template.drum_buttons.helpers({
 
 Template.banner.helpers({
   notifs: function() {
+
     var user = Meteor.users.findOne({_id: Meteor.userId()}, {fields: {'notifications': 1}});
     if (!user) {
       return [];
@@ -128,6 +132,8 @@ Template.banner.helpers({
     if(!notifications) {
       return[];
     }
+    console.log(user.notifications);
+    console.log(notifications);
     return notifications;
   },
 
@@ -172,7 +178,7 @@ document.onkeydown = function(event) {
     return;
   }
   // Meteor.call("publishRecording", "record");
-  // Meteor.call("follow", "FXdumNGxaj668xcHe");
+  // Meteor.call("follow", "6jiKDu8DWW6JBvdrG");
   var key = event.keyCode;
   if (Session.get("activeInstrumentView") ==  DRUM_VIEW) {
     var button = document.getElementById("key-" + key);

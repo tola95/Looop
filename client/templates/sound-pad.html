@@ -25,19 +25,21 @@
     <div class="tracks-container">
       <div class="recording">
         <h2>Recordings</h2>
-        <div class="tracks">
-          {{#unless recordings.length}}
-          <p>You have no recordings yet</p>
-          {{/unless}}
-          {{#each recordings}}
-            {{> record_strip}}
-          {{/each }}
-        </div>
-        {{#if loadMore}}
-          <div type="button" class="load">
-              Load more
+        <div class = "recordings-containter">
+          <div class="tracks">
+            {{#unless recordings.length}}
+            <p>You have no recordings yet</p>
+            {{/unless}}
+            {{#each recordings}}
+              {{> record_strip}}
+            {{/each }}
           </div>
-        {{/if}}
+          {{#if loadMore}}
+            <div type="button" class="load">
+                Load more
+            </div>
+          {{/if}}
+        </div>
       </div>
 
     </div>
