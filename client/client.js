@@ -21,9 +21,11 @@ var soundsDB = Meteor.subscribe("sounds", function() {
 
 Meteor.subscribe("userData", function () {
     if (Meteor.userId()) {
-      console.log(Meteor.users.findOne({_id: Meteor.userId()}).bio);
       var bio = Meteor.users.findOne({_id: Meteor.userId()}).bio;
       var fullname = Meteor.users.findOne({_id: Meteor.userId()}).fullname;
+      var genres = Meteor.users.findOne({_id: Meteor.userId()}).genres;
+      var followers = 0;
+      var following = 0;
       
       if (bio) {
         document.getElementById('description').innerHTML = bio;
@@ -31,8 +33,15 @@ Meteor.subscribe("userData", function () {
       if (fullname) {
         document.getElementById('fullname').innerHTML = fullname;
       }
+      if (genres) {
+        document.getElementById('genres').innerHTML = genres;
+      }
+        document.getElementById('nooffollowers').innerHTML = followers;
+        document.getElementById('nooffollowing').innerHTML = following;
     }
 });
+
+Meteor.subscribe("images");
 
 Session.setDefault("drumRendered", false);
 window.onload = function() {
@@ -57,6 +66,10 @@ Template.banner.events({
 
 Template.home.events({
   'click #me': function(event) {
+    event.preventDefault();
+    window.open(event.target.href, '_blank');
+  },
+  'click #editdetailspage': function(event) {
     event.preventDefault();
     window.open(event.target.href, '_blank');
   }
@@ -321,8 +334,7 @@ Template.keys.events({
   }
 });
 
-
-Template.main.events = {
+Template.usermain.events = {
    'click #timelinebutton' : function() {
       document.getElementById('recordings').style.display = "none";
       document.getElementById('timeline').style.display = "block";
@@ -334,32 +346,47 @@ Template.main.events = {
    }
 };
 
-Template.bio.events = {
+Template.details.events = {
   'click #update' : function() {
 
     var description = document.getElementById("desc_text").value;
     var fullname = document.getElementById("fname_text").value;
+    var genres = document.getElementById("genres_text").value;
 
     if (Meteor.userId()) {
       Meteor.users.update({
         _id: Meteor.userId()
         }, {
           $set: {"bio": description,
-                 "fullname": fullname } 
+                 "fullname": fullname, 
+                 "genres": genres
+                } 
       })
     }
 
     document.getElementById('description').innerHTML = Meteor.users.findOne({_id: Meteor.userId()}).bio;
     document.getElementById('fullname').innerHTML = Meteor.users.findOne({_id: Meteor.userId()}).fullname;
+    document.getElementById("genres").innerHTML = Meteor.users.findOne({_id: Meteor.userId()}).genres;
 
     document.getElementById("desc_text").value = "";
     document.getElementById("fname_text").value = "";
   },
 
-  'click #addProfilePic' : function() {
 
-
+  'change #addProfilePic' : function(event, template) {
+    var files = event.target.files;
+    for (var i = 0, ln = files.length; i < ln; i++) {
+      Images.insert(files[i], function (err, fileObj) {
+        // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(fileObj);
+        }
+      });
+    }
   }
+  
 };
 
 
@@ -396,9 +423,7 @@ Template.save_recording.events({
       document.getElementById("save-recording-okay").click();
     }
   }
-
 });
-
 
 /* Sets the display style of the set recordings box. 
   Must be passed "block" or "none" */

@@ -1,0 +1,35 @@
+<template name="details">
+<head>
+	<link rel="stylesheet" type="text/css" href="user.css">
+</head>
+
+<body>
+
+	{{> banner}}
+	
+	<div id="edit_details" align="center">
+	
+    
+      
+      <fieldset>
+      <div>
+      Add Photo: <input id="addProfilePic" type="file"  />
+      </div>
+      <div>
+      Add Header: <input id="addHeaderPic" type="file" />
+      </div>
+      <div>   
+      <label for="fname_text">Full Name </label><textarea rows="1" id="fname_text" maxlength="30" ></textarea>
+      </div>
+      <div>
+      <label for="desc_text">Biography </label><textarea rows="5" id="desc_text" maxlength="140"></textarea>
+      </div>
+      <div>
+      <label for="genres_text">Genres </label><textarea rows="2" id="genres_text" maxlength="50"></textarea>
+      </div>
+      <button id="update">Update</button>
+      </fieldset>
+    
+    </div>
+</body>
+</template>

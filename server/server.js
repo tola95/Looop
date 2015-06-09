@@ -62,12 +62,17 @@ Meteor.publish("activities", function() {
 });
 
 Meteor.publish("userData", function () {
-  if (this.userId) {
-    return Meteor.users.find({_id: this.userId},
-                             {fields: {'followers': 1, 'following': 1, 'notifications': 1, 'activityFeed': 1, 'seenNotification': 1}});
-  } else {
-    this.ready();
-  }
+  return Meteor.users.find(
+    {_id: this.userId},
+    {fields: {'bio': 1, 
+              'fullname': 1, 
+              'genres': 1, 
+              'profilephoto': 1, 
+              'following': 1,
+              'followers': 1
+             }
+    }
+  );
 });
 
 Meteor.methods({
@@ -195,6 +200,10 @@ Meteor.methods({
     // TODO: need Recordings DB with activity feed IDs
     return;
   }
+});
+
+Meteor.publish("images", function () {
+  return Images.find();
 });
 
 RecordingActivity = function(recordingId, user) {
