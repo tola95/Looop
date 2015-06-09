@@ -53,7 +53,13 @@ Template.home.helpers({
   activeView: function () { return Session.get("activeInstrumentView"); },
 
   recordings: function () {
-    return Session.get("sessionRecordings");
+    if (Meteor.userId() != null){
+      var usersRecordings = Meteor.call("getRecordings", Meteor.userId());
+      Session.set("sessionRecordings", usersRecordings);
+      return numOfRecordingsToShow();
+    } else {
+      return Session.get("sessionRecordings");      
+    }
   },
 
 });
@@ -300,6 +306,7 @@ Template.bio.events = {
 
 
 Session.setDefault("sessionRecordings", new Array());
+Session.setDefault("numberOfRecordingToShow", 5);
 
 Template.save_recording.events({
   'click button': function() {
@@ -310,13 +317,13 @@ Template.save_recording.events({
     var name = document.getElementById('recording-name-input').value;
     audioController.recorder.getBuffer(function (blob){
       if (Meteor.userId() != null){
-        var newRecording = createNewRecordingObject(name, Meteor.userID, blob, audioController);
+        var newRecording = createNewRecordingObject(name, Meteor.userId(), blob);
         //add to the database
-        //Meteor.call()
+        Meteor.call("addRecording", newRecording);
       } else {
-        var newRecording = createNewRecordingObject(name, Meteor.userID, blob, audioController);
+        var newRecording = createNewRecordingObject(name, Meteor.userId(), blob);
         var newRecordingArray = Session.get("sessionRecordings");
-        newRecordingArray.push(newRecording);
+        newRecordingArray.unshift(newRecording);
         Session.set("sessionRecordings", newRecordingArray);
       }
     });
@@ -349,6 +356,34 @@ updateSaveRecordingVisibility = function(visibility) {
 }
 
 
-createNewRecordingObject = function(name, user, blob, context){
-  return new Recording(name, user, blob, context);
+createNewRecordingObject = function(name, user, blob){
+  return new Recording(name, user, blob);
+}
+
+//When a user logs in 
+Accounts.onLogin(function() {
+  var recentRecordings = Session.get("sessionRecordings");
+  console.log("Session recordings after log in " + recentRecordings);
+  for (var i = 0; i < recentRecordings; i++){
+    Meteor.call("addRecording", recentRecordings[i]);
+  }
+    Session.set("sessionRecordings", new Array());
+});
+
+//When a user logs outs 
+Accounts.onLogout(function() {
+  Session.set("sessionRecordings", new Array());
+});
+
+numOfRecordingsToShow = function() {
+  var currentRecordings = Session.get("sessionRecordings");
+  if(currentRecordings.length < Session.get("numberOfRecordingToShow")) {
+    return currentRecordings;
+  } else {
+    var newCurrentRecordings = new Array();
+    for(var i = 0; i <= Session.get("numberOfRecordingToShow"); i++) {
+      newCurrentRecordings[i] = currentRecordings[i];
+    }
+    return newCurrentRecordings;
+  }
 }

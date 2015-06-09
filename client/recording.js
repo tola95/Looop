@@ -1,10 +1,10 @@
-Recording = function(name, user, blob, audioContext){
+Recording = function(name, user, blob){
 	this.name = name;
 	this.user = user;
 	this.blob = blob;
 	this.createdAt = new Date();
 
-	this.playRecording = function () {
+	this.playRecording = function (audioContext) {
 	    var newSource = audioContext.createBufferSource();
 	    var newBuffer = audioContext.createBuffer( 2, this.blob[0].length, audioContext.sampleRate );
 	    newBuffer.getChannelData(0).set(this.blob[0]);
