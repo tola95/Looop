@@ -1,0 +1,66 @@
+#personaldetails {
+	float: left;
+	width: 300px;
+	margin-top: 10px;
+	margin-left: 10px;
+
+}
+
+#header {
+	height: 200px;
+	border: 1px solid #E94418;
+	margin-left: auto;
+	margin-right: auto;
+	z-index: 0;
+}
+
+#photo {
+	width: 30%;
+	height: 40%;
+	border: 1px solid #E94418;
+	margin: 20px;
+	z-index: 1;
+	display: inline-block;
+
+}
+
+#bio {
+	border: 1px solid #E94418;
+	margin-top: 20px;
+	z-index: 1;
+	font-family: 'Tahoma', Arial, sans-serif;
+}
+
+#edit_details {
+	border: 1px solid #E94418;
+	margin-top: 20px;
+	z-index: 1;
+	font-family: 'Tahoma', Arial, sans-serif;
+}
+
+#main {
+	border: 1px solid #E94418;
+	margin-left: auto;
+	margin-right: auto;
+	float: middle;
+	width: 600px;
+	height: 800px;
+	z-index: 1;
+	font-family: 'Tahoma', Arial, sans-serif;
+	margin-top: 10px;
+
+}
+
+#suggestions {
+	border: 1px solid #E94418;
+	margin-left: 20px;
+	margin-right: 20px;
+	float: middle;
+	width: 200px;
+	height: 400px;
+	z-index: 1;
+	font-family: 'Tahoma', Arial, sans-serif;
+	margin-top: 10px;
+}
+
+
