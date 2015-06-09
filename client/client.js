@@ -7,8 +7,14 @@ var STARTING_DRUM = "drum1",
     keycont = 0,
     audioController;
 
+// Retrieves the array of paths for the given instrument from the database
+var getInstrumentSounds;
+
 // Once the Sounds DB is ready, set the default drum and keyboard notes
 var soundsDB = Meteor.subscribe("sounds", function() {
+  getInstrumentSounds = function(instrument) {
+    return Sounds.findOne({"instrument": instrument}).paths;
+  } 
   updateDrumSounds(getInstrumentSounds(STARTING_DRUM));
   updatePianoSounds(getInstrumentSounds(STARTING_KEYBOARD));
 });
@@ -28,8 +34,11 @@ Meteor.subscribe("userData", function () {
     }
 });
 
+Session.setDefault("drumRendered", false);
 window.onload = function() {
-  audioController  = new AudioControl();}
+  audioController  = new AudioControl();
+  audioController.addAudioSources();
+}
 
 Template.banner.events({
   'click .notifications': function() {
@@ -50,13 +59,7 @@ Template.home.events({
   }
 });
 
-// Retrieves the array of paths for the given instrument from the database
-getInstrumentSounds = function(instrument) {
-  if (!Sounds) {
-    return;
-  }
-  return Sounds.findOne({"instrument": instrument}).paths;
-}  
+
 
 Session.setDefault("activeInstrumentView", DRUM_VIEW);
 
@@ -65,7 +68,7 @@ Template.home.helpers({
 
   recordings: function () {
     return Session.get("sessionRecordings");
-  },
+  }
 
 });
 
@@ -73,7 +76,7 @@ toggle_sidebar = function() {
   classie.toggle( event.target, 'active');
     var menuLeft = document.getElementById('cbp-spmenu-s1')
     classie.toggle( menuLeft, 'cbp-spmenu-open');
-}
+};
 
 Template.recording_controls.events({
   'click #record-button': function() {
@@ -149,6 +152,7 @@ Template.soundpad_button.events({
     var audio = template.find('audio');
     if (!audio.paused) {
       var clone = audio.cloneNode(true);
+      audioController.addSource(clone);
       clone.play();
       return;
     }
@@ -156,6 +160,7 @@ Template.soundpad_button.events({
     audio.play();
   }
 });
+
 
 // Simulate button press on corresponding key press
 document.onkeydown = function(event) {
@@ -205,15 +210,20 @@ Accounts.ui.config({
   passwordSignupFields: "USERNAME_ONLY"
 });
 
+
 // Respond to events in the instrument menu
 Template.instrument_menu.events = {
-  'click .drum_options ': function() {
+  'click .drum_options ': function(event, template) {
     Session.set("activeInstrumentView", DRUM_VIEW);
+    document.getElementById("p-wrapper").style.display = "none";
+    document.getElementById("buttoncontainer").style.display = "block";
     toggle_sidebar();
   },
 
-  'click .keyboard_options': function() {
+  'click .keyboard_options': function(event, template) {
     Session.set("activeInstrumentView", KEYBOARD_VIEW);
+    document.getElementById("p-wrapper").style.display = "block";
+    document.getElementById("buttoncontainer").style.display = "none";
     toggle_sidebar();
   },
 
@@ -292,6 +302,7 @@ Template.keys.events({
     var audio = e.target.getElementsByClassName("audio")[0];
     if (!audio.paused) {
       var clone = audio.cloneNode(true);
+      audioController.addSource(clone);
       clone.play();
       return;
     }
@@ -299,6 +310,7 @@ Template.keys.events({
     audio.play();
   }
 });
+
 
 Template.main.events = {
    'click #timelinebutton' : function() {

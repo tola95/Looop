@@ -4,7 +4,7 @@
       {{#if homePage}}
       <input type="image" class="upper-left_btn" id="sidebar-button" src="images/menu_icon.png" title="Sidebar menu button" width="35px" height="35px">
       {{else}}
-      <input type="image" class="upper-left_btn" src="images/menu_icon.png" width="35px" height="35px">
+      <a href="/"><img class="upper-left_btn" src="images/home.png" width="35px" height="35px"></a>
       {{/if}}
       <div class="logo">
       <h1>Loop</h1>
@@ -21,10 +21,8 @@
   </div>
 
   
-  {{#if homePage}}
-    {{#if currentUser}}
-      <a id="activity-link" href="/activity">Activity</a>
-    {{/if}}
+  {{#if currentUser}}
+    <a id="activity-link" href="/activity">Activity</a>
   {{/if}}
 
   <div class="login">
