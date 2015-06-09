@@ -1,8 +1,9 @@
-<template name="details">
+
 <head>
 	<link rel="stylesheet" type="text/css" href="user.css">
 </head>
 
+<template name="details">
 <body>
 
 	{{> banner}}
@@ -19,13 +20,16 @@
       Add Header: <input id="addHeaderPic" type="file" />
       </div>
       <div>   
-      <label for="fname_text">Full Name </label><textarea rows="1" id="fname_text" maxlength="30" ></textarea>
+      <label for="fname_text">Full Name </label>
+            <textarea rows="1" id="fname_text" maxlength="30">{{fullname}}</textarea>
       </div>
       <div>
-      <label for="desc_text">Biography </label><textarea rows="5" id="desc_text" maxlength="140"></textarea>
+      <label for="desc_text">Biography </label>
+            <textarea rows="5" id="desc_text" maxlength="140">{{bio}}</textarea>
       </div>
       <div>
-      <label for="genres_text">Genres </label><textarea rows="2" id="genres_text" maxlength="50"></textarea>
+      <label for="genres_text">Genres </label>
+            <textarea rows="2" id="genres_text" maxlength="50">{{genres}}</textarea>
       </div>
       <button id="update">Update</button>
       </fieldset>

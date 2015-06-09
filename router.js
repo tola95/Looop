@@ -13,7 +13,3 @@ Router.route('/details', function () {
 Router.route('/upload.php', function() {
   this.render('upload');
 });
-
-Router.route('/activity', function() {
-	this.render('activity');
-});

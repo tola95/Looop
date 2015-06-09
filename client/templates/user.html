@@ -6,7 +6,7 @@
 
 
 <template name="personal">
-<body style="color:black" id="userbody">
+<div id="userbody">
   {{> banner}}
 
   {{>personaldetails }}
@@ -18,8 +18,10 @@
   <div id="editdetailslink">
     <a id="editdetailspage" href="/details" target="_blank">Edit Details</a>
   </div>
+
+  {{details}}
   
-</body>
+</div>
 </template>
 
 <template name="usermain">
@@ -28,6 +30,7 @@
     <button id="recordingsbutton">Recordings</button>
     <h3 style="display:none" id="recordings">Recordings</h3>
     <h3 style="display:block" id="timeline">Timeline</h3>
+    {{> activity }}
   </div> 
 </template>
 
@@ -39,9 +42,9 @@
 
 <template name="bio">
   <div id="bio" align="center">
-    <h3 id="fullname">&nbsp;</h3>
-    <p id="description">&nbsp;</p>
-    <p id="genres">&nbsp;</p>
+    <h3 id="fullname">{{fullname}}</h3>
+    <p id="description">{{bio}}</p>
+    <p id="genres">{{genres}}</p>
   </div>
 </template>
 
@@ -75,8 +78,8 @@
     <button id="followers">Followers</button>
     </div>
     <div>
-    <p id="nooffollowing">&nbsp;</p>
-    <p id="nooffollowers">&nbsp;</p>
+    <p id="nooffollowing">{{numberFollowing}}</p>
+    <p id="nooffollowers">{{numberFollowers}}</p>
     </div>
   </div>
 </template>

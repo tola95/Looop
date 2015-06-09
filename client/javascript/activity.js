@@ -1,7 +1,6 @@
 Meteor.subscribe("activities");
 
 Template.activity.helpers({
-	// console.log(acts);
 
 	activities: function () {
 		var activities = [];
@@ -18,6 +17,7 @@ Template.activity.helpers({
 			activities.push(act);
 		}
 
+		console.log("activities: " + activities);
 		return activities;
 	}
 });

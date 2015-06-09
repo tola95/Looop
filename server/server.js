@@ -199,7 +199,36 @@ Meteor.methods({
   unpublishRecording: function(recordingId) {
     // TODO: need Recordings DB with activity feed IDs
     return;
+  },
+
+  updateProfileInfo: function(description, fullname, genres) {
+    if (!this.userId) {
+      throw new Meteor.Error("not logged in", "Please login to update profile");
+    }
+    Meteor.users.update({
+        _id: Meteor.userId()
+        }, {
+          $set: {"bio": description,
+                 "fullname": fullname, 
+                 "genres": genres
+                } 
+      });
+  },
+
+
+  addProfilePhoto: function(files) {
+    for (var i = 0, ln = files.length; i < ln; i++) {
+      Images.insert(files[i], function (err, fileObj) {
+        // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(fileObj);
+        }
+      });
+    }
   }
+
 });
 
 Meteor.publish("images", function () {

@@ -635,7 +635,7 @@ ul#piano li span:active, ul#piano li span.key-pressed {
 }
 
 
-#save-recording-background {
+.dark-background {
   z-index: 4000;
   position: absolute;
   background-color: rgba(29,29,29, .7);
