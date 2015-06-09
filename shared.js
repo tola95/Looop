@@ -53,4 +53,8 @@ Meteor.methods({
 // Notification for when one user follows another. For notifying the user being followed
 FollowedNotification = function(followerId) {
 	this.followerId = followerId;
-}
+};
+
+var Images = new FS.Collection("images", {
+    stores: [new FS.Store.FileSystem("images", {path: "~/uploads"})]
+  });

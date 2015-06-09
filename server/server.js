@@ -51,7 +51,14 @@ Meteor.publish("sounds", function() {
 Meteor.publish("userData", function () {
   return Meteor.users.find(
     {_id: this.userId},
-    {fields: {'bio': 1, 'fullname': 1}}
+    {fields: {'bio': 1, 
+              'fullname': 1, 
+              'genres': 1, 
+              'profilephoto': 1, 
+              'following': 1,
+              'followers': 1
+             }
+    }
   );
 });
 
@@ -62,3 +69,8 @@ Meteor.users.allow({
    
   }
 });
+
+Meteor.publish("images", function () {
+  return Images.find();
+});
+
