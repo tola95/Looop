@@ -307,6 +307,7 @@ Template.bio.events = {
 
 Session.setDefault("sessionRecordings", new Array());
 Session.setDefault("numberOfRecordingToShow", 5);
+Session.setDefault("sessionId", 1);
 
 Template.save_recording.events({
   'click button': function() {
@@ -325,6 +326,9 @@ Template.save_recording.events({
         var newRecordingArray = Session.get("sessionRecordings");
         newRecordingArray.unshift(newRecording);
         Session.set("sessionRecordings", newRecordingArray);
+        var newSessionId = Session.get("sessionId");
+        newSessionId++;
+        Session.set("sessionId", newSessionId);
       }
     });
     audioController.clearRecording();
@@ -373,6 +377,7 @@ Accounts.onLogin(function() {
 //When a user logs outs 
 Accounts.onLogout(function() {
   Session.set("sessionRecordings", new Array());
+  Session.set("sessionId", 1);
 });
 
 numOfRecordingsToShow = function() {
@@ -387,3 +392,9 @@ numOfRecordingsToShow = function() {
     return newCurrentRecordings;
   }
 }
+
+Template.record_strip.helpers({
+  sessionId : function(){return Session.get("sessionId");}
+});
+
+

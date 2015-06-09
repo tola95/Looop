@@ -115,7 +115,7 @@ Meteor.methods({
 
   getRecordings: function(userId, num) {
     Recordings.find({user: userId}, {sort: {createdAt: -1}});
-  }
+  },
 
   /* Called when the current user wants to unfollow the user with id followedId */
   unfollow: function(followedId) {
