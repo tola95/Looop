@@ -18,13 +18,17 @@
   <div class="big-cont">
     {{> recording_controls}}
     <div class="instr_container">
-      {{> Template.dynamic template=activeView }}
+      {{> drum_buttons}}
+      {{> keys}}
     </div>
 
     <div class="tracks-container">
       <div class="recording">
         <h2>Recordings</h2>
         <div class="tracks">
+          {{#unless recordings.length}}
+          <p>You have no recordings yet</p>
+          {{/unless}}
           {{#each recordings}}
             {{> record_strip}}
           {{/each }}

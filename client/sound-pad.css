@@ -125,6 +125,10 @@ button:active {
   overflow: hidden;
 }
 
+.tracks p {
+  padding: 10px;
+}
+
 .options {
   float:right;
   margin-right: 5px;
@@ -372,6 +376,7 @@ a:hover {
 
 /* Piano Wrapper */
 #p-wrapper {
+  display: none;
   float: middle;
   background:#000;
   background:-webkit-linear-gradient(-60deg,#000,#333,#000,#666,#333 70%);
