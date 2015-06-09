@@ -6,17 +6,23 @@
 
 
 <template name="personal">
-<body style="color:black">
+<body style="color:black" id="userbody">
+  {{> banner}}
+
   {{>personaldetails }}
 
-  {{> main }}
+  {{> usermain }}
 
   {{> suggestions }}
+
+  <div id="editdetailslink">
+    <a id="editdetailspage" href="/details" target="_blank">Edit Details</a>
+  </div>
   
 </body>
 </template>
 
-<template name="main">
+<template name="usermain">
   <div id="main" align="center">
     <button id="timelinebutton">Timeline</button>
     <button id="recordingsbutton">Recordings</button>
@@ -27,6 +33,7 @@
 
 <template name="photo">
   <div id="photo">
+    <img id="profilephoto" src="dj.png">
   </div>
 </template>
 
@@ -34,16 +41,7 @@
   <div id="bio" align="center">
     <h3 id="fullname">&nbsp;</h3>
     <p id="description">&nbsp;</p>
-  </div>
-
-  <div id="edit_details" align="center">
-    <button id="addProfilePic">Add Photo</button>
-    <button id="addHeaderPic">Add Header</button>
-    
-      Full Name:<input type="text" id="fname_text"><br>
-      Description:<input type="text" id="desc_text"><br>
-      <button id="update">Update</button>
-    
+    <p id="genres">&nbsp;</p>
   </div>
 </template>
 
@@ -58,7 +56,9 @@
   <div id="personaldetails">
     {{>header}}
 
-    {{> bio }}    
+    {{> bio }} 
+
+    {{> followings}}   
   </div>
 </template>
 
@@ -67,3 +67,17 @@
     <h3>Suggestions</h3>
   </div>
 </template>
+
+<template name="followings">
+  <div id="followings" >
+    <div>
+    <button id="following">Following</button>
+    <button id="followers">Followers</button>
+    </div>
+    <div>
+    <p id="nooffollowing">&nbsp;</p>
+    <p id="nooffollowers">&nbsp;</p>
+    </div>
+  </div>
+</template>
+

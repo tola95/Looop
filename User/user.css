@@ -1,66 +1,181 @@
+#userbody {
+    background-color: #F3F3F3;
+    height: 1000px;
+}
+
 #personaldetails {
 	float: left;
 	width: 300px;
-	margin-top: 10px;
-	margin-left: 10px;
-
+	margin-top: 50px;
+	margin-left: 30px;
 }
 
 #header {
 	height: 200px;
-	border: 1px solid #E94418;
+	border: 3px solid #E94418;
 	margin-left: auto;
 	margin-right: auto;
 	z-index: 0;
+	background-color: white;
 }
 
 #photo {
 	width: 30%;
 	height: 40%;
-	border: 1px solid #E94418;
+	border: 3px solid #E94418;
 	margin: 20px;
 	z-index: 1;
 	display: inline-block;
+	background-color: white;
 
 }
 
 #bio {
-	border: 1px solid #E94418;
+	border: 3px solid #E94418;
 	margin-top: 20px;
 	z-index: 1;
 	font-family: 'Tahoma', Arial, sans-serif;
+	background-color: white;
 }
 
 #edit_details {
-	border: 1px solid #E94418;
+	border: 3px solid #E94418;
 	margin-top: 20px;
 	z-index: 1;
 	font-family: 'Tahoma', Arial, sans-serif;
+	float: middle;
+	width: 500px;
+	height: 800px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: white;
 }
 
 #main {
-	border: 1px solid #E94418;
+	border: 3px solid #E94418;
 	margin-left: auto;
 	margin-right: auto;
 	float: middle;
-	width: 600px;
+	width: 400px;
 	height: 800px;
 	z-index: 1;
 	font-family: 'Tahoma', Arial, sans-serif;
-	margin-top: 10px;
+	margin-top: 20px;
+	background-color: white;
 
 }
 
 #suggestions {
-	border: 1px solid #E94418;
+	border: 3px solid #E94418;
 	margin-left: 20px;
 	margin-right: 20px;
-	float: middle;
+	float: right;
 	width: 200px;
 	height: 400px;
 	z-index: 1;
 	font-family: 'Tahoma', Arial, sans-serif;
 	margin-top: 10px;
+	background-color: white;
 }
 
+#editdetailslink {
+	float: right;
+}
+
+#fname_text {
+	width: 200px;
+	margin-top: 20px;
+	float: middle;
+	display:inline-block;
+}
+
+#desc_text {
+	width: 200px;
+	height: 100px;
+	margin-top: 20px;
+	float: middle;
+	display:inline-block;
+}
+
+#genres_text {
+	width: 200px;
+	height: 100px;
+	margin-top: 20px;
+	float: middle;
+	display:inline-block;
+}
+
+#addProfilePic {
+    float: middle;
+    margin-top: 100px;
+}
+
+#addHeaderPic {
+    float: middle;
+}
+
+#following {
+    float: left;
+    color: #E94418
+    border: none;
+    background-color: #F3F3F3;
+    font-size: 14px; 
+    font-weight: bold;
+}
+
+#nooffollowing {
+    float: left;
+    color: #E94418
+    border: none;
+    background-color: #F3F3F3;
+    font-weight: bold;
+}
+
+#followers {
+    color: #E94418;
+    float: right;
+    border: none;
+    background-color: #F3F3F3;
+    font-size: 14px; 
+    font-weight: bold;
+}
+
+#nooffollowers {
+    float: right;
+    color: #E94418
+    border: none;
+    background-color: #F3F3F3;
+    font-weight: bold;
+}
+
+#followings {
+	margin-top: 20px;
+}
+
+#timelinebutton{
+	font-size: 10px; 
+    font-weight: bold;
+    border: none;
+    background-color: white;
+}
+
+#recordingsbutton{
+	font-size: 10px; 
+    font-weight: bold;
+    border: none;
+    background-color: white;
+}
+
+label {
+    display:inline-block;
+    width:200px;
+    margin-right:30px;
+    text-align:middle;
+}
+
+fieldset {
+    border:none;
+    width:500px;
+    margin: 20 auto 20 auto;
+}
 

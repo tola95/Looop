@@ -62,7 +62,6 @@ Meteor.publish("activities", function() {
 });
 
 Meteor.publish("userData", function () {
-<<<<<<< HEAD
   return Meteor.users.find(
     {_id: this.userId},
     {fields: {'bio': 1, 
@@ -74,14 +73,6 @@ Meteor.publish("userData", function () {
              }
     }
   );
-=======
-  if (this.userId) {
-    return Meteor.users.find({_id: this.userId},
-                             {fields: {'followers': 1, 'following': 1, 'notifications': 1, 'activityFeed': 1, 'seenNotification': 1}});
-  } else {
-    this.ready();
-  }
->>>>>>> af4a8c06817d973aed94577a31fe119189dba5a2
 });
 
 Meteor.methods({
@@ -211,12 +202,10 @@ Meteor.methods({
   }
 });
 
-<<<<<<< HEAD
 Meteor.publish("images", function () {
   return Images.find();
 });
 
-=======
 RecordingActivity = function(recordingId, user) {
   this.recordingId = recordingId;
   this.postedAt = new Date();
@@ -229,4 +218,3 @@ FollowedNotification = function(followerId) {
   this.followerId = followerId;
   this.ttype = "FollowedNotification";
 }
->>>>>>> af4a8c06817d973aed94577a31fe119189dba5a2
