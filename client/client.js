@@ -47,23 +47,6 @@ getInstrumentSounds = function(instrument) {
   return Sounds.findOne({"instrument": instrument}).paths;
 }  
 
-Session.setDefault("activeInstrumentView", DRUM_VIEW);
-
-Template.home.helpers({
-  activeView: function () { return Session.get("activeInstrumentView"); },
-
-  recordings: function () {
-    if (Meteor.userId() != null){
-      var usersRecordings = Meteor.call("getRecordings", Meteor.userId());
-      Session.set("sessionRecordings", usersRecordings);
-      return numOfRecordingsToShow();
-    } else {
-      return Session.get("sessionRecordings");      
-    }
-  },
-
-});
-
 toggle_sidebar = function() {
   classie.toggle( event.target, 'active');
     var menuLeft = document.getElementById('cbp-spmenu-s1')
@@ -308,6 +291,22 @@ Template.bio.events = {
 Session.setDefault("sessionRecordings", new Array());
 Session.setDefault("numberOfRecordingToShow", 5);
 Session.setDefault("sessionId", 1);
+Session.setDefault("activeInstrumentView", DRUM_VIEW);
+
+Template.home.helpers({
+  activeView: function () { return Session.get("activeInstrumentView"); },
+
+  recordings: function () {
+    if (Meteor.userId() != null){
+      var usersRecordings = Meteor.call("getRecordings", Meteor.userId());
+      Session.set("sessionRecordings", usersRecordings);
+      return numOfRecordingsToShow();
+    } else {
+      return Session.get("sessionRecordings");      
+    }
+  },
+
+});
 
 Template.save_recording.events({
   'click button': function() {
@@ -386,7 +385,7 @@ numOfRecordingsToShow = function() {
     return currentRecordings;
   } else {
     var newCurrentRecordings = new Array();
-    for(var i = 0; i <= Session.get("numberOfRecordingToShow"); i++) {
+    for(var i = 0; i < Session.get("numberOfRecordingToShow"); i++) {
       newCurrentRecordings[i] = currentRecordings[i];
     }
     return newCurrentRecordings;
@@ -394,7 +393,25 @@ numOfRecordingsToShow = function() {
 }
 
 Template.record_strip.helpers({
-  sessionId : function(){return Session.get("sessionId");}
+  sessionId : function(){return Session.get("sessionId");},
+});
+
+Template.record_strip.events({
+  'click input' : function (event){
+    var inputId = event.target.id;
+    var userRecordings = Session.get("sessionRecordings");
+    if (Meteor.userId() != null){
+      for (var i = 0; i < userRecordings.length; i++){
+        if(inputId == userRecordings[i]._id){
+          userRecordings[i].playRecording(audioController);
+          break;
+        }
+      }
+    } else {
+      var index = userRecordings.length - inputId;
+      userRecordings[index].playRecording(audioController);
+    }
+  }
 });
 
 
