@@ -2,24 +2,50 @@ var TIMELINE_VIEW = "timeline_view",
     RECORDINGS_VIEW = "recordings_view";
 
 Meteor.subscribe("userData");
+Meteor.subscribe("allUserData");
+
+addRecording = function() {
+  Meteor.call("addRecordings", {name: "published", user: "zJrMK9gDyHRovmKg2", published: true});
+  // Meteor.call("addRecordings", {name: "unpublished", user: "zJrMK9gDyHRovmKg2", published: false});
+}
+
+Template.personal.helpers({
+  currentUserPage: function() {
+    return Meteor.userId() == Template.instance().data.userId;
+  }
+});
+
+Template.personal.events({
+  'click .follow-button': function(event, template) {
+    Meteor.call("follow", template.data.userId);
+  }
+});
 
 Template.bio.helpers({
   fullname: function() {
-    var user = Meteor.user();
+    // console.log("id: "+ Router.current().params.userID);
+    var user = Meteor.users.findOne({_id: Router.current().params.userID});
+    // console.log("user: " + user);
     if (user) {
-      return user.fullname;
+      if (user.fullname) {
+        // console.log("fullname: " + user.fullname);
+        return user.fullname;
+      } else {
+        // console.log("username: " + user.username);
+        return user.username;
+      }
     }
   },
 
   bio: function() {
-    var user = Meteor.user();
+    var user = Meteor.users.findOne({_id: Router.current().params.userID});
     if (user) {
       return user.bio;
     }
   },
 
   genres: function() {
-    var user = Meteor.user();
+    var user = Meteor.users.findOne({_id: Router.current().params.userID});
     if (user) {
       return user.genres;
     }
@@ -28,13 +54,13 @@ Template.bio.helpers({
 
 Template.followings.helpers({
   numberFollowers: function() {
-    var user = Meteor.user();
+    var user = Meteor.users.findOne({_id: Router.current().params.userID});
     if (user && user.followers) {
       return user.followers.length;
     }
   },
   numberFollowing: function() {
-    var user = Meteor.user();
+    var user = Meteor.users.findOne({_id: Router.current().params.userID});
     if (user && user.following) {
       return user.following.length;
     }
@@ -43,7 +69,7 @@ Template.followings.helpers({
 
 Session.setDefault("feedView", TIMELINE_VIEW);
 
-Template.usermain.events = {
+Template.current_usermain.events = {
    'click #timelinebutton' : function() {
       Session.set("feedView", TIMELINE_VIEW);
       document.getElementById('recordings').style.display = "none";
@@ -57,7 +83,7 @@ Template.usermain.events = {
    }
 };
 
-Template.usermain.helpers({
+Template.current_usermain.helpers({
   feedView: function() {
     return Session.get("feedView");
   }
@@ -71,7 +97,6 @@ Template.edetails.events({
 
 updateSaveDetailsVisibility = function(visibility) {
   elems = document.getElementsByClassName("save-details");
-  console.log(elems);
   for (var i=0; i<elems.length; i++) {
     elems[i].style.display = visibility;
   }
@@ -121,3 +146,9 @@ Template.details.events = {
     Meteor.call("addProfilePhoto", files);
   }
 };
+
+Template.other_usermain.helpers({
+  published_recordings: function() {
+    return Recordings.find({user: Router.current().params.userID, published: true});
+  }
+});

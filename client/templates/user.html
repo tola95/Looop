@@ -11,9 +11,13 @@
 
   {{> personaldetails }}
 
-  {{> usermain }}
-  
-  {{> editDetails}}
+  {{#if currentUserPage}}
+    {{> current_usermain }}
+    {{> editDetails}}
+  {{else}}
+    <button class="follow-button">Follow</button>
+    {{> other_usermain}}
+  {{/if}}
   
 </div>
 </template>
@@ -26,13 +30,25 @@
   </div>
 </template>
 
-<template name="usermain">
-  <div id="main" align="center">
+<template name="current_usermain">
+  <div class="main">
     <button id="timelinebutton">Timeline</button>
     <button id="recordingsbutton">Recordings</button>
     <h3 style="display:none" id="recordings">Recordings</h3>
     <h3 style="display:block" id="timeline">Timeline</h3>
     {{> UI.dynamic template=feedView }}
+  </div> 
+</template>
+
+<template name="other_usermain">
+  <div class="main">
+    <button onclick="addRecording()">Add recording</button>
+    <h3 id="recordings">Recordings</h3>
+    {{#each published_recordings }}
+      {{> recordingCard}}
+    {{else}}
+      There are no published recordings.
+    {{/each}}
   </div> 
 </template>
 
@@ -76,7 +92,9 @@
 
     {{> followings}} 
 
-    {{> edetails}}
+    {{#if currentUserPage}}
+      {{> edetails}}
+    {{/if}}
       
   </div>
 
