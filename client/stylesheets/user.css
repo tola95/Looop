@@ -12,10 +12,8 @@
 
 #header {
 	height: 200px;
-	border: 3px solid #E94418;
 	margin-left: auto;
 	margin-right: auto;
-	z-index: 0;
 	background-color: white;
 }
 
@@ -31,7 +29,6 @@
 }
 
 #bio {
-	border: 3px solid #E94418;
 	margin-top: 20px;
 	z-index: 1;
 	font-family: 'Tahoma', Arial, sans-serif;
@@ -39,7 +36,6 @@
 }
 
 #edit_details {
-	border: 3px solid #E94418;
 	margin-top: 20px;
 	z-index: 1;
 	font-family: 'Tahoma', Arial, sans-serif;
@@ -52,14 +48,12 @@
 }
 
 #main {
-	border: 3px solid #E94418;
 	margin-left: auto;
-	margin-right: auto;
+	margin-right: 5%;
 	float: middle;
-	width: 400px;
+	width: 800px;
 	height: 800px;
-	z-index: 1;
-	font-family: 'Tahoma', Arial, sans-serif;
+	font-family: 'smallFont', Arial, sans-serif;
 	margin-top: 20px;
 	background-color: white;
 
@@ -116,25 +110,25 @@
 
 #following {
     float: left;
-    color: #E94418
-    border: none;
+    color: #E94418;
     background-color: #F3F3F3;
+    border-style: solid 1px;
     font-size: 14px; 
     font-weight: bold;
 }
 
 #nooffollowing {
     float: left;
-    color: #E94418
-    border: none;
-    background-color: #F3F3F3;
+    margin-top: 12px;
+    margin-left: 10px;
     font-weight: bold;
 }
 
 #followers {
     color: #E94418;
     float: right;
-    border: none;
+    margin-left: 10px;
+    border-style: solid 1px;
     background-color: #F3F3F3;
     font-size: 14px; 
     font-weight: bold;
@@ -142,28 +136,42 @@
 
 #nooffollowers {
     float: right;
-    color: #E94418
-    border: none;
-    background-color: #F3F3F3;
+    margin-top: 12px;
+    margin-left: 10px;
     font-weight: bold;
 }
 
 #followings {
 	margin-top: 20px;
+
 }
 
 #timelinebutton{
-	font-size: 10px; 
-    font-weight: bold;
+	margin-top: 20px;
+	font-size: 15px; 
+	color: #E94418;
     border: none;
     background-color: white;
 }
 
 #recordingsbutton{
-	font-size: 10px; 
-    font-weight: bold;
+	margin-top: 20px;
+	font-size: 15px; 
+	color: #E94418;
     border: none;
     background-color: white;
+}
+
+#recordings {
+	font-family: 'smallFont';
+	font-style: bold;
+	font-size: 20px;
+}
+
+#timeline {
+	font-family: 'smallFont';
+	font-style: bold;
+	font-size: 20px;
 }
 
 label {
