@@ -103,8 +103,13 @@
 }
 
 #following {
+	float: left;
+    border: none;
+    background: none;
     color: #E94418;
-    font-size: 14px; 
+    font-size: 20px;
+    font-weight: bold; 
+
 }
 
 #nooffollowing {
@@ -115,8 +120,12 @@
 
 #followers {
     color: #E94418;
-    font-size: 14px; 
+    font-size: 20px; 
     margin-left: 20px;
+    float: right;
+    border: none;
+    background: none;
+    font-weight: bold;
 }
 
 #nooffollowers {
