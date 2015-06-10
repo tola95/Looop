@@ -70,7 +70,8 @@ Meteor.publish("userData", function () {
               'profilephoto': 1, 
               'following': 1,
               'followers': 1,
-              'seenNotification': 1
+              'seenNotification': 1,
+              'activityFeed': 1
              }
     }
   );
@@ -170,7 +171,7 @@ Meteor.methods({
 
     // TODO: Get recording out of recording DB - check creator ID (maybe??)
 
-    var activity = new RecordingActivity(recordingId, Meteor.user().username);
+    var activity = new RecordingActivity(recordingId, Meteor.user().username, "Song Title");
     var activityId = Activities.insert(activity);
 
     var followers = Meteor.users.findOne({_id: this.userId}).followers;
@@ -236,11 +237,11 @@ Meteor.publish("images", function () {
   return Images.find();
 });
 
-RecordingActivity = function(recordingId, user) {
+RecordingActivity = function(recordingId, user, name) {
   this.recordingId = recordingId;
   this.postedAt = new Date();
   this.postedBy = user;
-  this.nameOfActivity = "song";
+  this.nameOfActivity = name;
 }
 
 // Notification for when one user follows another. For notifying the user being followed
