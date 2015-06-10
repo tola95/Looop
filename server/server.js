@@ -69,7 +69,8 @@ Meteor.publish("userData", function () {
               'genres': 1, 
               'profilephoto': 1, 
               'following': 1,
-              'followers': 1
+              'followers': 1,
+              'seenNotification': 1
              }
     }
   );
