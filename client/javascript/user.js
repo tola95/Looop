@@ -63,6 +63,21 @@ Template.usermain.helpers({
   }
 });
 
+Template.edetails.events({
+  'click #editdetailslink' : function() {
+    updateSaveDetailsVisibility("block");
+  }
+});
+
+updateSaveDetailsVisibility = function(visibility) {
+  elems = document.getElementsByClassName("save-details");
+  console.log(elems);
+  for (var i=0; i<elems.length; i++) {
+    elems[i].style.display = visibility;
+  }
+}
+
+
 Template.details.helpers({
   fullname: function() {
     var user = Meteor.user();
@@ -96,6 +111,7 @@ Template.details.events = {
 
     document.getElementById("desc_text").value = "";
     document.getElementById("fname_text").value = "";
+    updateSaveDetailsVisibility("none");
   },
 
 

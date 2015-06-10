@@ -13,13 +13,19 @@
 
   {{> usermain }}
 
-  <div id="editdetailslink">
-    <a id="editdetailspage" href="/details" target="_blank">Edit Details</a>
-  </div>
-
-  {{details}}
+  {{> edetails}}
+  
+  {{> editDetails}}
   
 </div>
+</template>
+
+<template name="edetails">
+  <div id="editdetailslink">
+    <button>
+      Edit Details
+    </button>
+  </div>
 </template>
 
 <template name="usermain">
@@ -52,7 +58,9 @@
     <h3 id="fullname">{{fullname}}</h3>
     <p id="description">{{bio}}</p>
     <p id="genres">{{genres}}</p>
+
   </div>
+
 </template>
 
 <template name="header">
@@ -68,7 +76,17 @@
 
     {{> bio }} 
 
-    {{> followings}}   
+    {{> followings}} 
+      
+  </div>
+
+</template>
+
+<template name="editDetails">
+  <div class="save-details dark-background" id="save-details-background">
+    <div class="save-details" id="save-details-wrapperr">
+      {{> details}}
+    </div>
   </div>
 </template>
 
@@ -83,5 +101,35 @@
     <p id="nooffollowers">{{numberFollowers}}</p>
     </div>
   </div>
+</template>
+
+<template name="details">
+<body>
+
+  <div id="edit_details" align="center">
+      <fieldset>
+      <div>
+      Add Photo: <input id="addProfilePic" type="file"  />
+      </div>
+      <div>
+      Add Header: <input id="addHeaderPic" type="file" />
+      </div>
+      <div>   
+      <label for="fname_text">Full Name </label>
+            <textarea rows="1" id="fname_text" maxlength="30">{{fullname}}</textarea>
+      </div>
+      <div>
+      <label for="desc_text">Biography </label>
+            <textarea rows="5" id="desc_text" maxlength="140">{{bio}}</textarea>
+      </div>
+      <div>
+      <label for="genres_text">Genres </label>
+            <textarea rows="2" id="genres_text" maxlength="50">{{genres}}</textarea>
+      </div>
+      <button id="update">Update</button>
+      </fieldset>
+    
+      </div>
+</body>
 </template>
 

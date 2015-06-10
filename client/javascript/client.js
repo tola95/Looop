@@ -361,6 +361,7 @@ Template.save_recording.events({
   Must be passed "block" or "none" */
 updateSaveRecordingVisibility = function(visibility) {
   elems = document.getElementsByClassName("save-recording");
+  console.log(elems);
   for (var i=0; i<elems.length; i++) {
       elems[i].style.display = visibility;
   }
