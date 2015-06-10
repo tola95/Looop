@@ -64,7 +64,7 @@ Template.recording_controls.events({
     document.getElementById("record-button").style.display = "inline-block";
     document.getElementById("stop-button").style.display = "none";
     audioController.stopRecording(); 
-    Meteor.call("record");
+    Meteor.call("addRecording");
     updateSaveRecordingVisibility("block");
   }
 
@@ -290,7 +290,7 @@ Template.bio.events = {
 
 Session.setDefault("sessionRecordings", new Array());
 Session.setDefault("numberOfRecordingToShow", 5);
-Session.setDefault("sessionId", 1);
+Session.setDefault("sessionId", 0);
 Session.setDefault("activeInstrumentView", DRUM_VIEW);
 
 Template.home.helpers({
@@ -325,8 +325,8 @@ Template.save_recording.events({
         var newRecordingArray = Session.get("sessionRecordings");
         newRecordingArray.unshift(newRecording);
         Session.set("sessionRecordings", newRecordingArray);
-        var newSessionId = Session.get("sessionId");
-        newSessionId++;
+        var oldSessionId = Session.get("sessionId");
+        newSessionId = oldSessionId + 1;
         Session.set("sessionId", newSessionId);
       }
     });
@@ -393,14 +393,17 @@ numOfRecordingsToShow = function() {
 }
 
 Template.record_strip.helpers({
-  sessionId : function(){return Session.get("sessionId");},
+  sessionId : function(){
+    return Session.get("sessionId");
+    },
 });
 
 Template.record_strip.events({
   'click input' : function (event){
     var inputId = event.target.id;
-    var userRecordings = Session.get("sessionRecordings");
+    console.log("the inputId is " + inputId);
     if (Meteor.userId() != null){
+      var userRecordings = Session.get("sessionRecordings");
       for (var i = 0; i < userRecordings.length; i++){
         if(inputId == userRecordings[i]._id){
           userRecordings[i].playRecording(audioController);
@@ -408,7 +411,13 @@ Template.record_strip.events({
         }
       }
     } else {
+      var userRecordings = Session.get("sessionRecordings");
+      console.log("The user recordings are " + userRecordings);
+      console.log("The length of userRecordings is " + userRecordings.length);
       var index = userRecordings.length - inputId;
+      console.log("The index is " + index);
+      console.log("The reconding is " + userRecordings[index]);
+      console.log("the type of recording is " + typeof userRecordings[index]);
       userRecordings[index].playRecording(audioController);
     }
   }
