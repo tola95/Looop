@@ -27,6 +27,9 @@
       </a>
 
       <div id="notif_block">
+        {{#if no_notifs}}
+          No notifications
+        {{/if}}
         {{#each notifs}}
           {{> notifications}}
         {{/each}}

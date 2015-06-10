@@ -3,13 +3,25 @@ Router.route('/', function () {
 });
 
 Router.route('/user', function () {
-  this.render('personal');
+	if (Meteor.user()) {
+	  this.render('personal');
+	} else {
+		this.redirect("/");
+	}
 });
 
 Router.route('/details', function () {
-  this.render('details');
+	if (Meteor.user()) {
+	  this.render('details');
+	} else {
+		this.redirect("/");
+	}
 });
 
 Router.route('/upload.php', function() {
-  this.render('upload');
+	if (Meteor.user()) {
+	  this.render('upload');
+	} else {
+		this.redirect("/");
+	}  
 });
