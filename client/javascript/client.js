@@ -181,7 +181,7 @@ document.onkeydown = function(event) {
     return;
   }
   // Meteor.call("publishRecording", "record");
-  // Meteor.call("follow", "6jiKDu8DWW6JBvdrG");
+  // Meteor.call("follow", "XbMEG8gzZaCXDEYRx");
   var key = event.keyCode;
   if (Session.get("activeInstrumentView") ==  DRUM_VIEW) {
     var button = document.getElementById("key-" + key);
