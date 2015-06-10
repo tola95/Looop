@@ -30,7 +30,7 @@ window.onload = function() {
 Template.banner.events({
   'click #notifications-wrapper': function() {
     var value = document.getElementById('notif_block').style.display;
-    console.log(document.getElementById('notif_block').style.display);
+    // console.log(document.getElementById('notif_block').style.display);
     if (value == 'inline-block') {
       document.getElementById('notif_block').style.display = 'none'; 
     }
@@ -123,9 +123,18 @@ Template.banner.helpers({
     if(!notifications) {
       return[];
     }
-    console.log(user.notifications);
-    console.log(notifications);
+    // console.log(user.notifications);
+    // console.log(notifications);
     return notifications;
+  },
+
+  no_notifs: function() {
+    var user = Meteor.user();
+    if (user && user.notifications) {
+      return user.notifications.length == 0;
+    } else {
+      return true;
+    }
   },
 
   seenNotif: function() {

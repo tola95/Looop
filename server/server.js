@@ -71,7 +71,8 @@ Meteor.publish("userData", function () {
               'following': 1,
               'followers': 1,
               'seenNotification': 1,
-              'activityFeed': 1
+              'activityFeed': 1,
+              'notifications': 1
              }
     }
   );
