@@ -4,7 +4,8 @@ Template.activity.helpers({
 
 	activities: function () {
 		var activities = [];
-		var userDoc = Meteor.users.findOne({_id: Meteor.userId()}, {fields: {'activityFeed': 1}});
+		// var userDoc = Meteor.users.findOne({_id: Meteor.userId()}, {fields: {'activityFeed': 1}});
+		var userDoc = Meteor.user()
 		if (!userDoc) {
 			return [];
 		}
@@ -17,7 +18,6 @@ Template.activity.helpers({
 			activities.push(act);
 		}
 
-		console.log("activities: " + activities);
 		return activities;
 	}
 });

@@ -28,8 +28,17 @@
     <button id="recordingsbutton">Recordings</button>
     <h3 style="display:none" id="recordings">Recordings</h3>
     <h3 style="display:block" id="timeline">Timeline</h3>
-    {{> activity }}
+    {{> UI.dynamic template=feedView }}
   </div> 
+</template>
+
+
+<template name="timeline_view">
+  {{> activity }}
+</template>
+
+<template name="recordings_view">
+  recordings
 </template>
 
 <template name="photo">
