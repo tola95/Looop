@@ -14,6 +14,10 @@
   {{> usermain }}
   
   {{> editDetails}}
+
+  {{> listFollowers}}
+
+  {{> listFollowing}}
   
 </div>
 </template>
@@ -90,6 +94,25 @@
   </div>
 </template>
 
+<template name="listFollowers">
+  <div class="list-followers dark-background" id="list-followers-background">
+    <div class="list-followers" id="list-followers-wrapperr">
+      <button class="closebox">X</button>
+      Followers
+    </div>
+  </div>
+</template>
+
+<template name="listFollowing">
+  <div class="list-following dark-background" id="list-following-background">
+    <div class="list-following" id="list-following-wrapperr">
+      <button class="closebox">X</button>
+      Following
+    </div>
+  </div>
+</template>
+
+
 <template name="followings">
   <div id="follow-buttons-container">
     <div id="following-container">
@@ -109,6 +132,8 @@
 
 <template name="details">
 <body>
+
+  <button class="closebox">X</button>
 
   <div id="edit_details" align="center">
       <fieldset>

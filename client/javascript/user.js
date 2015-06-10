@@ -51,6 +51,47 @@ Template.followings.helpers({
   }
 });
 
+Template.followings.events({
+  'click #following' : function() {
+    updateListFollowersVisibility("block");
+  },
+
+  'click #followers' : function() {
+    updateListFollowingVisibility("block");
+  }
+  
+});
+
+Template.listFollowing.events({
+  'click .closebox' : function() {
+    updateListFollowingVisibility("none");
+  }
+
+});
+
+Template.listFollowers.events({
+  'click .closebox' : function() {
+    updateListFollowersVisibility("none");
+  }
+  
+});
+
+updateListFollowersVisibility = function(visibility) {
+  elems = document.getElementsByClassName("list-followers");
+  console.log(elems);
+  for (var i=0; i<elems.length; i++) {
+    elems[i].style.display = visibility;
+  }
+}
+
+updateListFollowingVisibility = function(visibility) {
+  elems = document.getElementsByClassName("list-following");
+  console.log(elems);
+  for (var i=0; i<elems.length; i++) {
+    elems[i].style.display = visibility;
+  }
+}
+
 Session.setDefault("feedView", TIMELINE_VIEW);
 
 Template.usermain.events = {
@@ -124,6 +165,9 @@ Template.details.events = {
     updateSaveDetailsVisibility("none");
   },
 
+  'click .closebox' : function() {
+    updateSaveDetailsVisibility("none");
+  },
 
   'change #addProfilePic' : function(event, template) {
     var files = event.target.files;
