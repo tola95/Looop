@@ -5,6 +5,7 @@
 	height: 100px;
 	margin: 25px auto;
 	box-shadow: 2px 2px 3px #999;
+	border-radius: 5px;
 }
 
 .recording {

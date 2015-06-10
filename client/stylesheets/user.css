@@ -1,12 +1,12 @@
-#userbody {
-    height: 1000px;
-}
-
 #personaldetails {
 	float: left;
 	width: 300px;
 	margin-top: 50px;
 	margin-left: 30px;
+	border: 2px solid #F3F3F3;
+	border-radius: 5px;
+	box-shadow: 2px 2px 3px #E3E3e3;
+	padding: 5px;
 }
 
 #header {
@@ -19,12 +19,9 @@
 #photo {
 	width: 30%;
 	height: 40%;
-	border: 3px solid #E94418;
 	margin: 20px;
 	z-index: 1;
 	display: inline-block;
-	background-color: white;
-
 }
 
 #bio {
@@ -45,16 +42,15 @@
 }
 
 #main {
-	border: 1px solid #F3F3F3;
+	border: 2px solid #F3F3F3;
+	border-radius: 5px;
 	margin-left: auto;
 	margin-right: 5%;
-	float: middle;
 	width: 800px;
-	height: 800px;
 	font-family: 'smallFont', Arial, sans-serif;
 	margin-top: 20px;
 	background-color: white;
-
+	box-shadow: 2px 2px 3px #E3E3e3;
 }
 
 #suggestions {
@@ -71,11 +67,7 @@
 }
 
 #editdetailslink {
-	float: left;
-	margin-left: 10px;
-	margin-top: 20px;
-	text-decoration: none;
-	color: black;
+	clear: both;
 }
 
 #fname_text {
@@ -111,41 +103,37 @@
 }
 
 #following {
-    float: left;
     color: #E94418;
-    background-color: #F3F3F3;
-    border-style: solid 1px;
     font-size: 14px; 
-    font-weight: bold;
 }
 
 #nooffollowing {
-    float: left;
     margin-top: 12px;
-    margin-left: 10px;
+
     font-weight: bold;
 }
 
 #followers {
     color: #E94418;
-    float: right;
-    margin-left: 10px;
-    border-style: solid 1px;
-    background-color: #F3F3F3;
     font-size: 14px; 
-    font-weight: bold;
+    margin-left: 20px;
 }
 
 #nooffollowers {
-    float: right;
     margin-top: 12px;
-    margin-left: 10px;
     font-weight: bold;
 }
 
-#followings {
-	margin-top: 20px;
+#followers-container {
+	float: right;
+}
 
+#follow-buttons-container {
+	margin-top: 20px;
+}
+
+.follows-buttons {
+	display: inline-block;
 }
 
 #timelinebutton{
@@ -216,4 +204,3 @@ fieldset {
 .save-details {
   display: none;
 }
-

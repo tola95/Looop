@@ -12,8 +12,6 @@
   {{> personaldetails }}
 
   {{> usermain }}
-
-  {{> edetails}}
   
   {{> editDetails}}
   
@@ -49,7 +47,7 @@
 
 <template name="photo">
   <div id="photo">
-    <img id="profilephoto" src="dj.png">
+    <img id="profilephoto" src="images/dj.png">
   </div>
 </template>
 
@@ -77,6 +75,8 @@
     {{> bio }} 
 
     {{> followings}} 
+
+    {{> edetails}}
       
   </div>
 
@@ -91,15 +91,15 @@
 </template>
 
 <template name="followings">
-  <div id="followings" >
-    <div>
-    <button id="following">Following</button>
-    <button id="followers">Followers</button>
-    </div>
-    <div>
-    <p id="nooffollowing">{{numberFollowing}}</p>
-    <p id="nooffollowers">{{numberFollowers}}</p>
-    </div>
+  <div id="follow-buttons-container">
+    <span id="following-container">
+      <button class="follows-buttons" id="following">Following</button>
+      <span id="nooffollowing">{{numberFollowing}}</span>
+    </span>
+    <span id="followers-container">
+      <button class="follows-buttons" id="followers">Followers</button>
+      <span id="nooffollowers">{{numberFollowers}}</span>
+    </span>
   </div>
 </template>
 
