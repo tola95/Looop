@@ -92,14 +92,18 @@
 
 <template name="followings">
   <div id="follow-buttons-container">
-    <span id="following-container">
-      <button class="follows-buttons" id="following">Following</button>
-      <span id="nooffollowing">{{numberFollowing}}</span>
-    </span>
-    <span id="followers-container">
-      <button class="follows-buttons" id="followers">Followers</button>
-      <span id="nooffollowers">{{numberFollowers}}</span>
-    </span>
+    <div id="following-container">
+      <div >
+       <button class="follows-buttons" id="following">Following</button>
+      </div>
+      <div id="nooffollowing">{{numberFollowing}}</div>
+    </div>
+    <div id="followers-container">
+      <div >
+        <button class="follows-buttons" id="followers">Followers</button>
+      </div>
+      <div id="nooffollowers">{{numberFollowers}}</div>
+    </div>
   </div>
 </template>
 

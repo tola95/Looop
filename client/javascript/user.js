@@ -30,13 +30,23 @@ Template.followings.helpers({
   numberFollowers: function() {
     var user = Meteor.user();
     if (user && user.followers) {
-      return user.followers.length;
+      var length = user.followers.length;
+      if (length > 0) {
+        return length;
+      } else {
+        return 0;
+      }
     }
   },
   numberFollowing: function() {
     var user = Meteor.user();
     if (user && user.following) {
-      return user.following.length;
+      var length = user.following.length;
+      if (length > 0) {
+        return length;
+      } else {
+        return 0;
+      }
     }
   }
 });

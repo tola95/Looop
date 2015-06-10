@@ -113,9 +113,10 @@
 }
 
 #nooffollowing {
-    margin-top: 12px;
-
+    float: left;
     font-weight: bold;
+    margin-left: 40px;
+    font-size: 40px;
 }
 
 #followers {
@@ -129,12 +130,18 @@
 }
 
 #nooffollowers {
-    margin-top: 12px;
     font-weight: bold;
+    float: right;
+    margin-right: 40px;
+    font-size: 40px;
 }
 
 #followers-container {
 	float: right;
+}
+
+#following-container {
+	float: left;
 }
 
 #follow-buttons-container {
