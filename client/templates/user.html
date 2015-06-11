@@ -11,9 +11,19 @@
 
   {{> personaldetails }}
 
-  {{> usermain }}
+  {{#if currentUserPage}}
+    {{> current_usermain }}
+    {{> editDetails}}
+
+  	{{> listFollowers}}
+
+  	{{> listFollowing}}
+  {{else}}
+    <button class="follow-button">Follow</button>
+    {{> other_usermain}}
+  {{/if}}
   
-  {{> editDetails}}
+  
   
 </div>
 </template>
@@ -26,13 +36,25 @@
   </div>
 </template>
 
-<template name="usermain">
-  <div id="main" align="center">
+<template name="current_usermain">
+  <div class="main">
     <button id="timelinebutton">Timeline</button>
     <button id="recordingsbutton">Recordings</button>
     <h3 style="display:none" id="recordings">Recordings</h3>
     <h3 style="display:block" id="timeline">Timeline</h3>
     {{> UI.dynamic template=feedView }}
+  </div> 
+</template>
+
+<template name="other_usermain">
+  <div class="main">
+    <button onclick="addRecording()">Add recording</button>
+    <h3 id="recordings">Recordings</h3>
+    {{#each published_recordings }}
+      {{> recordingCard}}
+    {{else}}
+      There are no published recordings.
+    {{/each}}
   </div> 
 </template>
 
@@ -47,7 +69,7 @@
 
 <template name="photo">
   <div id="photo">
-    <img id="profilephoto" src="images/dj.png">
+    <img id="profilephoto" src="images/dj.png" width="90px" height="80px">
   </div>
 </template>
 
@@ -76,7 +98,9 @@
 
     {{> followings}} 
 
-    {{> edetails}}
+    {{#if currentUserPage}}
+      {{> edetails}}
+    {{/if}}
       
   </div>
 
@@ -90,21 +114,46 @@
   </div>
 </template>
 
+<template name="listFollowers">
+  <div class="list-followers dark-background" id="list-followers-background">
+    <div class="list-followers" id="list-followers-wrapperr">
+      <button class="closebox">X</button>
+      Followers
+    </div>
+  </div>
+</template>
+
+<template name="listFollowing">
+  <div class="list-following dark-background" id="list-following-background">
+    <div class="list-following" id="list-following-wrapperr">
+      <button class="closebox">X</button>
+      Following
+    </div>
+  </div>
+</template>
+
+
 <template name="followings">
   <div id="follow-buttons-container">
-    <span id="following-container">
-      <button class="follows-buttons" id="following">Following</button>
-      <span id="nooffollowing">{{numberFollowing}}</span>
-    </span>
-    <span id="followers-container">
-      <button class="follows-buttons" id="followers">Followers</button>
-      <span id="nooffollowers">{{numberFollowers}}</span>
-    </span>
+    <div id="following-container">
+      <div >
+       <button class="follows-buttons" id="following">Following</button>
+      </div>
+      <div id="nooffollowing">{{numberFollowing}}</div>
+    </div>
+    <div id="followers-container">
+      <div >
+        <button class="follows-buttons" id="followers">Followers</button>
+      </div>
+      <div id="nooffollowers">{{numberFollowers}}</div>
+    </div>
   </div>
 </template>
 
 <template name="details">
 <body>
+
+  <button class="closebox">X</button>
 
   <div id="edit_details" align="center">
       <fieldset>
