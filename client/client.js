@@ -321,6 +321,7 @@ Template.save_recording.events({
         Meteor.call("addRecording", newRecording);
       } else {
         var newRecording = new Recording(name, Meteor.userId(), wav);
+        console.log(newRecording.wav);
         var newRecordingArray = Session.get("sessionRecordings");
         newRecordingArray.unshift(newRecording);
         Session.set("sessionRecordings", newRecordingArray);
@@ -409,6 +410,7 @@ Template.record_strip.events({
         if(inputId == userRecordings[i].createdAt){
           console.log("The reconding's createdAt is " + userRecordings[i].createdAt);
           console.log("The wav is " + userRecordings[i].wav);
+          console.log(userRecordings[i].wav);
           var url = window.URL.createObjectURL(userRecordings[i].wav);
           audio.src = url;
           audio.play();
