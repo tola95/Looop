@@ -1,8 +1,8 @@
 var TIMELINE_VIEW = "timeline_view",
     RECORDINGS_VIEW = "recordings_view";
 
-Meteor.subscribe("userData");
 Meteor.subscribe("allUserData");
+Meteor.subscribe("userData");
 
 addRecording = function() {
   Meteor.call("addRecordings", {name: "published", user: "zJrMK9gDyHRovmKg2", published: true});
@@ -35,15 +35,11 @@ Template.personal.events({
 
 Template.bio.helpers({
   fullname: function() {
-    // console.log("id: "+ Router.current().params.userID);
     var user = Meteor.users.findOne({_id: Router.current().params.userID});
-    // console.log("user: " + user);
     if (user) {
       if (user.fullname) {
-        // console.log("fullname: " + user.fullname);
         return user.fullname;
       } else {
-        // console.log("username: " + user.username);
         return user.username;
       }
     }

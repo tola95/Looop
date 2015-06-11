@@ -21,6 +21,7 @@ var soundsDB = Meteor.subscribe("sounds", function() {
 
 Meteor.subscribe("images");
 Meteor.subscribe("recordings");
+Meteor.subscribe("allUserData");
 
 Session.setDefault("drumRendered", false);
 window.onload = function() {
