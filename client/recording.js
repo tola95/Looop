@@ -1,6 +1,6 @@
-Recording = function(name, user, blob){
+Recording = function(name, user, wav){
 	this.name = name;
 	this.user = user;
-	this.blob = blob;
+	this.wav = wav;
 	this.createdAt = new Date();
 }
