@@ -1,9 +1,9 @@
 <template name="banner">
 <div class="banner">
     {{#if homePage}}
-    <input type="image" class="upper-left_btn" id="sidebar-button" src="images/menu_icon.png" title="Sidebar menu button" width="35px" height="35px">
+    <input type="image" class="upper-left_btn" id="sidebar-button" src="/images/menu_icon.png" title="Sidebar menu button" width="35px" height="35px">
     {{else}}
-    <a href="/"><img class="upper-left_btn" src="images/home.png" width="35px" height="35px"></a>
+    <a href="/"><img class="upper-left_btn" src="/images/home.png" width="35px" height="35px"></a>
     {{/if}}
 
     <div class="logo">
@@ -22,7 +22,7 @@
         {{#if seenNotif}}
         Notifications
         {{else}}
-        Notifications <img src="images/menu_icon.png" width="5px" height="5px">
+        Notifications <img src="/images/menu_icon.png" width="5px" height="5px">
         {{/if}}
       </a>
 

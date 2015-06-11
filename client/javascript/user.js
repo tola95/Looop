@@ -12,12 +12,24 @@ addRecording = function() {
 Template.personal.helpers({
   currentUserPage: function() {
     return Meteor.userId() == Template.instance().data.userId;
+  },
+
+  followingUser: function() {
+    var otherUser = Template.instance().data.userId;
+    var currentUser = Meteor.user();
+    if (currentUser && currentUser.following) {
+      return currentUser.following.indexOf(otherUser) != -1;
+    }
   }
 });
 
 Template.personal.events({
-  'click .follow-button': function(event, template) {
+  'click #follow-button': function(event, template) {
     Meteor.call("follow", template.data.userId);
+  },
+
+  'click #unfollow-button': function(event, template) {
+    Meteor.call("unfollow", template.data.userId);
   }
 });
 

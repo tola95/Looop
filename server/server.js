@@ -159,7 +159,7 @@ Meteor.methods({
     Meteor.users.update({
       _id: followedId
       }, {
-      $pull: {followers: followedId}
+      $pull: {followers: this.userId}
     });
   },
 
