@@ -134,6 +134,12 @@ Meteor.methods({
     return 1;
   },
 
+  findByUsername: function(userName) {
+    var userr = Meteor.users.findOne({username: userName}, {fields: {'_id': 1}});
+    console.log(userr);
+    return userr;
+  },
+
   // function for adding the recording to the database when the user finishes recording
   addRecordings: function(recording) {
     Recordings.insert(recording);

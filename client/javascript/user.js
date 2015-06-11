@@ -104,7 +104,6 @@ Template.listFollowers.events({
 
 updateListFollowersVisibility = function(visibility) {
   elems = document.getElementsByClassName("list-followers");
-  console.log(elems);
   for (var i=0; i<elems.length; i++) {
     elems[i].style.display = visibility;
   }
@@ -112,7 +111,6 @@ updateListFollowersVisibility = function(visibility) {
 
 updateListFollowingVisibility = function(visibility) {
   elems = document.getElementsByClassName("list-following");
-  console.log(elems);
   for (var i=0; i<elems.length; i++) {
     elems[i].style.display = visibility;
   }

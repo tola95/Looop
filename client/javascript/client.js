@@ -95,15 +95,29 @@ Template.recording_controls.events({
 });
 
 Template.search.events({
+  'click #searchText': function() {
+    document.getElementById('results').style.display = "block";
+  },
+
   'keypress': function(event) {
     if (event.keyCode == 13) {
       var name = document.getElementById('searchText').value;
-      console.log('yes');
-      var user = Meteor.users.findOne({username: name});
+      var user = Meteor.users.findOne({username: name}, {fields: {'_id': 1}});
       if (!user) {
         return [];
       }
-      console.log(user);
+      console.log('hello');
+      var newDiv = document.createElement("div");
+      var att = document.createElement("a");
+      var userID = user._id;
+      if (!userID) {
+        return [];
+      }
+      att.setAttribute('href',"/user/:" + userID);
+      att.innerHTML = "name";
+      var elm = document.getElementById("results");
+      newDiv.appendChild(att);
+      elm.appendChild(newDiv);
     }
 
   }
