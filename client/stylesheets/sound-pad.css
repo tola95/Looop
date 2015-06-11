@@ -646,6 +646,11 @@ ul#piano li span:active, ul#piano li span.key-pressed {
   top: 0;
 }
 
+.search_box {
+  margin-left: 625px;
+  margin-top: -30px;
+}
+
 #save-recording-wrapper {
   z-index: 5000;
   border: solid;

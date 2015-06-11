@@ -93,6 +93,21 @@ Template.recording_controls.events({
 
 });
 
+Template.search.events({
+  'keypress': function(event) {
+    if (event.keyCode == 13) {
+      var name = document.getElementById('searchText').value;
+      console.log('yes');
+      var user = Meteor.users.findOne({username: name});
+      if (!user) {
+        return [];
+      }
+      console.log(user);
+    }
+
+  }
+});
+
 Template.home.events({
   'click #sidebar-button': function(event) {
     toggle_sidebar();

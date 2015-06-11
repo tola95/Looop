@@ -10,10 +10,13 @@
     <h1>Loop</h1>
     </div>
 
+    
+
   <div class="login">
     {{> loginButtons}}
   </div>
-
+  
+  
   {{#if currentUser}}
     <a id="activity-link" href="/user">Profile</a>
 
@@ -34,8 +37,9 @@
           {{> notifications}}
         {{/each}}
       </div>
-
+      
     </div>
+    {{> search}}
   {{/if}}
 
 </div>
@@ -46,5 +50,12 @@
     {{#if typeIs 'FollowedNotification'}}
     <b>{{followerId}}</b> is following you
     {{/if}}
+  </div>
+</template>
+
+<template name="search">
+  <div class="search_box">
+    <input id="searchText" type="text" value="Search..">
+    <input type="submit" style="display:none">
   </div>
 </template>
