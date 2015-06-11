@@ -64,7 +64,7 @@ Template.recording_controls.events({
     document.getElementById("record-button").style.display = "inline-block";
     document.getElementById("stop-button").style.display = "none";
     audioController.stopRecording(); 
-    Meteor.call("addRecording");
+    //Meteor.call("addRecording");
     updateSaveRecordingVisibility("block");
   }
 
@@ -290,7 +290,7 @@ Template.bio.events = {
 
 Session.setDefault("sessionRecordings", new Array());
 Session.setDefault("numberOfRecordingToShow", 5);
-Session.setDefault("sessionId", 0);
+//var sessionId =  0;
 Session.setDefault("activeInstrumentView", DRUM_VIEW);
 
 Template.home.helpers({
@@ -325,9 +325,10 @@ Template.save_recording.events({
         var newRecordingArray = Session.get("sessionRecordings");
         newRecordingArray.unshift(newRecording);
         Session.set("sessionRecordings", newRecordingArray);
-        var oldSessionId = Session.get("sessionId");
-        newSessionId = oldSessionId + 1;
-        Session.set("sessionId", newSessionId);
+        // var oldSessionId = Session.get("sessionId");
+        // newSessionId = oldSessionId + 1;
+        // Session.set("sessionId", newSessionId);
+        //sessionId++;
       }
     });
     audioController.clearRecording();
@@ -368,6 +369,7 @@ Accounts.onLogin(function() {
   var recentRecordings = Session.get("sessionRecordings");
   console.log("Session recordings after log in " + recentRecordings);
   for (var i = 0; i < recentRecordings; i++){
+    recentRecordings[i].name = Meteor.userId();
     Meteor.call("addRecording", recentRecordings[i]);
   }
     Session.set("sessionRecordings", new Array());
@@ -376,7 +378,8 @@ Accounts.onLogin(function() {
 //When a user logs outs 
 Accounts.onLogout(function() {
   Session.set("sessionRecordings", new Array());
-  Session.set("sessionId", 1);
+  //Session.set("sessionId", 1);
+  //sessionId = 0;
 });
 
 numOfRecordingsToShow = function() {
@@ -392,11 +395,11 @@ numOfRecordingsToShow = function() {
   }
 }
 
-Template.record_strip.helpers({
-  sessionId : function(){
-    return Session.get("sessionId");
-    },
-});
+// Template.record_strip.helpers({
+//   sessionId : function(){
+//     return sessionId; //Session.get("sessionId");
+//     },
+// });
 
 Template.record_strip.events({
   'click input' : function (event){
@@ -406,19 +409,31 @@ Template.record_strip.events({
       var userRecordings = Session.get("sessionRecordings");
       for (var i = 0; i < userRecordings.length; i++){
         if(inputId == userRecordings[i]._id){
-          userRecordings[i].playRecording(audioController);
-          break;
+          // userRecordings[i].playRecording(audioController.context);
+          audioController.playRecording(userRecordings[i].blob);
         }
+        break;
       }
     } else {
       var userRecordings = Session.get("sessionRecordings");
       console.log("The user recordings are " + userRecordings);
       console.log("The length of userRecordings is " + userRecordings.length);
-      var index = userRecordings.length - inputId;
-      console.log("The index is " + index);
-      console.log("The reconding is " + userRecordings[index]);
-      console.log("the type of recording is " + typeof userRecordings[index]);
-      userRecordings[index].playRecording(audioController);
+      // var index = userRecordings.length - inputId;
+      console.log("The index is " + inputId);
+      // console.log("The reconding is " + userRecordings[index]);
+      // console.log("The reconding's name is " + userRecordings[index].name);
+      // console.log("The reconding's name is " + userRecordings[index].blob);
+      // console.log("the type of recording is " + typeof userRecordings[index]);
+      // userRecordings[index].playRecording(audioController.context);
+      for(var i = 0; i < userRecordings.length; i++){
+        if(inputId == userRecordings[i].createdAt){
+          console.log("The reconding's createdAt is " + userRecordings[i].createdAt);
+          // userRecordings[i].playRecording(audioController.context);
+          console.log("The blob is " + userRecordings[i].blob)
+          audioController.playRecording(userRecordings[i].blob);
+        }
+        break;
+      }
     }
   }
 });

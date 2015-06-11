@@ -25,4 +25,16 @@ AudioControl = function() {
 	this.clearRecording = function() {
 		this.recorder.clear();
 	};
+
+	this.playRecording = function(blob) {
+		var control = this;
+	    var newSource = control.context.createBufferSource();
+	    var newBuffer = control.context.createBuffer( 2, blob[0].length, control.context.sampleRate );
+	    newBuffer.getChannelData(0).set(blob[0]);
+	    newBuffer.getChannelData(1).set(blob[1]);
+	    newSource.buffer = newBuffer;
+
+	    newSource.connect( control.context.destination );
+	    newSource.start(0);
+	}
 }

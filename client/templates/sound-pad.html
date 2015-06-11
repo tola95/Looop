@@ -50,7 +50,7 @@
       <button><img title="publish" src="images/globe.png" width="12px" height="12px"></button>
       <button><img title="delete" src="images/delete.png" width="12px" height="12px"></button>
     </div>
-      <input type="image" id="{{#if currentUser}}{{_id}}{{else}}{{sessionId}}{{/if}}"  src="images/play.png" width="20px" height="20px">
+      <input type="image" id="{{#if currentUser}}{{_id}}{{else}}{{createdAt}}{{/if}}"  src="images/play.png" width="20px" height="20px">
     <div class="name" title="Play {{name}}">
       {{name}}
     </div>
