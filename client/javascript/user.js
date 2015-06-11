@@ -53,11 +53,11 @@ Template.followings.helpers({
 
 Template.followings.events({
   'click #following' : function() {
-    updateListFollowersVisibility("block");
+    updateListFollowingVisibility("block");
   },
 
   'click #followers' : function() {
-    updateListFollowingVisibility("block");
+    updateListFollowersVisibility("block");
   }
   
 });
@@ -175,3 +175,29 @@ Template.details.events = {
     Meteor.call("addProfilePhoto", files);
   }
 };
+
+Template.listofFollowers.helpers({
+  follower: function() {
+    var followers = Meteor.users.find({following: Meteor.userId()} );
+    var ff = Meteor.users.findOne({following: Meteor.userId()} );
+    console.log(Meteor.userId());
+    if (ff) {
+      console.log(ff);
+    }
+
+    if (followers) {
+      return followers;
+    }
+  }
+
+});
+
+Template.listofFollowing.helpers({
+  following: function() {
+    var following = Meteor.users.find({}, {followers: Meteor.userID} );
+    if (following) {
+      return following;
+    }
+  }
+
+});
