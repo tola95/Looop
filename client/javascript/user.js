@@ -11,15 +11,7 @@ addRecording = function() {
 
 Template.personal.helpers({
   currentUserPage: function() {
-    return Meteor.userId() == Template.instance().data.userId;
-  },
-
-  followingUser: function() {
-    var otherUser = Template.instance().data.userId;
-    var currentUser = Meteor.user();
-    if (currentUser && currentUser.following) {
-      return currentUser.following.indexOf(otherUser) != -1;
-    }
+    return String(Meteor.userId()) === String(Template.instance().data.userId);
   }
 });
 
@@ -30,6 +22,24 @@ Template.personal.events({
 
   'click #unfollow-button': function(event, template) {
     Meteor.call("unfollow", template.data.userId);
+  }
+});
+
+Template.personaldetails.helpers({
+  currentUserPage: function() {
+    return String(Meteor.userId()) === String(Template.instance().data.userId);
+  },
+
+  followingUser: function() {
+    var otherUser = Template.instance().data.userId;
+    var currentUser = Meteor.user();
+    if (currentUser && currentUser.following) {
+      return currentUser.following.indexOf(otherUser) != -1;
+    }
+  },
+
+  notOwnProfile: function() {
+    return String(Meteor.userId()) !== String(Template.instance().data.userId);
   }
 });
 
