@@ -81,24 +81,24 @@ Meteor.publish("userData", function () {
               'followers': 1,
               'seenNotification': 1,
               'activityFeed': 1,
-              'notifications': 1
+              'notifications': 1,
              }
-    }
-  );
+    })
+});
 
-  Meteor.publish("allUserData", function () {
-    return Meteor.users.find({}, {
-      fields: {'bio': 1, 
-              'fullname': 1, 
-              'genres': 1, 
-              'profilephoto': 1, 
-              'following': 1,
-              'followers': 1,
-              'activityFeed': 1,
-              'notifications': 1
-             }
-    });
-  });
+Meteor.publish("allUserData", function () {
+  return Meteor.users.find(
+  {},
+  {fields: {'bio': 1, 
+            'fullname': 1, 
+            'genres': 1, 
+            'profilephoto': 1, 
+            'following': 1,
+            'followers': 1,
+            'activityFeed': 1,
+            'username': 1
+           }
+  })
 });
 
 Meteor.methods({
@@ -165,7 +165,7 @@ Meteor.methods({
     Meteor.users.update({
       _id: followedId
       }, {
-      $pull: {followers: followedId}
+      $pull: {followers: this.userId}
     });
   },
 

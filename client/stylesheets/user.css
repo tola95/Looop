@@ -222,7 +222,15 @@ fieldset {
   display: none;
 }
 
-.follow-button {
+.follow-buttons {
 	color: #E94418;
 	font-size: 14px;
+}
+
+#unfollow-button:hover span {
+	display: none;
+}
+
+#unfollow-button:hover:before {
+	content: "Unfollow";
 }

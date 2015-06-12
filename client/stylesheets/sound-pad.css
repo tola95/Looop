@@ -163,7 +163,8 @@ button:active {
 #results {
   width: 150px;
   height: 50px;
-  background-color: white;
+  background-color: #1D1D1D;
+  opacity: 0.85;
   display: none;
 }
 
@@ -171,6 +172,16 @@ button:active {
   float:right;
   margin-right: 5px;
   visibility: hidden;
+}
+
+#result_cont {
+  margin-top: 10px;
+  color: white;
+}
+
+#user {
+  margin-left: 10px;
+  color: white;
 }
 
 .options button {

@@ -1,5 +1,3 @@
-Meteor.subscribe("allUserData");
-
 Router.route('/', function () {
   this.render('home');
 });

@@ -1,8 +1,8 @@
 var TIMELINE_VIEW = "timeline_view",
     RECORDINGS_VIEW = "recordings_view";
 
-Meteor.subscribe("userData");
 Meteor.subscribe("allUserData");
+Meteor.subscribe("userData");
 
 addRecording = function() {
   Meteor.call("addRecordings", {name: "published", user: "zJrMK9gDyHRovmKg2", published: true});
@@ -12,26 +12,34 @@ addRecording = function() {
 Template.personal.helpers({
   currentUserPage: function() {
     return Meteor.userId() == Template.instance().data.userId;
+  },
+
+  followingUser: function() {
+    var otherUser = Template.instance().data.userId;
+    var currentUser = Meteor.user();
+    if (currentUser && currentUser.following) {
+      return currentUser.following.indexOf(otherUser) != -1;
+    }
   }
 });
 
 Template.personal.events({
-  'click .follow-button': function(event, template) {
+  'click #follow-button': function(event, template) {
     Meteor.call("follow", template.data.userId);
+  },
+
+  'click #unfollow-button': function(event, template) {
+    Meteor.call("unfollow", template.data.userId);
   }
 });
 
 Template.bio.helpers({
   fullname: function() {
-    // console.log("id: "+ Router.current().params.userID);
     var user = Meteor.users.findOne({_id: Router.current().params.userID});
-    // console.log("user: " + user);
     if (user) {
       if (user.fullname) {
-        // console.log("fullname: " + user.fullname);
         return user.fullname;
       } else {
-        // console.log("username: " + user.username);
         return user.username;
       }
     }

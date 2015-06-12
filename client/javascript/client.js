@@ -21,6 +21,7 @@ var soundsDB = Meteor.subscribe("sounds", function() {
 
 Meteor.subscribe("images");
 Meteor.subscribe("recordings");
+Meteor.subscribe("allUserData");
 
 Session.setDefault("drumRendered", false);
 window.onload = function() {
@@ -94,6 +95,20 @@ Template.recording_controls.events({
 
 });
 
+// Template.searchResults.helpers({
+//   r: function() {
+//     var name = document.getElementById('searchText').value;
+//     conosle.log(name);
+//     var user = Meteor.users.findOne({username: name}, {fields: {'_id': 1}});
+//     if (!user) {
+//       return [];
+//     } else {
+//       return user;
+//     }
+//   }
+  
+// });
+
 Template.search.events({
   'click #searchText': function() {
     document.getElementById('results').style.display = "block";
@@ -103,22 +118,35 @@ Template.search.events({
     if (event.keyCode == 13) {
       var name = document.getElementById('searchText').value;
       var user = Meteor.users.findOne({username: name}, {fields: {'_id': 1}});
-      if (!user) {
-        return [];
-      }
-      console.log('hello');
       var newDiv = document.createElement("div");
-      var att = document.createElement("a");
-      var userID = user._id;
-      if (!userID) {
-        return [];
-      }
-      att.setAttribute('href',"/user/:" + userID);
-      att.innerHTML = "name";
+      newDiv.id = "result_cont";
       var elm = document.getElementById("results");
-      newDiv.appendChild(att);
-      elm.appendChild(newDiv);
+
+      var exits = document.getElementById("result_cont");
+      if(exits) {
+        exits.parentNode.removeChild(exits);
+      }
+      
+      if (!user) {
+        newDiv.innerHTML = "No results found!";
+        elm.appendChild(newDiv);
+        return [];
+      } else {
+        var userID = user._id;
+        if (!userID) {
+          return [];
+        }
+        var att = document.createElement("a");
+        
+        att.setAttribute('href',"/user/:" + userID);
+        att.innerHTML = "" + name;
+        att.id = "user";
+        newDiv.appendChild(att);
+        elm.appendChild(newDiv);
+      }
     }
+      
+      
 
   }
 });
