@@ -19,13 +19,6 @@
 
   	{{> listFollowing}}
   {{else}}
-    {{#if currentUser}}
-      {{#if followingUser}}
-        <button class="follow-buttons" id="unfollow-button"><span>Following</span></button>
-      {{else}}
-        <button class="follow-buttons" id="follow-button">Follow</button>
-      {{/if}}
-    {{/if}}
     {{> other_usermain}}
   {{/if}}
   
@@ -103,6 +96,18 @@
     {{> bio }} 
 
     {{> followings}} 
+
+    {{#if currentUser}}
+    {{#if notOwnProfile }}
+      <div class="follow-button-container">
+        {{#if followingUser}}
+          <button class="follow-buttons" id="unfollow-button"><span>Following</span></button>
+        {{else}}
+          <button class="follow-buttons" id="follow-button">Follow</button>
+        {{/if}}
+      </div>
+    {{/if}}
+    {{/if}}
 
     {{#if currentUserPage}}
       {{> edetails}}
