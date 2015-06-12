@@ -4,10 +4,10 @@ var TIMELINE_VIEW = "timeline_view",
 Meteor.subscribe("allUserData");
 Meteor.subscribe("userData");
 
-addRecording = function() {
-  Meteor.call("addRecordings", {name: "published", user: "zJrMK9gDyHRovmKg2", published: true});
-  // Meteor.call("addRecordings", {name: "unpublished", user: "zJrMK9gDyHRovmKg2", published: false});
-}
+// addRecording = function() {
+//   Meteor.call("addRecordings", {name: "song 1", user: "n4iBCeyiBFDu8M6po", published: true});
+//   Meteor.call("addRecordings", {name: "song 2", user: "n4iBCeyiBFDu8M6po", published: false});
+// }
 
 Template.personal.helpers({
   currentUserPage: function() {
@@ -97,11 +97,19 @@ Template.followings.helpers({
 
 Template.followings.events({
   'click #following' : function() {
-    updateListFollowingVisibility("block");
+    if (String(Meteor.userId()) === String(Template.instance().data.userId)) {
+      updateListFollowingVisibility("block");
+    } else {
+      updateprofile_ListFollowingVisibility("block");
+    }
   },
 
   'click #followers' : function() {
-    updateListFollowersVisibility("block");
+    if (String(Meteor.userId()) === String(Template.instance().data.userId)) {
+      updateListFollowersVisibility("block");
+    } else {
+      updateprofile_ListFollowersVisibility("block");
+    }
   }
   
 });
@@ -120,6 +128,20 @@ Template.listFollowers.events({
   
 });
 
+Template.profile_listFollowing.events({
+  'click .closebox' : function() {
+    updateprofile_ListFollowingVisibility("none");
+  }
+
+});
+
+Template.profile_listFollowers.events({
+  'click .closebox' : function() {
+    updateprofile_ListFollowersVisibility("none");
+  }
+  
+});
+
 updateListFollowersVisibility = function(visibility) {
   elems = document.getElementsByClassName("list-followers");
   for (var i=0; i<elems.length; i++) {
@@ -129,6 +151,20 @@ updateListFollowersVisibility = function(visibility) {
 
 updateListFollowingVisibility = function(visibility) {
   elems = document.getElementsByClassName("list-following");
+  for (var i=0; i<elems.length; i++) {
+    elems[i].style.display = visibility;
+  }
+}
+
+updateprofile_ListFollowersVisibility = function(visibility) {
+  elems = document.getElementsByClassName("profile-list-followers");
+  for (var i=0; i<elems.length; i++) {
+    elems[i].style.display = visibility;
+  }
+}
+
+updateprofile_ListFollowingVisibility = function(visibility) {
+  elems = document.getElementsByClassName("profile-list-following");
   for (var i=0; i<elems.length; i++) {
     elems[i].style.display = visibility;
   }
@@ -167,8 +203,7 @@ updateSaveDetailsVisibility = function(visibility) {
   for (var i=0; i<elems.length; i++) {
     elems[i].style.display = visibility;
   }
-}
-
+};
 
 Template.details.helpers({
   fullname: function() {
@@ -223,12 +258,42 @@ Template.listofFollowers.helpers({
       return followers;
     }
   }
+});
+
+// Helpers for view of current user's recordings on their own profile
+Template.recordings_view.helpers({
+  recordings: function() {
+    var userId = Meteor.userId();
+    if (userId) {
+      return Recordings.find({user: userId}, {}, {limit: 10});
+    }
+  }
 
 });
 
 Template.listofFollowing.helpers({
   following: function() {
     var following = Meteor.users.find({followers: Meteor.userId()} );
+    if (following) {
+      return following;
+    }
+  }
+
+});
+
+Template.profile_listofFollowers.helpers({
+  follower: function() {
+    var followers = Meteor.users.find({following: Template.instance().data.userId} );
+    if (followers) {
+      return followers;
+    }
+  }
+
+});
+
+Template.profile_listofFollowing.helpers({
+  following: function() {
+    var following = Meteor.users.find({followers: Template.instance().data.userId} );
     if (following) {
       return following;
     }
