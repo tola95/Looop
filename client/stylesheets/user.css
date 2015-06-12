@@ -35,7 +35,7 @@
 	font-family: 'Tahoma', Arial, sans-serif;
 	float: middle;
 	width: 500px;
-	height: 500px;
+	height: 460px;
 	margin-left: auto;
 	margin-right: auto;
 	background-color: white;
@@ -95,7 +95,7 @@
 
 #addProfilePic {
     float: middle;
-    margin-top: 100px;
+    margin-top: 5px;
 }
 
 #addHeaderPic {
@@ -221,6 +221,10 @@ fieldset {
   display: none;
 }
 
+.closebox {
+	float: right;
+}
+
 .follow-buttons {
 	color: #E94418;
 	font-size: 14px;
@@ -228,6 +232,10 @@ fieldset {
 
 #unfollow-button:hover span {
 	display: none;
+}
+
+#update {
+	margin-top: 25px;
 }
 
 #unfollow-button:hover:before {

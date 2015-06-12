@@ -229,8 +229,19 @@ Meteor.methods({
 
   // Deletes the Activity associated with the recording
   unpublishRecording: function(recordingId) {
-    // TODO: need Recordings DB with activity feed IDs
-    return;
+    var followers = Meteor.users.findOne({_id: this.userId}).followers;
+    if(followers) {
+      for (var i=0; i < followers.length; i++) {
+        Meteor.users.update({
+          _id: followers[i]
+          }, {
+            $pull : {
+              activityFeed: "recordingId";
+            }
+          }
+        })
+      }
+    }
   },
 
   updateProfileInfo: function(description, fullname, genres) {
