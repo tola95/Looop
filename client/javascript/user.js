@@ -5,8 +5,8 @@ Meteor.subscribe("allUserData");
 Meteor.subscribe("userData");
 
 addRecording = function() {
-  Meteor.call("addRecordings", {name: "published", user: "zJrMK9gDyHRovmKg2", published: true});
-  // Meteor.call("addRecordings", {name: "unpublished", user: "zJrMK9gDyHRovmKg2", published: false});
+  Meteor.call("addRecordings", {name: "song 1", user: "n4iBCeyiBFDu8M6po", published: true});
+  Meteor.call("addRecordings", {name: "song 2", user: "n4iBCeyiBFDu8M6po", published: false});
 }
 
 Template.personal.helpers({
@@ -203,8 +203,7 @@ updateSaveDetailsVisibility = function(visibility) {
   for (var i=0; i<elems.length; i++) {
     elems[i].style.display = visibility;
   }
-}
-
+};
 
 Template.details.helpers({
   fullname: function() {
@@ -257,6 +256,16 @@ Template.listofFollowers.helpers({
     var followers = Meteor.users.find({following: Meteor.userId()} );
     if (followers) {
       return followers;
+    }
+  }
+});
+
+// Helpers for view of current user's recordings on their own profile
+Template.recordings_view.helpers({
+  recordings: function() {
+    var userId = Meteor.userId();
+    if (userId) {
+      return Recordings.find({user: userId}, {}, {limit: 10});
     }
   }
 

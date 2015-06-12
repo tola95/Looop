@@ -6,28 +6,22 @@
 
 
 <template name="personal">
-<div id="userbody">
   {{> banner}}
 
-  {{> personaldetails}}
-  
-  {{#if currentUserPage}}
-    {{> current_usermain }}
-    {{> editDetails}}
+  <div id="userbody">
 
-  	{{> listFollowers}}
+    {{> personaldetails }}
 
-  	{{> listFollowing}}
-  {{else}}
-    {{> other_usermain}}
-
-    {{> profile_listFollowers}}
-
-    {{> profile_listFollowing}}
+    {{#if currentUserPage}}
+      {{> current_usermain }}
+      {{> editDetails}}
+  	  {{> listFollowers}}
+  	  {{> listFollowing}}
+    {{else}}
+      {{> other_usermain}}
+      {{> profile_listFollowers}}
+      {{> profile_listFollowing}}
   {{/if}}
-  
-  
-  
 </div>
 </template>
 
@@ -41,6 +35,7 @@
 
 <template name="current_usermain">
   <div class="main">
+    <!-- <button onclick="addRecording()">Add recording</button> -->
     <button id="timelinebutton">Timeline</button>
     <button id="recordingsbutton">Recordings</button>
     <h3 style="display:none" id="recordings">Recordings</h3>
@@ -51,9 +46,8 @@
 
 <template name="other_usermain">
   <div class="main">
-    <!-- <button onclick="addRecording()">Add recording</button> -->
     <h3 id="recordings">Recordings</h3>
-    {{#each published_recordings }}
+    {{#each published_recordings}}
       {{> recordingCard}}
     {{else}}
       There are no published recordings.
@@ -67,7 +61,11 @@
 </template>
 
 <template name="recordings_view">
-  recordings
+  {{#each recordings}}
+    {{> ownRecordingCard}}
+  {{else}}
+    You have no recordings.
+  {{/each}}
 </template>
 
 <template name="photo">
