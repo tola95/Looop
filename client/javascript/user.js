@@ -97,11 +97,11 @@ Template.followings.helpers({
 
 Template.followings.events({
   'click #following' : function() {
-    updateListFollowersVisibility("block");
+    updateListFollowingVisibility("block");
   },
 
   'click #followers' : function() {
-    updateListFollowingVisibility("block");
+    updateListFollowersVisibility("block");
   }
   
 });
@@ -212,13 +212,26 @@ Template.details.events = {
 
   'change #addProfilePic' : function(event, template) {
     var files = event.target.files;
-
     Meteor.call("addProfilePhoto", files);
   }
 };
 
-Template.other_usermain.helpers({
-  published_recordings: function() {
-    return Recordings.find({user: Router.current().params.userID, published: true});
+Template.listofFollowers.helpers({
+  follower: function() {
+    var followers = Meteor.users.find({following: Meteor.userId()} );
+    if (followers) {
+      return followers;
+    }
   }
+
+});
+
+Template.listofFollowing.helpers({
+  following: function() {
+    var following = Meteor.users.find({followers: Meteor.userId()} );
+    if (following) {
+      return following;
+    }
+  }
+
 });
