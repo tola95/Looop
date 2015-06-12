@@ -217,7 +217,7 @@ fieldset {
   box-shadow: 5px 5px 3px #222;
 }
 
-.save-details, .list-followers, .list-following {
+.save-details, .list-followers, .list-following, .profile-list-followers, .profile-list-following {
   display: none;
 }
 
