@@ -1,7 +1,7 @@
-Recording = function(name, user, wav){
+Recording = function(name, user, blob){
 	this.name = name;
 	this.user = user;
-	this.wav = wav;
+	this.blob = blob;
 	this.createdAt = new Date();
 
 	this.playRecording = function( buffers ) {

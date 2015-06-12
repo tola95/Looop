@@ -298,9 +298,8 @@ Template.home.helpers({
 
   recordings: function () {
     if (Meteor.userId() != null){
-      var usersRecordings = Meteor.call("getRecordings", Meteor.userId());
-      Session.set("sessionRecordings", usersRecordings);
-      return numOfRecordingsToShow();
+      secondaryRecordingArray = Meteor.call("getRecordings", Meteor.userId());
+      return numOfRecordingsToShow(secondaryRecordingArray);
     } else {
       return Session.get("sessionRecordings");      
     }
@@ -360,27 +359,28 @@ updateSaveRecordingVisibility = function(visibility) {
 Accounts.onLogin(function() {
   //var recentRecordings = Session.get("sessionRecordings");
   //console.log("Session recordings after log in " + recentRecordings);
-  for (var i = 0; i < recentRecordings; i++){
-    recentRecordings[i].name = Meteor.userId();
-    Meteor.call("addRecording", recentRecordings[i]);
-  }
+  for (var i = 0; i < secondaryRecordingArray.length; i++){
+    secondaryRecordingArray[i].name = Meteor.userId();
+    Meteor.call("addRecording", secondaryRecordingArray[i]);
     Session.set("sessionRecordings", new Array());
+    secondaryRecordingArray = new Array();
+  }
 });
 
 //When a user logs outs 
 Accounts.onLogout(function() {
   Session.set("sessionRecordings", new Array());
+  secondaryRecordingArray = new Array();
   numberOfRecordingToShow = 5;
 });
 
-numOfRecordingsToShow = function() {
-  var currentRecordings = Session.get("sessionRecordings");
-  if(currentRecordings.length < numberOfRecordingToShow) {
-    return currentRecordings;
+numOfRecordingsToShow = function(recs) {
+  if(recs.length < numberOfRecordingToShow) {
+    return recs;
   } else {
     var newCurrentRecordings = new Array();
     for(var i = 0; i < numberOfRecordingToShow; i++) {
-      newCurrentRecordings[i] = currentRecordings[i];
+      newCurrentRecordings[i] = recs[i];
     }
     return newCurrentRecordings;
   }
@@ -393,28 +393,13 @@ Template.record_strip.events({
     var inputId = event.target.id;
     console.log("the inputId is " + inputId);
     if (Meteor.userId() != null){
-      var userRecordings = Session.get("sessionRecordings");
-      for (var i = 0; i < userRecordings.length; i++){
-        if(inputId == userRecordings[i]._id){
-          var url = window.URL.createObjectURL(userRecordings[i].blob);
-          audio.src = url;
-          audio.play();
-        }
-        break;
+      var qRec = Meteor.call("getARecording", inputId);
+      qRec.playRecoding(audioController.context);
       }
     } else {
-      var userRecordings = Session.get("sessionRecordings");
-      console.log("The user recordings are " + userRecordings);
-      console.log("The length of userRecordings is " + userRecordings.length);
-      console.log("The index is " + inputId);
-      for(var i = 0; i < userRecordings.length; i++){
-        if(inputId == userRecordings[i].createdAt){
-          console.log("The reconding's createdAt is " + userRecordings[i].createdAt);
-          console.log("The blobis " + userRecordings[i].blob);
-          console.log(userRecordings[i].blob);
-          var url = window.URL.createObjectURL(userRecordings[i].blob);
-          audio.src = url;
-          audio.play();
+      for(var i = 0; i < secondaryRecordingArray.length; i++){
+        if(inputId == secondaryRecordingArray[i].createdAt){
+          secondaryRecordingArray[i].playRecoding(audioController.context);
         }
         break;
       }
