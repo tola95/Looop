@@ -29,6 +29,17 @@ window.onload = function() {
   audioController.addAudioSources();
 }
 
+document.addEventListener("click", function(event) { 
+  if (event.target.id != "searchText") {
+    var elem = document.getElementById('results');
+      if(elem.style.display == 'block') {
+      elem.style.display = 'none';
+      document.getElementById('searchText').value = "Search..";
+    } 
+  }
+  
+});
+
 Template.banner.events({
   'click #notifications-wrapper': function() {
     var value = document.getElementById('notif_block').style.display;
@@ -95,22 +106,9 @@ Template.recording_controls.events({
 
 });
 
-// Template.searchResults.helpers({
-//   r: function() {
-//     var name = document.getElementById('searchText').value;
-//     conosle.log(name);
-//     var user = Meteor.users.findOne({username: name}, {fields: {'_id': 1}});
-//     if (!user) {
-//       return [];
-//     } else {
-//       return user;
-//     }
-//   }
-  
-// });
-
 Template.search.events({
   'click #searchText': function() {
+    document.getElementById('searchText').value = "";
     document.getElementById('results').style.display = "block";
   },
 
@@ -138,7 +136,7 @@ Template.search.events({
         }
         var att = document.createElement("a");
         
-        att.setAttribute('href',"/user/:" + userID);
+        att.setAttribute('href',"/user/" + userID);
         att.innerHTML = "" + name;
         att.id = "user";
         newDiv.appendChild(att);
