@@ -131,7 +131,7 @@
   <div class="list-followers dark-background" id="list-followers-background">
     <div class="list-followers" id="list-followers-wrapperr">
       <button class="closebox">X</button>
-      Followers
+      {{> listofFollowers}}
     </div>
   </div>
 </template>
@@ -140,9 +140,21 @@
   <div class="list-following dark-background" id="list-following-background">
     <div class="list-following" id="list-following-wrapperr">
       <button class="closebox">X</button>
-      Following
+      {{> listofFollowing}}
     </div>
   </div>
+</template>
+
+<template name="listofFollowers">
+  {{#each follower}}
+    <div> {{username}} </div>
+  {{/each}}
+</template>
+
+<template name="listofFollowing">
+  {{#each following}}
+    <div> {{username}} </div>
+  {{/each}}
 </template>
 
 
