@@ -30,9 +30,10 @@ window.onload = function() {
 }
 
 document.addEventListener("click", function(event) { 
-  if (event.target.id != "searchText") {
+  var t = event.target.id;
+  if (t != "searchText" && t != "results") {
     var elem = document.getElementById('results');
-      if(elem.style.display == 'block') {
+    if(elem.style.display == 'block') {
       elem.style.display = 'none';
       document.getElementById('searchText').value = "Search..";
     } 

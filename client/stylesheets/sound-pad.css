@@ -89,7 +89,7 @@ button:active {
 }
 
 .tracks-container .recording h2 {
-  font-family: "mFont";
+  font-family: "smallFont";
   height: auto;
   padding-top: 10px;
   color: #E94418;
@@ -167,6 +167,7 @@ button:active {
   border: 1px solid #ccc;
   border-radius: 4px;
   display: none;
+  position: absolute;
 }
 
 .options {
@@ -179,6 +180,7 @@ button:active {
   margin-top: 10px;
   color: #E94418;
   margin-left: 10px;
+
 }
 
 #user {
