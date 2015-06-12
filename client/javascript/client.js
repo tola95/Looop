@@ -21,12 +21,24 @@ var soundsDB = Meteor.subscribe("sounds", function() {
 
 Meteor.subscribe("images");
 Meteor.subscribe("recordings");
+Meteor.subscribe("allUserData");
 
 Session.setDefault("drumRendered", false);
 window.onload = function() {
   audioController  = new AudioControl();
   audioController.addAudioSources();
 }
+
+document.addEventListener("click", function(event) { 
+  if (event.target.id != "searchText") {
+    var elem = document.getElementById('results');
+      if(elem.style.display == 'block') {
+      elem.style.display = 'none';
+      document.getElementById('searchText').value = "Search..";
+    } 
+  }
+  
+});
 
 Template.banner.events({
   'click #notifications-wrapper': function() {
@@ -92,6 +104,49 @@ Template.recording_controls.events({
     updateSaveRecordingVisibility("block");
   }
 
+});
+
+Template.search.events({
+  'click #searchText': function() {
+    document.getElementById('searchText').value = "";
+    document.getElementById('results').style.display = "block";
+  },
+
+  'keypress': function(event) {
+    if (event.keyCode == 13) {
+      var name = document.getElementById('searchText').value;
+      var user = Meteor.users.findOne({username: name}, {fields: {'_id': 1}});
+      var newDiv = document.createElement("div");
+      newDiv.id = "result_cont";
+      var elm = document.getElementById("results");
+
+      var exits = document.getElementById("result_cont");
+      if(exits) {
+        exits.parentNode.removeChild(exits);
+      }
+      
+      if (!user) {
+        newDiv.innerHTML = "No results found!";
+        elm.appendChild(newDiv);
+        return [];
+      } else {
+        var userID = user._id;
+        if (!userID) {
+          return [];
+        }
+        var att = document.createElement("a");
+        
+        att.setAttribute('href',"/user/" + userID);
+        att.innerHTML = "" + name;
+        att.id = "user";
+        newDiv.appendChild(att);
+        elm.appendChild(newDiv);
+      }
+    }
+      
+      
+
+  }
 });
 
 Template.home.events({

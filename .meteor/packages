@@ -10,3 +10,5 @@ accounts-password
 iron:router
 cfs:standard-packages
 cfs:filesystem
+matteodem:easy-search
+peerlibrary:blaze-components

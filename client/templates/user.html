@@ -19,7 +19,6 @@
 
   	{{> listFollowing}}
   {{else}}
-    <button class="follow-button">Follow</button>
     {{> other_usermain}}
   {{/if}}
   
@@ -48,7 +47,7 @@
 
 <template name="other_usermain">
   <div class="main">
-    <button onclick="addRecording()">Add recording</button>
+    <!-- <button onclick="addRecording()">Add recording</button> -->
     <h3 id="recordings">Recordings</h3>
     {{#each published_recordings }}
       {{> recordingCard}}
@@ -69,7 +68,7 @@
 
 <template name="photo">
   <div id="photo">
-    <img id="profilephoto" src="images/dj.png" width="90px" height="80px">
+    <img id="profilephoto" src="/images/dj.png" width="90px" height="80px">
   </div>
 </template>
 
@@ -97,6 +96,18 @@
     {{> bio }} 
 
     {{> followings}} 
+
+    {{#if currentUser}}
+    {{#if notOwnProfile }}
+      <div class="follow-button-container">
+        {{#if followingUser}}
+          <button class="follow-buttons" id="unfollow-button"><span>Following</span></button>
+        {{else}}
+          <button class="follow-buttons" id="follow-button">Follow</button>
+        {{/if}}
+      </div>
+    {{/if}}
+    {{/if}}
 
     {{#if currentUserPage}}
       {{> edetails}}
