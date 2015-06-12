@@ -212,7 +212,6 @@ Template.details.events = {
 
   'change #addProfilePic' : function(event, template) {
     var files = event.target.files;
-
     Meteor.call("addProfilePhoto", files);
   }
 };
@@ -220,7 +219,6 @@ Template.details.events = {
 Template.listofFollowers.helpers({
   follower: function() {
     var followers = Meteor.users.find({following: Meteor.userId()} );
-
     if (followers) {
       return followers;
     }
@@ -230,7 +228,7 @@ Template.listofFollowers.helpers({
 
 Template.listofFollowing.helpers({
   following: function() {
-    var following = Meteor.users.find({}, {followers: Meteor.userID} );
+    var following = Meteor.users.find({followers: Meteor.userId()} );
     if (following) {
       return following;
     }
