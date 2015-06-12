@@ -15,14 +15,14 @@
     {{#if currentUserPage}}
       {{> current_usermain }}
       {{> editDetails}}
-
-    	{{> listFollowers}}
-
-    	{{> listFollowing}}
+  	  {{> listFollowers}}
+  	  {{> listFollowing}}
     {{else}}
       {{> other_usermain}}
-    {{/if}}
-  </div>
+      {{> profile_listFollowers}}
+      {{> profile_listFollowing}}
+  {{/if}}
+</div>
 </template>
 
 <template name="edetails">
@@ -145,6 +145,24 @@
   </div>
 </template>
 
+<template name="profile_listFollowers">
+  <div class="profile-list-followers dark-background" id="list-followers-background">
+    <div class="profile-list-followers" id="list-followers-wrapperr">
+      <button class="closebox">X</button>
+      {{> profile_listofFollowers}}
+    </div>
+  </div>
+</template>
+
+<template name="profile_listFollowing">
+  <div class="profile-list-following dark-background" id="list-following-background">
+    <div class="profile-list-following" id="list-following-wrapperr">
+      <button class="closebox">X</button>
+      {{> profile_listofFollowing}}
+    </div>
+  </div>
+</template>
+
 <template name="listofFollowers">
   {{#each follower}}
     <div> {{username}} </div>
@@ -152,6 +170,18 @@
 </template>
 
 <template name="listofFollowing">
+  {{#each following}}
+    <div> {{username}} </div>
+  {{/each}}
+</template>
+
+<template name="profile_listofFollowers">
+  {{#each follower}}
+    <div> {{username}} </div>
+  {{/each}}
+</template>
+
+<template name="profile_listofFollowing">
   {{#each following}}
     <div> {{username}} </div>
   {{/each}}

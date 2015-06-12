@@ -97,11 +97,19 @@ Template.followings.helpers({
 
 Template.followings.events({
   'click #following' : function() {
-    updateListFollowingVisibility("block");
+    if (String(Meteor.userId()) === String(Template.instance().data.userId)) {
+      updateListFollowingVisibility("block");
+    } else {
+      updateprofile_ListFollowingVisibility("block");
+    }
   },
 
   'click #followers' : function() {
-    updateListFollowersVisibility("block");
+    if (String(Meteor.userId()) === String(Template.instance().data.userId)) {
+      updateListFollowersVisibility("block");
+    } else {
+      updateprofile_ListFollowersVisibility("block");
+    }
   }
   
 });
@@ -120,6 +128,20 @@ Template.listFollowers.events({
   
 });
 
+Template.profile_listFollowing.events({
+  'click .closebox' : function() {
+    updateprofile_ListFollowingVisibility("none");
+  }
+
+});
+
+Template.profile_listFollowers.events({
+  'click .closebox' : function() {
+    updateprofile_ListFollowersVisibility("none");
+  }
+  
+});
+
 updateListFollowersVisibility = function(visibility) {
   elems = document.getElementsByClassName("list-followers");
   for (var i=0; i<elems.length; i++) {
@@ -129,6 +151,20 @@ updateListFollowersVisibility = function(visibility) {
 
 updateListFollowingVisibility = function(visibility) {
   elems = document.getElementsByClassName("list-following");
+  for (var i=0; i<elems.length; i++) {
+    elems[i].style.display = visibility;
+  }
+}
+
+updateprofile_ListFollowersVisibility = function(visibility) {
+  elems = document.getElementsByClassName("profile-list-followers");
+  for (var i=0; i<elems.length; i++) {
+    elems[i].style.display = visibility;
+  }
+}
+
+updateprofile_ListFollowingVisibility = function(visibility) {
+  elems = document.getElementsByClassName("profile-list-following");
   for (var i=0; i<elems.length; i++) {
     elems[i].style.display = visibility;
   }
@@ -238,6 +274,26 @@ Template.recordings_view.helpers({
 Template.listofFollowing.helpers({
   following: function() {
     var following = Meteor.users.find({followers: Meteor.userId()} );
+    if (following) {
+      return following;
+    }
+  }
+
+});
+
+Template.profile_listofFollowers.helpers({
+  follower: function() {
+    var followers = Meteor.users.find({following: Template.instance().data.userId} );
+    if (followers) {
+      return followers;
+    }
+  }
+
+});
+
+Template.profile_listofFollowing.helpers({
+  following: function() {
+    var following = Meteor.users.find({followers: Template.instance().data.userId} );
     if (following) {
       return following;
     }
