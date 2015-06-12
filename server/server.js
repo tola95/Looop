@@ -199,9 +199,14 @@ Meteor.methods({
       throw new Meteor.Error("not logged in", "Please login to publish a recording");
     }
 
-    // TODO: Get recording out of recording DB - check creator ID (maybe??)
+    var recording = Recordings.findOne({_id: recordingId});
+    if (!recording || recording.user != this.userId) {
+      return;
+    }
 
-    var activity = new RecordingActivity(recordingId, Meteor.user().username, "Song Title");
+    Recordings.update({_id: recordingId}, {$set: {published: true}});
+
+    var activity = new RecordingActivity(recordingId, Meteor.user().username, recording.name);
     var activityId = Activities.insert(activity);
 
     var followers = Meteor.users.findOne({_id: this.userId}).followers;

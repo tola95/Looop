@@ -4,10 +4,10 @@ var TIMELINE_VIEW = "timeline_view",
 Meteor.subscribe("allUserData");
 Meteor.subscribe("userData");
 
-addRecording = function() {
-  Meteor.call("addRecordings", {name: "song 1", user: "n4iBCeyiBFDu8M6po", published: true});
-  Meteor.call("addRecordings", {name: "song 2", user: "n4iBCeyiBFDu8M6po", published: false});
-}
+// addRecording = function() {
+//   Meteor.call("addRecordings", {name: "song 1", user: "n4iBCeyiBFDu8M6po", published: true});
+//   Meteor.call("addRecordings", {name: "song 2", user: "n4iBCeyiBFDu8M6po", published: false});
+// }
 
 Template.personal.helpers({
   currentUserPage: function() {

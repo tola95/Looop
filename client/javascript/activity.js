@@ -22,3 +22,10 @@ Template.activity.helpers({
 	}
 });
 
+Template.ownRecordingCard.events({
+	'click .publish-button': function(event) {
+		var recordingId = event.target.parentNode.id;
+		console.log("recoridng ID: " + recordingId);
+		Meteor.call("publishRecording", recordingId);
+	}
+});

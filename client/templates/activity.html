@@ -36,7 +36,7 @@
 
 
 <template name="ownRecordingCard">
-<div class="recording-card">
+<div class="recording-card" id={{_id}}>
 	{{> recordingCardContents }}
 	{{#if published}}
 		<button class="unpublish-button publish-buttons"><span>Published</span></button>
