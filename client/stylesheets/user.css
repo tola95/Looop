@@ -41,7 +41,7 @@
 	background-color: white;
 }
 
-#main {
+#userbody .main {
 	border: 2px solid #F3F3F3;
 	border-radius: 5px;
 	margin-left: auto;
@@ -51,6 +51,7 @@
 	margin-top: 20px;
 	background-color: white;
 	box-shadow: 2px 2px 3px #E3E3e3;
+	text-align: center;
 }
 
 #suggestions {
@@ -221,3 +222,7 @@ fieldset {
   display: none;
 }
 
+.follow-button {
+	color: #E94418;
+	font-size: 14px;
+}

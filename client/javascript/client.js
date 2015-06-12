@@ -20,6 +20,7 @@ var soundsDB = Meteor.subscribe("sounds", function() {
 });
 
 Meteor.subscribe("images");
+Meteor.subscribe("recordings");
 
 Session.setDefault("drumRendered", false);
 window.onload = function() {
@@ -123,8 +124,6 @@ Template.banner.helpers({
     if(!notifications) {
       return[];
     }
-    // console.log(user.notifications);
-    // console.log(notifications);
     return notifications;
   },
 
@@ -147,6 +146,10 @@ Template.banner.helpers({
       return[];
     }
     return seen;
+  },
+
+  currentUserId: function() {
+    return Meteor.userId();
   }
 });
 

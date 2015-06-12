@@ -1,7 +1,9 @@
 <template name="activity">
 
 {{#each activities}}
-	{{> activityCard }}
+	{{> activityCard}}
+{{else}}
+	There are no activities.
 {{/each}}
 
 </template>
@@ -10,8 +12,22 @@
 <div class="activity-card">
 	<!-- <img class="profile-photo" src="images/dj.png" alt="Profile photo"> -->
 	<span class="card-contents">
-		<!-- {{> record_strip name="testname" }} -->
 		<div class="activity_info"><h1>{{nameOfActivity}}</h1> - {{postedBy}}</div>
+		<div class="recording">
+			<audio controls src="sounds/drums/Crash-01.wav">
+				Your browser does not support the <code>audio</code> element.
+			</audio>
+		</div>
+	</span>
+</div>
+</template>
+
+
+<template name="recordingCard">
+<div class="activity-card">
+	<!-- <img class="profile-photo" src="images/dj.png" alt="Profile photo"> -->
+	<span class="card-contents">
+		<div class="activity_info"><h1>{{name}}</h1></div>
 		<div class="recording">
 			<audio controls src="sounds/drums/Crash-01.wav">
 				Your browser does not support the <code>audio</code> element.

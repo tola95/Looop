@@ -46,6 +46,15 @@ var addSound = function(name, paths) {
 	});
 }
 
+Accounts.onCreateUser(function(options, user) {
+  user.followers = [];
+  user.following = [];
+  user.activityFeed = [];
+  user.notifications = [];
+  user.activities = [];
+  return user;
+});
+
 Meteor.publish("sounds", function() {
 	if (!Sounds) {
 		console.log("Sound not defined yet");
@@ -76,6 +85,20 @@ Meteor.publish("userData", function () {
              }
     }
   );
+
+  Meteor.publish("allUserData", function () {
+    return Meteor.users.find({}, {
+      fields: {'bio': 1, 
+              'fullname': 1, 
+              'genres': 1, 
+              'profilephoto': 1, 
+              'following': 1,
+              'followers': 1,
+              'activityFeed': 1,
+              'notifications': 1
+             }
+    });
+  });
 });
 
 Meteor.methods({
@@ -86,7 +109,7 @@ Meteor.methods({
       // TODO: login popup
       throw new Meteor.Error("not logged in", "Please log in to follow");
     }
-    // console.log(Meteor.users.findOne());
+
     Meteor.users.update({
       _id: this.userId
       }, {
