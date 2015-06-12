@@ -288,9 +288,10 @@ Template.bio.events = {
 };
 
 
-Session.setDefault("sessionRecordings", new Array());
-Session.setDefault("numberOfRecordingToShow", 5);
 Session.setDefault("activeInstrumentView", DRUM_VIEW);
+Session.setDefault("sessionRecordings", new Array());
+var numberOfRecordingToShow = 5;
+var secondaryRecordingArray = new Array();
 
 Template.home.helpers({
   activeView: function () { return Session.get("activeInstrumentView"); },
@@ -314,14 +315,14 @@ Template.save_recording.events({
 
   'click #save-recording-okay': function(){
     var name = document.getElementById('recording-name-input').value;
-    audioController.recorder.exportWAV(function (wav){
+    audioController.recorder.getBuffer(function (blob){
       if (Meteor.userId() != null){
-        var newRecording = new Recording(name, Meteor.userId(), wav);
+        var newRecording = new Recording(name, Meteor.userId(), blob);
         //add to the database
         Meteor.call("addRecording", newRecording);
       } else {
-        var newRecording = new Recording(name, Meteor.userId(), wav);
-        console.log(newRecording.wav);
+        var newRecording = new Recording(name, Meteor.userId(), blob);
+        secondaryRecordingArray.unshift(newRecording);
         var newRecordingArray = Session.get("sessionRecordings");
         newRecordingArray.unshift(newRecording);
         Session.set("sessionRecordings", newRecordingArray);
@@ -357,8 +358,8 @@ updateSaveRecordingVisibility = function(visibility) {
 
 //When a user logs in 
 Accounts.onLogin(function() {
-  var recentRecordings = Session.get("sessionRecordings");
-  console.log("Session recordings after log in " + recentRecordings);
+  //var recentRecordings = Session.get("sessionRecordings");
+  //console.log("Session recordings after log in " + recentRecordings);
   for (var i = 0; i < recentRecordings; i++){
     recentRecordings[i].name = Meteor.userId();
     Meteor.call("addRecording", recentRecordings[i]);
@@ -369,16 +370,16 @@ Accounts.onLogin(function() {
 //When a user logs outs 
 Accounts.onLogout(function() {
   Session.set("sessionRecordings", new Array());
-  Session.set("numberOfRecordingToShow", 5);
+  numberOfRecordingToShow = 5;
 });
 
 numOfRecordingsToShow = function() {
   var currentRecordings = Session.get("sessionRecordings");
-  if(currentRecordings.length < Session.get("numberOfRecordingToShow")) {
+  if(currentRecordings.length < numberOfRecordingToShow) {
     return currentRecordings;
   } else {
     var newCurrentRecordings = new Array();
-    for(var i = 0; i < Session.get("numberOfRecordingToShow"); i++) {
+    for(var i = 0; i < numberOfRecordingToShow; i++) {
       newCurrentRecordings[i] = currentRecordings[i];
     }
     return newCurrentRecordings;
@@ -395,7 +396,7 @@ Template.record_strip.events({
       var userRecordings = Session.get("sessionRecordings");
       for (var i = 0; i < userRecordings.length; i++){
         if(inputId == userRecordings[i]._id){
-          var url = window.URL.createObjectURL(userRecordings[i].wav);
+          var url = window.URL.createObjectURL(userRecordings[i].blob);
           audio.src = url;
           audio.play();
         }
@@ -409,9 +410,9 @@ Template.record_strip.events({
       for(var i = 0; i < userRecordings.length; i++){
         if(inputId == userRecordings[i].createdAt){
           console.log("The reconding's createdAt is " + userRecordings[i].createdAt);
-          console.log("The wav is " + userRecordings[i].wav);
-          console.log(userRecordings[i].wav);
-          var url = window.URL.createObjectURL(userRecordings[i].wav);
+          console.log("The blobis " + userRecordings[i].blob);
+          console.log(userRecordings[i].blob);
+          var url = window.URL.createObjectURL(userRecordings[i].blob);
           audio.src = url;
           audio.play();
         }
