@@ -22,9 +22,7 @@
 </div>
 </template>
 
-
-<template name="recordingCard">
-<div class="activity-card">
+<template name="recordingCardContents">
 	<!-- <img class="profile-photo" src="images/dj.png" alt="Profile photo"> -->
 	<span class="card-contents">
 		<div class="activity_info"><h1>{{name}}</h1></div>
@@ -34,5 +32,23 @@
 			</audio>
 		</div>
 	</span>
+</template>
+
+
+<template name="ownRecordingCard">
+<div class="recording-card">
+	{{> recordingCardContents }}
+	{{#if published}}
+		<button class="unpublish-button publish-buttons"><span>Published</span></button>
+	{{else}}
+		<button class="publish-buttons publish-button" ><img title="publish" src="/images/globe.png" width="10px" height="10px"> Publish</button>
+	{{/if}}
+</div>
+</template>
+
+
+<template name="recordingCard">
+<div class="recording-card">
+	{{> recordingCardContents }}
 </div>
 </template>

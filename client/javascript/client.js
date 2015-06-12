@@ -138,7 +138,7 @@ Template.search.events({
         }
         var att = document.createElement("a");
         
-        att.setAttribute('href',"/user/:" + userID);
+        att.setAttribute('href',"/user/" + userID);
         att.innerHTML = "" + name;
         att.id = "user";
         newDiv.appendChild(att);
