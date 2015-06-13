@@ -119,7 +119,7 @@ Meteor.methods({
 
   getARecording: function(id){
     Recordings.findOne({_id:id});
-  }
+  },
 
   /* Called when the current user wants to unfollow the user with id followedId */
   unfollow: function(followedId) {

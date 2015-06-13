@@ -321,6 +321,8 @@ Template.save_recording.events({
         Meteor.call("addRecording", newRecording);
       } else {
         var newRecording = new Recording(name, Meteor.userId(), blob);
+        console.log(newRecording);
+        console.log(newRecording.blob);
         secondaryRecordingArray.unshift(newRecording);
         var newRecordingArray = Session.get("sessionRecordings");
         newRecordingArray.unshift(newRecording);
@@ -386,8 +388,6 @@ numOfRecordingsToShow = function(recs) {
   }
 }
 
-var audio = new Audio();
-
 Template.record_strip.events({
   'click input' : function (event){
     var inputId = event.target.id;
@@ -395,16 +395,30 @@ Template.record_strip.events({
     if (Meteor.userId() != null){
       var qRec = Meteor.call("getARecording", inputId);
       qRec.playRecoding(audioController.context);
-      }
-    } else {
+      } 
+    else {
       for(var i = 0; i < secondaryRecordingArray.length; i++){
         if(inputId == secondaryRecordingArray[i].createdAt){
-          secondaryRecordingArray[i].playRecoding(audioController.context);
+          console.log(secondaryRecordingArray[i]);
+          console.log(secondaryRecordingArray[i].blob);
+
+          playRecording(secondaryRecordingArray[i].blob);
         }
         break;
       }
     }
   }
 });
+
+
+playRecording = function( buffers ) {
+  var newSource = audioController.context.createBufferSource();
+  var newBuffer = audioController.context.createBuffer( 2, buffers[0].length, audioController.context.sampleRate );
+  newBuffer.getChannelData(0).set(buffers[0]);
+  newBuffer.getChannelData(1).set(buffers[1]);
+  newSource.buffer = newBuffer;
+  newSource.connect( audioController.context.destination );
+  newSource.start(0);
+}
 
 
