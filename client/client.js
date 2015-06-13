@@ -290,7 +290,7 @@ Template.bio.events = {
 
 Session.setDefault("activeInstrumentView", DRUM_VIEW);
 Session.setDefault("sessionRecordings", new Array());
-var numberOfRecordingToShow = 5;
+// var numberOfRecordingToShow = 5;
 var secondaryRecordingArray = new Array();
 
 Template.home.helpers({
@@ -298,8 +298,7 @@ Template.home.helpers({
 
   recordings: function () {
     if (Meteor.userId() != null){
-      secondaryRecordingArray = Meteor.call("getRecordings", Meteor.userId());
-      return numOfRecordingsToShow(secondaryRecordingArray);
+      return Meteor.call("getRecordings", Meteor.userId());
     } else {
       return Session.get("sessionRecordings");      
     }
@@ -364,8 +363,8 @@ Accounts.onLogin(function() {
   for (var i = 0; i < secondaryRecordingArray.length; i++){
     secondaryRecordingArray[i].name = Meteor.userId();
     Meteor.call("addRecording", secondaryRecordingArray[i]);
-    Session.set("sessionRecordings", new Array());
-    secondaryRecordingArray = new Array();
+    // Session.set("sessionRecordings", new Array());
+    // secondaryRecordingArray = new Array();
   }
 });
 
@@ -373,20 +372,20 @@ Accounts.onLogin(function() {
 Accounts.onLogout(function() {
   Session.set("sessionRecordings", new Array());
   secondaryRecordingArray = new Array();
-  numberOfRecordingToShow = 5;
+  // numberOfRecordingToShow = 5;
 });
 
-numOfRecordingsToShow = function(recs) {
-  if(recs.length < numberOfRecordingToShow) {
-    return recs;
-  } else {
-    var newCurrentRecordings = new Array();
-    for(var i = 0; i < numberOfRecordingToShow; i++) {
-      newCurrentRecordings[i] = recs[i];
-    }
-    return newCurrentRecordings;
-  }
-}
+// numOfRecordingsToShow = function(recs) {
+//   if(recs.length < numberOfRecordingToShow) {
+//     return recs;
+//   } else {
+//     var newCurrentRecordings = new Array();
+//     for(var i = 0; i < numberOfRecordingToShow; i++) {
+//       newCurrentRecordings[i] = recs[i];
+//     }
+//     return newCurrentRecordings;
+//   }
+// }
 
 Template.record_strip.events({
   'click input' : function (event){
@@ -394,7 +393,7 @@ Template.record_strip.events({
     console.log("the inputId is " + inputId);
     if (Meteor.userId() != null){
       var qRec = Meteor.call("getARecording", inputId);
-      qRec.playRecoding(audioController.context);
+      playRecoding(qRec.blob);
       } 
     else {
       for(var i = 0; i < secondaryRecordingArray.length; i++){
