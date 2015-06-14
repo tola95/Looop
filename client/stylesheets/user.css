@@ -33,11 +33,11 @@
 }
 
 #edit_details {
-	font-family: 'Tahoma', Arial, sans-serif;
+	font-family: 'smallFont', Arial, sans-serif;
 	float: middle;
 	width: 500px;
-	height: 460px;
-	margin-left: auto;
+	height: auto;
+	margin-left: 50px;
 	margin-right: auto;
 	background-color: white;
 }
@@ -51,7 +51,7 @@
 	margin-left: 5%;
 	padding: 10px;
 	width: 60%;
-	min-width: 500px
+	min-width: 500px;
 	font-family: 'smallFont', Arial, sans-serif;
 	background-color: white;
 	box-shadow: 2px 2px 3px #E3E3e3;
@@ -99,8 +99,8 @@
 }
 
 #addProfilePic {
-    float: middle;
     margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 #addHeaderPic {
@@ -215,7 +215,6 @@ fieldset {
   margin-top: 40px;
   margin-left: 370px;
   padding: 15px 20px;
-  text-align: center;
   vertical-align: middle;
   box-shadow: 5px 5px 3px #222;
 }
@@ -226,6 +225,8 @@ fieldset {
 
 .closebox {
 	float: right;
+	background: white;
+	border: none;
 }
 
 .follow-buttons {
@@ -238,6 +239,7 @@ fieldset {
 }
 
 #update {
+	float: right;
 	margin-top: 25px;
 }
 
