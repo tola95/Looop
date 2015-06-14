@@ -33,10 +33,13 @@ document.addEventListener("click", function(event) {
   var t = event.target.id;
   if (t != "searchText" && t != "results") {
     var elem = document.getElementById('results');
-    if(elem.style.display == 'block') {
-      elem.style.display = 'none';
-      document.getElementById('searchText').value = "Search..";
-    } 
+    if (elem) {
+      if(elem.style.display == 'block') {
+        elem.style.display = 'none';
+        document.getElementById('searchText').value = "Search..";
+      } 
+    }
+    
   }
   
 });
@@ -420,7 +423,6 @@ Template.save_recording.events({
   Must be passed "block" or "none" */
 updateSaveRecordingVisibility = function(visibility) {
   elems = document.getElementsByClassName("save-recording");
-  console.log(elems);
   for (var i=0; i<elems.length; i++) {
       elems[i].style.display = visibility;
   }

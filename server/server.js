@@ -161,12 +161,12 @@ Meteor.methods({
       }, {
       $pull: {following: followedId}
     });
-
     Meteor.users.update({
       _id: followedId
       }, {
       $pull: {followers: this.userId}
     });
+
   },
 
   // Updates the seenNotification field to true to denote that the user has viewed the new notifications
@@ -235,19 +235,34 @@ Meteor.methods({
   // Deletes the Activity associated with the recording
   unpublishRecording: function(recordingID) {
     var followers = Meteor.users.findOne({_id: this.userId}).followers;
+    var activityId = Activities.findOne({recordingId: recordingID}, {fields: {"_id" : 1}});
+    console.log(activityId);
+    var activity = activityId._id;
+    console.log(activity);
     if(followers) {
       for (var i=0; i < followers.length; i++) {
         Meteor.users.update({
           _id:followers[i]
           }, {
             $pull : {
-              activityFeed: "recordingID"
+              activityFeed: activity
             }
         });
       }
     }
+
+    Meteor.users.update({_id: this.userId}, {
+      $pull: {activities: activity}
+    });
+
     Activities.remove({
       recordingId: recordingID
+    });
+
+    Recordings.update({
+      _id: recordingID
+      }, {
+        $set: {"published": false}
     });
   },
 

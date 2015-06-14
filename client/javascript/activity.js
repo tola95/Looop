@@ -25,7 +25,14 @@ Template.activity.helpers({
 Template.ownRecordingCard.events({
 	'click .publish-button': function(event) {
 		var recordingId = event.target.parentNode.id;
-		console.log("recoridng ID: " + recordingId);
+		console.log(recordingId);
 		Meteor.call("publishRecording", recordingId);
+	},
+
+	'click .unpublish-button': function(event) {
+		var recordingId = event.target.parentNode.id;
+		console.log(recordingId);
+		Meteor.call("unpublishRecording", recordingId);
+
 	}
 });
