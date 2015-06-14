@@ -177,13 +177,19 @@
 
 <template name="profile_listofFollowers">
   {{#each follower}}
-    <div> {{username}} </div>
+    <div class="fflist"> 
+      <button style="float:right;">Follow</button>
+      <div style="float:left;"> {{username}} </div>
+    </div>
   {{/each}}
 </template>
 
 <template name="profile_listofFollowing">
   {{#each following}}
-    <div> {{username}} </div>
+    <div class="fflist"> 
+      <button style="float:right;">Unfollow</button>
+      <div style="float:left;"> {{username}} </div>
+    </div>
   {{/each}}
 </template>
 
