@@ -113,8 +113,8 @@ Meteor.methods({
     Recordings.remove(recording);
   },
 
-  getRecordings: function(userId) {
-    Recordings.find({user: userId}, {sort: {createdAt: -1}});
+  getRecordings: function(userId, num) {
+    Recordings.find({user: userId}, {sort: {createdAt: -1}, limit: num});
   },
 
   getARecording: function(id){

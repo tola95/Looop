@@ -13,6 +13,8 @@ var soundsDB = Meteor.subscribe("sounds", function() {
   updatePianoSounds(getInstrumentSounds(STARTING_KEYBOARD));
 });
 
+Meteor.subscribe("recordings");
+
 Meteor.subscribe("userData", function () {
     if (Meteor.userId()) {
       console.log(Meteor.users.findOne({_id: Meteor.userId()}).bio);
@@ -290,7 +292,7 @@ Template.bio.events = {
 
 Session.setDefault("activeInstrumentView", DRUM_VIEW);
 Session.setDefault("sessionRecordings", new Array());
-// var numberOfRecordingToShow = 5;
+Session.setDefault("numberOfRecordingToShow", 5);
 var secondaryRecordingArray = new Array();
 
 Template.home.helpers({
@@ -298,7 +300,9 @@ Template.home.helpers({
 
   recordings: function () {
     if (Meteor.userId() != null){
-      return Meteor.call("getRecordings", Meteor.userId());
+      console.log("this helper was caller");
+      // return Meteor.call("getRecordings", Meteor.userId(), Session.get("numberOfRecordingToShow"));
+      return Recordings.find({user: Meteor.userId()}, {sort: {createdAt: -1}, limit: Session.get("numberOfRecordingToShow")});
     } else {
       return Session.get("sessionRecordings");      
     }
@@ -317,7 +321,8 @@ Template.save_recording.events({
       if (Meteor.userId() != null){
         var newRecording = new Recording(name, Meteor.userId(), blob);
         //add to the database
-        Meteor.call("addRecording", newRecording);
+        //Meteor.call("addRecording", newRecording);
+        Recordings.insert(newRecording);
       } else {
         var newRecording = new Recording(name, Meteor.userId(), blob);
         console.log(newRecording);
@@ -358,13 +363,14 @@ updateSaveRecordingVisibility = function(visibility) {
 
 //When a user logs in 
 Accounts.onLogin(function() {
-  //var recentRecordings = Session.get("sessionRecordings");
-  //console.log("Session recordings after log in " + recentRecordings);
+  console.log(Meteor.userId());
+  console.log(secondaryRecordingArray);
   for (var i = 0; i < secondaryRecordingArray.length; i++){
-    secondaryRecordingArray[i].name = Meteor.userId();
-    Meteor.call("addRecording", secondaryRecordingArray[i]);
-    // Session.set("sessionRecordings", new Array());
-    // secondaryRecordingArray = new Array();
+    console.log(secondaryRecordingArray[i]);
+    secondaryRecordingArray[i].user = Meteor.userId();
+    console.log(secondaryRecordingArray[i]);
+    //Meteor.call("addRecording", secondaryRecordingArray[i]);
+    Recordings.insert(secondaryRecordingArray[i]);
   }
 });
 
@@ -372,38 +378,31 @@ Accounts.onLogin(function() {
 Accounts.onLogout(function() {
   Session.set("sessionRecordings", new Array());
   secondaryRecordingArray = new Array();
-  // numberOfRecordingToShow = 5;
+  Session.set("numberOfRecordingToShow", 5);
 });
-
-// numOfRecordingsToShow = function(recs) {
-//   if(recs.length < numberOfRecordingToShow) {
-//     return recs;
-//   } else {
-//     var newCurrentRecordings = new Array();
-//     for(var i = 0; i < numberOfRecordingToShow; i++) {
-//       newCurrentRecordings[i] = recs[i];
-//     }
-//     return newCurrentRecordings;
-//   }
-// }
 
 Template.record_strip.events({
   'click input' : function (event){
     var inputId = event.target.id;
     console.log("the inputId is " + inputId);
+    console.log(secondaryRecordingArray);
+    console.log(Session.get("sessionRecordings"));    
     if (Meteor.userId() != null){
-      var qRec = Meteor.call("getARecording", inputId);
-      playRecoding(qRec.blob);
+      console.log(inputId);
+      var qRec = Recordings.findOne({_id:inputId});
+      console.log(qRec)
+      console.log(qRec.blob);
+      playRecording(qRec.blob);
       } 
     else {
       for(var i = 0; i < secondaryRecordingArray.length; i++){
+        console.log(inputId == secondaryRecordingArray[i].createdAt);
         if(inputId == secondaryRecordingArray[i].createdAt){
           console.log(secondaryRecordingArray[i]);
           console.log(secondaryRecordingArray[i].blob);
 
           playRecording(secondaryRecordingArray[i].blob);
         }
-        break;
       }
     }
   }
