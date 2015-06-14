@@ -1,12 +1,13 @@
 var TIMELINE_VIEW = "timeline_view",
-    RECORDINGS_VIEW = "recordings_view";
+    RECORDINGS_VIEW = "recordings_view",
+    FEED_LENGTH_LIMIT = 1;
 
 Meteor.subscribe("allUserData");
 Meteor.subscribe("userData");
 
 addRecording = function() {
-  Meteor.call("addRecordings", {name: "song 1", user: "Pn5v2gHp9KYBzPNjW", published: true});
-  Meteor.call("addRecordings", {name: "song 2", user: "Pn5v2gHp9KYBzPNjW", published: false});
+  Meteor.call("addRecordings", {name: "song 1", user: Meteor.userId(), published: false, createdAt: new Date()});
+  Meteor.call("addRecordings", {name: "song 2", user: Meteor.userId(), published: false, createdAt: new Date()});
 }
 
 Template.personal.helpers({
@@ -192,6 +193,13 @@ Template.current_usermain.helpers({
   }
 });
 
+Template.other_usermain.helpers({
+  published_recordings: function() {
+    var userId = Template.instance().data.userId;
+    return Recordings.find({user: userId, published: true}, {sort: {createdAt: -1}, limit: FEED_LENGTH_LIMIT});
+  }
+});
+
 Template.edetails.events({
   'click #editdetailslink' : function() {
     updateSaveDetailsVisibility("block");
@@ -265,7 +273,7 @@ Template.recordings_view.helpers({
   recordings: function() {
     var userId = Meteor.userId();
     if (userId) {
-      return Recordings.find({user: userId}, {}, {limit: 10});
+      return Recordings.find({user: userId}, {}, {sort: {createdAt: -1}, limit: FEED_LENGTH_LIMIT});
     }
   }
 
