@@ -161,12 +161,12 @@ Meteor.methods({
       }, {
       $pull: {following: followedId}
     });
-
     Meteor.users.update({
       _id: followedId
       }, {
       $pull: {followers: this.userId}
     });
+
   },
 
   // Updates the seenNotification field to true to denote that the user has viewed the new notifications
@@ -199,9 +199,14 @@ Meteor.methods({
       throw new Meteor.Error("not logged in", "Please login to publish a recording");
     }
 
-    // TODO: Get recording out of recording DB - check creator ID (maybe??)
+    var recording = Recordings.findOne({_id: recordingId});
+    if (!recording || recording.user != this.userId) {
+      return;
+    }
 
-    var activity = new RecordingActivity(recordingId, Meteor.user().username, "Song Title");
+    Recordings.update({_id: recordingId}, {$set: {published: true}});
+
+    var activity = new RecordingActivity(recordingId, Meteor.user().username, recording.name);
     var activityId = Activities.insert(activity);
 
     var followers = Meteor.users.findOne({_id: this.userId}).followers;
@@ -228,9 +233,37 @@ Meteor.methods({
   },
 
   // Deletes the Activity associated with the recording
-  unpublishRecording: function(recordingId) {
-    // TODO: need Recordings DB with activity feed IDs
-    return;
+  unpublishRecording: function(recordingID) {
+    var followers = Meteor.users.findOne({_id: this.userId}).followers;
+    var activityId = Activities.findOne({recordingId: recordingID}, {fields: {"_id" : 1}});
+    console.log(activityId);
+    var activity = activityId._id;
+    console.log(activity);
+    if(followers) {
+      for (var i=0; i < followers.length; i++) {
+        Meteor.users.update({
+          _id:followers[i]
+          }, {
+            $pull : {
+              activityFeed: activity
+            }
+        });
+      }
+    }
+
+    Meteor.users.update({_id: this.userId}, {
+      $pull: {activities: activity}
+    });
+
+    Activities.remove({
+      recordingId: recordingID
+    });
+
+    Recordings.update({
+      _id: recordingID
+      }, {
+        $set: {"published": false}
+    });
   },
 
   updateProfileInfo: function(description, fullname, genres) {
