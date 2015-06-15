@@ -14,7 +14,11 @@
 
 .activity_info h1 {
 	display: inline-block;
-  
+}
+
+.button-cont {
+	float: right;
+	width: auto;
 }
 
 .activity_info {
@@ -36,9 +40,17 @@
 }
 
 .recording-card .publish-buttons {
-	float: right;
 	background-color: white;
 	box-shadow: 1px 1px 2px 1px #878787;
+}
+
+.delete-button {
+	background-color: white;
+	box-shadow: 1px 1px 2px 1px #878787;
+}
+
+.delete-button .delete {
+	padding-top: 2px;
 }
 
 .recording-card .unpublish-button:hover span {
