@@ -172,7 +172,7 @@
       {{else}}
         <button style="float:right;" class="follow-from-popup">Follow</button>
       {{/if}}
-        <div style="float:left;"> {{username}} </div>
+        <a class="userlink" href={{userpage}} style="float:left;"> {{username}} </a>
     </div>
   {{/each}}
 </template>
@@ -181,7 +181,7 @@
   {{#each following}}
     <div class="fflist">
       <button style="float:right;" class="unfollow-from-popup">Unfollow</button>
-      <div style="float:left;"> {{username}} </div>
+      <a class="userlink" href={{userpage}} style="float:left;"> {{username}} </a>
     </div>
   {{/each}}
 </template>
@@ -196,7 +196,7 @@
           <button style="float:right;" class="follow-from-popup">Follow</button>
         {{/if}}
       {{/if}}
-      <div style="float:left;"> {{username}} </div>
+      <a class="userlink" href={{userpage}} style="float:left;"> {{username}} </a>
     </div>
   {{/each}}
 </template>
@@ -211,7 +211,7 @@
           <button style="float:right;" class="follow-from-popup">Follow</button>
         {{/if}}
       {{/if}}
-      <div style="float:left;"> {{username}} </div>
+      <a class="userlink" href={{userpage}} style="float:left;"> {{username}} </a>
     </div>
   {{/each}}
 </template>
@@ -236,10 +236,11 @@
 
 <template name="suggestions">
   <div id="suggestions-container">
+    <h3 align="center" id="suggestions">Suggestions</h3>
     {{#each suggested}}
       <div class="suggested">
-        <button>Follow</button>
-        <div>{{username}}</div>
+        <button style="float:right;">Follow</button>
+        <a class="userlink" href={{userpage}}>{{username}}</a>
       </div>
     {{/each}}
   </div>
