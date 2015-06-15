@@ -165,20 +165,30 @@
 
 <template name="listofFollowers">
   {{#each follower}}
-    <div> {{username}} </div>
+    <div class="fflist">
+      {{#if followingUser}}
+      <button style="float:right;" class="unfollow-from-popup">Unfollow</button>
+      {{else}}
+      <button style="float:right;" class="follow-from-popup">Follow</button>
+      {{/if}}
+      <div style="float:left;"> {{username}} </div>
+    </div>
   {{/each}}
 </template>
 
 <template name="listofFollowing">
   {{#each following}}
-    <div> {{username}} </div>
+    <div class="fflist">
+      <button style="float:right;" class="unfollow-from-popup">Unfollow</button>
+      <div style="float:left;"> {{username}} </div>
+    </div>
   {{/each}}
 </template>
 
 <template name="profile_listofFollowers">
   {{#each follower}}
     <div class="fflist"> 
-      <button style="float:right;">Follow</button>
+      <button style="float:right;" class="follow-from-popup">Follow</button>
       <div style="float:left;"> {{username}} </div>
     </div>
   {{/each}}
@@ -187,7 +197,7 @@
 <template name="profile_listofFollowing">
   {{#each following}}
     <div class="fflist"> 
-      <button style="float:right;">Unfollow</button>
+      <button style="float:right;" class="unfollow-from-popup">Unfollow</button>
       <div style="float:left;"> {{username}} </div>
     </div>
   {{/each}}

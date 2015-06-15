@@ -256,8 +256,8 @@ fieldset {
 
 .fflist {
 	border-bottom-color: black;
-	border-bottom: 2px;
+	border-bottom: 1px solid;
 	width: 200px;
 	height: 50px;
-	margin-top: 20px;
+	margin-top: 30px;
 }

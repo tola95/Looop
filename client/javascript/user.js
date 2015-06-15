@@ -265,6 +265,14 @@ Template.listofFollowers.helpers({
     if (followers) {
       return followers;
     }
+  },
+
+  followingUser: function() {
+    var otherUser = this._id;
+    var currentUser = Meteor.user();
+    if (currentUser && currentUser.following) {
+      return currentUser.following.indexOf(otherUser) != -1;
+    }
   }
 });
 
@@ -307,4 +315,23 @@ Template.profile_listofFollowing.helpers({
     }
   }
 
+});
+
+Template.listofFollowing.events({
+  'click .unfollow-from-popup': function() {
+    var id = this._id;
+    Meteor.call("unfollow", id);
+  }
+});
+
+Template.listofFollowers.events({
+  'click .unfollow-from-popup': function() {
+    var id = this._id;
+    Meteor.call("unfollow", id);
+  },
+
+  'click .follow-from-popup': function() {
+    var id = this._id;
+    Meteor.call("follow", id);
+  }
 });
