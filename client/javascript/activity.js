@@ -24,6 +24,9 @@ Template.activity.helpers({
 Template.ownRecordingCard.events({
 	'click .publish-button': function(event) {
 		var recordingId = event.target.parentNode.parentNode.id;
+		if(recordingId == "") {
+			recordingId = event.target.parentNode.parentNode.parentNode.id;
+		}
 		Meteor.call("publishRecording", recordingId);
 	},
 
@@ -35,7 +38,9 @@ Template.ownRecordingCard.events({
 
 	'click .delete-button': function(event) {
 		var recordingId = event.target.parentNode.parentNode.id;
-		console.log(recordingId);
+		if(recordingId == "") {
+			recordingId = event.target.parentNode.parentNode.parentNode.id;
+		}
 		Meteor.call("deleteRecording", recordingId);
 	}
 });
