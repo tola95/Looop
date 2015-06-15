@@ -17,7 +17,7 @@ Meteor.subscribe("recordings");
 
 Meteor.subscribe("userData", function () {
     if (Meteor.userId()) {
-      console.log(Meteor.users.findOne({_id: Meteor.userId()}).bio);
+      //console.log(Meteor.users.findOne({_id: Meteor.userId()}).bio);
       var bio = Meteor.users.findOne({_id: Meteor.userId()}).bio;
       var fullname = Meteor.users.findOne({_id: Meteor.userId()}).fullname;
       
@@ -293,14 +293,12 @@ Template.bio.events = {
 Session.setDefault("activeInstrumentView", DRUM_VIEW);
 Session.setDefault("sessionRecordings", new Array());
 Session.setDefault("numberOfRecordingToShow", 5);
-var secondaryRecordingArray = new Array();
 
 Template.home.helpers({
   activeView: function () { return Session.get("activeInstrumentView"); },
 
   recordings: function () {
     if (Meteor.userId() != null){
-      console.log("this helper was caller");
       // return Meteor.call("getRecordings", Meteor.userId(), Session.get("numberOfRecordingToShow"));
       return Recordings.find({user: Meteor.userId()}, {sort: {createdAt: -1}, limit: Session.get("numberOfRecordingToShow")});
     } else {
@@ -318,26 +316,13 @@ Template.save_recording.events({
   'click #save-recording-okay': function(){
     var name = document.getElementById('recording-name-input').value;
     audioController.recorder.getBuffer(function (blob){
-      var uint8Buffer = [new Uint8Array(newRecording.blob[0].buffer,0, newRecording.blob[0].length*Float32Array.BYTES_PER_ELEMENT), new Uint8Array(newRecording.blob[1].buffer, 0, newRecording.blob[1].length*Float32Array.BYTES_PER_ELEMENT)];
+      var uint8Buffer = [new Uint8Array(blob[0].buffer, 0, blob[0].length*Float32Array.BYTES_PER_ELEMENT),
+                         new Uint8Array(blob[1].buffer, 0, blob[1].length*Float32Array.BYTES_PER_ELEMENT)];
       if (Meteor.userId() != null){
-        var newRecording = new Recording(name, Meteor.userId(), blob);
-        //add to the database
-        //Meteor.call("addRecording", newRecording);
-        Recordings.insert(newRecording);
+        var newRecording = new Recording(name, Meteor.userId(), uint8Buffer);
+        Meteor.call("addRecording", newRecording);
       } else {
-        var newRecording = new Recording(name, Meteor.userId(), blob);
-        console.log(newRecording);
-        console.log(newRecording.blob);
-        console.log("initial recording going to play");
-        //playRecording(newRecording.blob);
-        console.log("initial recording stopped playing");
-        console.log(uint8Buffer);
-        var newFloat32Buffer = [new Float32Array(uint8Buffer[0].buffer), new Float32Array(uint8Buffer[1].buffer)];
-        console.log("new recording going to play");
-        console.log(newFloat32Buffer);
-        playRecording(newFloat32Buffer);
-        console.log("new recording stopped playing");
-        secondaryRecordingArray.unshift(newRecording);
+        var newRecording = new Recording(name, Meteor.userId(), uint8Buffer);
         var newRecordingArray = Session.get("sessionRecordings");
         newRecordingArray.unshift(newRecording);
         Session.set("sessionRecordings", newRecordingArray);
@@ -373,45 +358,33 @@ updateSaveRecordingVisibility = function(visibility) {
 
 //When a user logs in 
 Accounts.onLogin(function() {
-  console.log(Meteor.userId());
-  console.log(secondaryRecordingArray);
-  for (var i = 0; i < secondaryRecordingArray.length; i++){
-    console.log(secondaryRecordingArray[i]);
-    secondaryRecordingArray[i].user = Meteor.userId();
-    console.log(secondaryRecordingArray[i]);
-    //Meteor.call("addRecording", secondaryRecordingArray[i]);
-    Recordings.insert(secondaryRecordingArray[i]);
+  var recentSessionRecordings = Session.get("sessionRecordings");
+  for (var i = 0; i < recentSessionRecordings.length; i++){
+    recentSessionRecordings[i].user = Meteor.userId();
+    Meteor.call("addRecording", recentSessionRecordings[i]);
   }
+  Session.set("sessionRecordings", new Array());
 });
 
 //When a user logs outs 
 Accounts.onLogout(function() {
-  Session.set("sessionRecordings", new Array());
-  secondaryRecordingArray = new Array();
   Session.set("numberOfRecordingToShow", 5);
 });
 
 Template.record_strip.events({
   'click input' : function (event){
     var inputId = event.target.id;
-    console.log("the inputId is " + inputId);
-    console.log(secondaryRecordingArray);
-    console.log(Session.get("sessionRecordings"));    
     if (Meteor.userId() != null){
-      console.log(inputId);
       var qRec = Recordings.findOne({_id:inputId});
-      console.log(qRec)
-      console.log(qRec.blob);
-      playRecording(qRec.blob);
+      var newFloat32Buffer = [new Float32Array(qRec.blob[0].buffer), new Float32Array(qRec.blob[1].buffer)];
+      playRecording(newFloat32Buffer);
       } 
     else {
-      for(var i = 0; i < secondaryRecordingArray.length; i++){
-        console.log(inputId == secondaryRecordingArray[i].createdAt);
-        if(inputId == secondaryRecordingArray[i].createdAt){
-          console.log(secondaryRecordingArray[i]);
-          console.log(secondaryRecordingArray[i].blob);
-
-          playRecording(secondaryRecordingArray[i].blob);
+      var recentSessionRecordings = Session.get("sessionRecordings"); 
+      for(var i = 0; i < recentSessionRecordings.length; i++){
+        if(inputId == recentSessionRecordings[i].createdAt){
+          var newFloat32Buffer = [new Float32Array(recentSessionRecordings[i].blob[0].buffer), new Float32Array(recentSessionRecordings[i].blob[1].buffer)];
+          playRecording(newFloat32Buffer);
         }
       }
     }
