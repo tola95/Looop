@@ -52,6 +52,7 @@ Accounts.onCreateUser(function(options, user) {
   user.activityFeed = [];
   user.notifications = [];
   user.activities = [];
+  user.profilePhoto = "/images/dj.png";
   return user;
 });
 
@@ -76,12 +77,13 @@ Meteor.publish("userData", function () {
     {fields: {'bio': 1, 
               'fullname': 1, 
               'genres': 1, 
-              'profilephoto': 1, 
               'following': 1,
               'followers': 1,
               'seenNotification': 1,
               'activityFeed': 1,
               'notifications': 1,
+              'profilePhoto': 1,
+              'coverPhoto': 1
              }
     })
 });
@@ -92,13 +94,18 @@ Meteor.publish("allUserData", function () {
   {fields: {'bio': 1, 
             'fullname': 1, 
             'genres': 1, 
-            'profilephoto': 1, 
             'following': 1,
             'followers': 1,
             'activityFeed': 1,
-            'username': 1
+            'username': 1,
+            'profilePhoto': 1,
+            'coverPhoto': 1
            }
   })
+});
+
+Meteor.publish("images", function(){ 
+  return Images.find(); 
 });
 
 Meteor.methods({
@@ -270,6 +277,7 @@ Meteor.methods({
     if (!this.userId) {
       throw new Meteor.Error("not logged in", "Please login to update profile");
     }
+
     Meteor.users.update({
         _id: Meteor.userId()
         }, {
@@ -280,24 +288,27 @@ Meteor.methods({
       });
   },
 
-
-  addProfilePhoto: function(files) {
-    for (var i = 0, ln = files.length; i < ln; i++) {
-      Images.insert(files[i], function (err, fileObj) {
-        // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(fileObj);
-        }
-      });
+  updatePhoto: function(photo) {
+    if (!this.userId) {
+      throw new Meteor.Error("not logged in", "Please login to update profile");
     }
+
+    Meteor.users.update(Meteor.userId(), {$set: photo});
+  },
+
+  updateProfilePhoto: function(file) {
+    Images.insert(file, function (err, fileObj) {
+      if (err) {
+         alert("failed to upload profile photo");
+      } else {
+        var imagesURL = {
+          "profilePhoto": "/cfs/files/images/" + fileObj._id
+        };
+        Meteor.users.update(Meteor.userId(), {$set: photo});
+      }
+    });
   }
 
-});
-
-Meteor.publish("images", function () {
-  return Images.find();
 });
 
 RecordingActivity = function(recordingId, user, name) {
