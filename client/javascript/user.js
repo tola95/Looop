@@ -306,6 +306,10 @@ Template.listofFollowers.helpers({
     if (currentUser && currentUser.following) {
       return currentUser.following.indexOf(otherUser) != -1;
     }
+  },
+
+  userpage: function() {
+    return "/user/" + this._id;
   }
 });
 
@@ -326,6 +330,10 @@ Template.listofFollowing.helpers({
     if (following) {
       return following;
     }
+  },
+
+  userpage: function() {
+    return "/user/" + this._id;
   }
 
 });
@@ -344,6 +352,14 @@ Template.profile_listofFollowers.helpers({
     if (currentUser && currentUser.following) {
       return currentUser.following.indexOf(otherUser) != -1;
     }
+  },
+
+  userIsNotYou: function() {
+    return this._id != Meteor.userId();
+  },
+
+  userpage: function() {
+    return "/user/" + this._id;
   }
 
 });
@@ -362,6 +378,14 @@ Template.profile_listofFollowing.helpers({
     if (currentUser && currentUser.following) {
       return currentUser.following.indexOf(otherUser) != -1;
     }
+  },
+
+  userIsNotYou: function() {
+    return this._id != Meteor.userId();
+  },
+
+  userpage: function() {
+    return "/user/" + this._id;
   }
 
 });
@@ -423,5 +447,22 @@ Template.header.helpers({
     if (user) {
       return user.coverPhoto;
     }
+  }
+});
+
+Template.suggestions.helpers({
+  suggested: function() {
+    var myId = Meteor.userId();
+    var genre = Meteor.user().genres;
+    var followings = Meteor.users.find({followers: myId});
+    var suggestedUsers = Meteor.users.find({_id: {$ne: myId}},
+                                           {genres: genre}, 
+                                           {following: {$nin: followings}}
+                                           );
+    return suggestedUsers;
+  },
+
+  userpage: function() {
+    return "/user/" + this._id;
   }
 });

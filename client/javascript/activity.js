@@ -24,15 +24,19 @@ Template.activity.helpers({
 
 Template.ownRecordingCard.events({
 	'click .publish-button': function(event) {
-		var recordingId = event.target.parentNode.id;
-		console.log(recordingId);
+		var recordingId = event.target.parentNode.parentNode.id;
 		Meteor.call("publishRecording", recordingId);
 	},
 
 	'click .unpublish-button': function(event) {
-		var recordingId = event.target.parentNode.id;
+		var recordingId = event.target.parentNode.parentNode.id;
 		console.log(recordingId);
 		Meteor.call("unpublishRecording", recordingId);
+	},
 
+	'click .delete-button': function(event) {
+		var recordingId = event.target.parentNode.parentNode.id;
+		console.log(recordingId);
+		Meteor.call("deleteRecording", recordingId);
 	}
 });
