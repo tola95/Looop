@@ -8,11 +8,8 @@ meteor-platform
 accounts-ui
 accounts-password
 iron:router
-<<<<<<< HEAD
 cfs:standard-packages
 matteodem:easy-search
 peerlibrary:blaze-components
 cfs:gridfs
-=======
 gwendall:auth-client-callbacks
->>>>>>> 03e190f991cc2b1eff26e858e8005fbf3ceb4a28
