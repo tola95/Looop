@@ -311,6 +311,10 @@ Template.profile_listofFollowers.helpers({
     if (currentUser && currentUser.following) {
       return currentUser.following.indexOf(otherUser) != -1;
     }
+  },
+
+  userIsNotYou: function() {
+    return this._id != Meteor.userId();
   }
 
 });
@@ -329,6 +333,10 @@ Template.profile_listofFollowing.helpers({
     if (currentUser && currentUser.following) {
       return currentUser.following.indexOf(otherUser) != -1;
     }
+  },
+
+  userIsNotYou: function() {
+    return this._id != Meteor.userId();
   }
 
 });
@@ -373,5 +381,11 @@ Template.profile_listofFollowers.events({
   'click .follow-from-popup': function() {
     var id = this._id;
     Meteor.call("follow", id);
+  }
+});
+
+Template.suggestions.helpers({
+  suggested: function() {
+
   }
 });

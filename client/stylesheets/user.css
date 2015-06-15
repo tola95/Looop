@@ -261,3 +261,8 @@ fieldset {
 	height: 50px;
 	margin-top: 30px;
 }
+
+#suggestions-container {
+	width: 200px;
+	float: left;
+}

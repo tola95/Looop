@@ -17,6 +17,7 @@
       {{> editDetails}}
   	  {{> listFollowers}}
   	  {{> listFollowing}}
+      {{> suggestions}}
     {{else}}
       {{> other_usermain}}
       {{> profile_listFollowers}}
@@ -191,7 +192,9 @@
       {{#if followingUser}}
         <button style="float:right;" class="unfollow-from-popup">Unfollow</button>
       {{else}}
-        <button style="float:right;" class="follow-from-popup">Follow</button>
+        {{#if userIsNotYou}}
+          <button style="float:right;" class="follow-from-popup">Follow</button>
+        {{/if}}
       {{/if}}
       <div style="float:left;"> {{username}} </div>
     </div>
@@ -204,7 +207,9 @@
       {{#if followingUser}}
         <button style="float:right;" class="unfollow-from-popup">Unfollow</button>
       {{else}}
-        <button style="float:right;" class="follow-from-popup">Follow</button>
+        {{#if userIsNotYou}}
+          <button style="float:right;" class="follow-from-popup">Follow</button>
+        {{/if}}
       {{/if}}
       <div style="float:left;"> {{username}} </div>
     </div>
@@ -226,6 +231,17 @@
       </div>
       <div id="nooffollowers">{{numberFollowers}}</div>
     </div>
+  </div>
+</template>
+
+<template name="suggestions">
+  <div id="suggestions-container">
+    {{#each suggested}}
+      <div class="suggested">
+        <button>Follow</button>
+        <div>{{username}}</div>
+      </div>
+    {{/each}}
   </div>
 </template>
 
