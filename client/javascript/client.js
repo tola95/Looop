@@ -2,6 +2,8 @@ var STARTING_DRUM = "drum1",
     STARTING_KEYBOARD = "grandpiano",
     DRUM_VIEW = "drum_buttons",
     KEYBOARD_VIEW = "keys",
+    // keydown = 0,
+    // mousedownID = -1,
 
     drumcont = 0,
     keycont = 0,
@@ -203,8 +205,15 @@ Template.notifications.helpers({
 
 Template.soundpad_button.events({
   'mousedown': function (e, template) {
-    // Play corresponding audio file
     var audio = template.find('audio');
+    if (template.find('.playable').getAttribute('data_on') == 0) {
+      audio.load();
+      audio.play();
+      template.find('.playable').setAttribute('data_on', 1);
+    }
+    
+    if(template.find('.playable').getAttribute('mousedownID') == -1)
+    template.find('.playable').setAttribute('mousedownID', setInterval(function() {
     if (!audio.paused) {
       var clone = audio.cloneNode(true);
       audioController.addSource(clone);
@@ -213,6 +222,18 @@ Template.soundpad_button.events({
     }
     audio.load();
     audio.play();
+    }, 500));
+    // Play corresponding audio file
+    
+    
+  },
+
+  'mouseup': function(e, template) {
+    if(template.find('.playable').getAttribute('mousedownID') != 1) {
+      clearInterval(template.find('.playable').getAttribute('mousedownID'));
+      template.find('.playable').setAttribute('mousedownID', -1);
+    }
+    template.find('.playable').setAttribute('data_on', 0);
   }
 });
 
@@ -235,7 +256,9 @@ document.onkeydown = function(event) {
       classie.addClass(button, "key-pressed");
   }
   if (button) {
-    dispatchMouseEvent(button, 'mousedown', true, true);
+      dispatchMouseEvent(button, 'mousedown', true, true);
+      
+    
   }
 };
  
@@ -256,6 +279,7 @@ document.onkeyup = function(event) {
     } else {
       classie.removeClass(button, "key-pressed");
     }
+    dispatchMouseEvent(button, 'mouseup', true, true);
   }
 };
 
@@ -349,7 +373,9 @@ Template.keys.helpers({
 Template.keys.events({
   'mousedown .playable': function(e, template) {
     var audio = e.target.getElementsByClassName("audio")[0];
-    if (!audio.paused) {
+    console.log(e.target.getAttribute('data_on'));
+    if (e.target.getAttribute('data_on') == 0) {
+      if (!audio.paused ) {
       var clone = audio.cloneNode(true);
       audioController.addSource(clone);
       clone.play();
@@ -358,6 +384,13 @@ Template.keys.events({
     audio.load();
     audio.play();
   }
+  e.target.setAttribute('data_on', 1);
+    },
+
+  'mouseup .playable': function(e, template) {
+    e.target.setAttribute('data_on', 0);
+  }
+    
 });
 
 
