@@ -1,0 +1,21 @@
+Recording = function(name, user, blob){
+	this.name = name;
+	this.user = user;
+	this.blob = blob;
+	this.createdAt = new Date();
+<<<<<<< HEAD:client/javascript/recording.js
+	this.published = false;
+
+	this.playRecording = function () {
+	    var newSource = audioContext.createBufferSource();
+	    var newBuffer = audioContext.createBuffer( 2, this.blob[0].length, audioContext.sampleRate );
+	    newBuffer.getChannelData(0).set(this.blob[0]);
+	    newBuffer.getChannelData(1).set(this.blob[1]);
+	    newSource.buffer = newBuffer;
+
+	    newSource.connect( audioContext.destination );
+	    newSource.start(0);
+	}
+=======
+>>>>>>> 03e190f991cc2b1eff26e858e8005fbf3ceb4a28:client/recording.js
+}

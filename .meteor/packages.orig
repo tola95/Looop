@@ -1,0 +1,18 @@
+# Meteor packages used by this project, one per line.
+# Check this file (and the other files in this directory) into your repository.
+#
+# 'meteor add' and 'meteor remove' will edit this file for you,
+# but you can also edit it by hand.
+
+meteor-platform
+accounts-ui
+accounts-password
+iron:router
+<<<<<<< HEAD
+cfs:standard-packages
+matteodem:easy-search
+peerlibrary:blaze-components
+cfs:gridfs
+=======
+gwendall:auth-client-callbacks
+>>>>>>> 03e190f991cc2b1eff26e858e8005fbf3ceb4a28
