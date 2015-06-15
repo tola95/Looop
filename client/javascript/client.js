@@ -223,7 +223,6 @@ Template.notifications.helpers({
 Template.soundpad_button.events({
   'mousedown': function (e, template) {
     var audio = template.find('audio');
-    
     if (template.find('.playable').getAttribute('data_on') == 0) {
       audio.load();
       audio.play();
@@ -396,7 +395,9 @@ Template.keys.helpers({
 Template.keys.events({
   'mousedown .playable': function(e, template) {
     var audio = e.target.getElementsByClassName("audio")[0];
-    if (!audio.paused) {
+    console.log(e.target.getAttribute('data_on'));
+    if (e.target.getAttribute('data_on') == 0) {
+      if (!audio.paused ) {
       var clone = audio.cloneNode(true);
       audioController.addSource(clone);
       clone.play();
@@ -405,6 +406,13 @@ Template.keys.events({
     audio.load();
     audio.play();
   }
+  e.target.setAttribute('data_on', 1);
+    },
+
+  'mouseup .playable': function(e, template) {
+    e.target.setAttribute('data_on', 0);
+  }
+    
 });
 
 
