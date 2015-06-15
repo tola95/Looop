@@ -397,20 +397,21 @@ Template.keys.events({
     var audio = e.target.getElementsByClassName("audio")[0];
     console.log(e.target.getAttribute('data_on'));
     if (e.target.getAttribute('data_on') == 0) {
+      e.target.setAttribute('data_on', 1);
       if (!audio.paused ) {
-      var clone = audio.cloneNode(true);
-      audioController.addSource(clone);
-      clone.play();
-      return;
+        var clone = audio.cloneNode(true);
+        audioController.addSource(clone);
+        clone.play();
+        return;
+      }
+      audio.load();
+      audio.play();
     }
-    audio.load();
-    audio.play();
-  }
-  e.target.setAttribute('data_on', 1);
-    },
+  },
 
   'mouseup .playable': function(e, template) {
-    e.target.setAttribute('data_on', 0);
+    if (e.target.getAttribute('data_on') == 1)
+      e.target.setAttribute('data_on', 0);
   }
     
 });
