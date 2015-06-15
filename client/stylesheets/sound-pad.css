@@ -275,13 +275,13 @@ button:active {
     background-color:#D8D8D8;
     -moz-border-radius:6px;
     -webkit-border-radius:6px;
-    border-radius:5px;
+    border-radius:10px;
     border:1px solid #424242;
     display:inline-block;
     cursor:pointer;
-    color:#3B5957;
+    color:#B5B5B5;
     font-family: "smallFont";
-    font-size:12px;
+    font-size:15px;
     padding:20px;
     text-shadow: 0px 1px 0px rgba(255, 255, 255, .5);
 }

@@ -12,3 +12,4 @@ cfs:standard-packages
 matteodem:easy-search
 peerlibrary:blaze-components
 cfs:gridfs
+gwendall:auth-client-callbacks
