@@ -17,6 +17,7 @@
       {{> editDetails}}
   	  {{> listFollowers}}
   	  {{> listFollowing}}
+      {{> suggestions}}
     {{else}}
       {{> other_usermain}}
       {{> profile_listFollowers}}
@@ -68,12 +69,6 @@
   {{/each}}
 </template>
 
-<template name="photo">
-  <div id="photo">
-    <img id="profilephoto" src="/images/dj.png" width="90px" height="80px">
-  </div>
-</template>
-
 <template name="bio">
   <div id="bio" align="center">
     <h3 id="fullname">{{fullname}}</h3>
@@ -85,8 +80,10 @@
 </template>
 
 <template name="header">
-  <div id="header">
-    {{> photo }} 
+  <div id="header" style="background-image: url({{cover_src}})">
+    <div id="photo">
+      <img id="profilephoto" src={{profile_src}} alt="profile photo">
+    </div>
     
   </div>
 </template>
@@ -171,7 +168,7 @@
       {{else}}
         <button style="float:right;" class="follow-from-popup">Follow</button>
       {{/if}}
-        <div style="float:left;"> {{username}} </div>
+        <a class="userlink" href={{userpage}} style="float:left;"> {{username}} </a>
     </div>
   {{/each}}
 </template>
@@ -180,7 +177,7 @@
   {{#each following}}
     <div class="fflist">
       <button style="float:right;" class="unfollow-from-popup">Unfollow</button>
-      <div style="float:left;"> {{username}} </div>
+      <a class="userlink" href={{userpage}} style="float:left;"> {{username}} </a>
     </div>
   {{/each}}
 </template>
@@ -191,9 +188,11 @@
       {{#if followingUser}}
         <button style="float:right;" class="unfollow-from-popup">Unfollow</button>
       {{else}}
-        <button style="float:right;" class="follow-from-popup">Follow</button>
+        {{#if userIsNotYou}}
+          <button style="float:right;" class="follow-from-popup">Follow</button>
+        {{/if}}
       {{/if}}
-      <div style="float:left;"> {{username}} </div>
+      <a class="userlink" href={{userpage}} style="float:left;"> {{username}} </a>
     </div>
   {{/each}}
 </template>
@@ -204,9 +203,11 @@
       {{#if followingUser}}
         <button style="float:right;" class="unfollow-from-popup">Unfollow</button>
       {{else}}
-        <button style="float:right;" class="follow-from-popup">Follow</button>
+        {{#if userIsNotYou}}
+          <button style="float:right;" class="follow-from-popup">Follow</button>
+        {{/if}}
       {{/if}}
-      <div style="float:left;"> {{username}} </div>
+      <a class="userlink" href={{userpage}} style="float:left;"> {{username}} </a>
     </div>
   {{/each}}
 </template>
@@ -229,19 +230,30 @@
   </div>
 </template>
 
+<template name="suggestions">
+  <div id="suggestions-container">
+    <h3 align="center" id="suggestions">Suggestions</h3>
+    {{#each suggested}}
+      <div class="suggested">
+        <button style="float:right;">Follow</button>
+        <a class="userlink" href={{userpage}}>{{username}}</a>
+      </div>
+    {{/each}}
+  </div>
+</template>
+
 <template name="details">
-<body>
 
   <button class="closebox">X</button>
 
   <div id="edit_details">
       <fieldset>
-      <!-- <div>
+      <div>
       Add Photo <input id="addProfilePic" type="file"  />
       </div>
       <div>
       Add Header <input id="addHeaderPic" type="file" />
-      </div> -->
+      </div>
       <div>   
       <label for="fname_text">Full Name </label>
             <textarea rows="1" id="fname_text" maxlength="30">{{fullname}}</textarea>
@@ -258,6 +270,5 @@
       </fieldset>
     
       </div>
-</body>
 </template>
 
