@@ -213,7 +213,7 @@ Meteor.methods({
 
     Recordings.update({_id: recordingId}, {$set: {published: true}});
 
-    var activity = new RecordingActivity(recordingId, Meteor.user().username, recording.name);
+    var activity = new RecordingActivity(recordingId, Meteor.user().username, recording.name, Meteor.userId());
     var activityId = Activities.insert(activity);
 
     var followers = Meteor.users.findOne({_id: this.userId}).followers;
@@ -311,11 +311,12 @@ Meteor.methods({
 
 });
 
-RecordingActivity = function(recordingId, user, name) {
+RecordingActivity = function(recordingId, user, name, userId) {
   this.recordingId = recordingId;
   this.postedAt = new Date();
   this.postedBy = user;
   this.nameOfActivity = name;
+  this.creatorId = userId;
 }
 
 // Notification for when one user follows another. For notifying the user being followed

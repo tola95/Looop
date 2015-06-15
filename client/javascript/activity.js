@@ -4,7 +4,6 @@ Template.activity.helpers({
 
 	activities: function () {
 		var activities = [];
-		// var userDoc = Meteor.users.findOne({_id: Meteor.userId()}, {fields: {'activityFeed': 1}});
 		var userDoc = Meteor.user()
 		if (!userDoc) {
 			return [];
@@ -38,5 +37,25 @@ Template.ownRecordingCard.events({
 		var recordingId = event.target.parentNode.parentNode.id;
 		console.log(recordingId);
 		Meteor.call("deleteRecording", recordingId);
+	}
+});
+
+
+Template.recordingCardContents.helpers({
+	profile_image: function() {
+		var user = Meteor.users.findOne({_id: getProfileId()});
+		if (user) {
+			return user.profilePhoto;
+		}
+	}
+});
+
+Template.activityCard.helpers({
+	profile_image: function() {
+		var userId = Template.instance().data.creatorId;
+		var user = Meteor.users.findOne({_id: userId});
+		if (user) {
+			return user.profilePhoto;
+		}
 	}
 });
