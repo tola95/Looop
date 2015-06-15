@@ -475,6 +475,7 @@ Accounts.onLogout(function() {
 
 Template.record_strip.events({
   'click input' : function (event){
+    console.log("playing");
     var inputId = event.target.id;
     if (Meteor.userId() != null){
       var qRec = Recordings.findOne({_id:inputId});

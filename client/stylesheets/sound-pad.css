@@ -113,7 +113,7 @@ button:active {
   border-radius:5px;
 }
 
-#play {
+.play {
   margin-left: 10px;
   float:left;
   padding-right: 10px;
