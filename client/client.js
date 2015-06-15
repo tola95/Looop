@@ -318,6 +318,7 @@ Template.save_recording.events({
   'click #save-recording-okay': function(){
     var name = document.getElementById('recording-name-input').value;
     audioController.recorder.getBuffer(function (blob){
+      var uint8Buffer = [new Uint8Array(newRecording.blob[0].buffer,0, newRecording.blob[0].length*Float32Array.BYTES_PER_ELEMENT), new Uint8Array(newRecording.blob[1].buffer, 0, newRecording.blob[1].length*Float32Array.BYTES_PER_ELEMENT)];
       if (Meteor.userId() != null){
         var newRecording = new Recording(name, Meteor.userId(), blob);
         //add to the database
@@ -327,6 +328,15 @@ Template.save_recording.events({
         var newRecording = new Recording(name, Meteor.userId(), blob);
         console.log(newRecording);
         console.log(newRecording.blob);
+        console.log("initial recording going to play");
+        //playRecording(newRecording.blob);
+        console.log("initial recording stopped playing");
+        console.log(uint8Buffer);
+        var newFloat32Buffer = [new Float32Array(uint8Buffer[0].buffer), new Float32Array(uint8Buffer[1].buffer)];
+        console.log("new recording going to play");
+        console.log(newFloat32Buffer);
+        playRecording(newFloat32Buffer);
+        console.log("new recording stopped playing");
         secondaryRecordingArray.unshift(newRecording);
         var newRecordingArray = Session.get("sessionRecordings");
         newRecordingArray.unshift(newRecording);
@@ -418,5 +428,3 @@ playRecording = function( buffers ) {
   newSource.connect( audioController.context.destination );
   newSource.start(0);
 }
-
-
