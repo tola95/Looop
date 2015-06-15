@@ -38,11 +38,16 @@
 <template name="ownRecordingCard">
 <div class="recording-card" id={{_id}}>
 	{{> recordingCardContents }}
-	{{#if published}}
-		<button class="unpublish-button publish-buttons"><span>Published</span></button>
-	{{else}}
-		<button class="publish-buttons publish-button" ><img title="publish" src="/images/globe.png" width="10px" height="10px"> Publish</button>
-	{{/if}}
+	<div class="button-cont">
+		{{#if published}}
+			<button class="unpublish-button publish-buttons"><span>Published</span></button>
+		{{else}}
+			<button class="publish-buttons publish-button" ><img title="publish" src="/images/globe.png" width="10px" height="10px"> Publish</button>
+		{{/if}}
+		<button class="delete-button">
+			<img class="delete" title="delete" src="/images/delete.png" width="10px" height="10px">
+		</button>
+	</div>
 </div>
 </template>
 
