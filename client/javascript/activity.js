@@ -14,7 +14,9 @@ Template.activity.helpers({
 		}
 		for (var i = 0; i < activityFeed.length; i ++) {
 			var act = Activities.findOne({_id: activityFeed[i]});
-			activities.push(act);
+			if (act) {
+				activities.unshift(act);
+			}
 		}
 
 		return activities;
@@ -32,7 +34,6 @@ Template.ownRecordingCard.events({
 
 	'click .unpublish-button': function(event) {
 		var recordingId = event.target.parentNode.parentNode.id;
-		console.log(recordingId);
 		Meteor.call("unpublishRecording", recordingId);
 	},
 
@@ -50,8 +51,12 @@ Template.recordingCardContents.events({
     	var inputId = event.target.id;
     	if (Meteor.userId() != null){
       		var qRec = Recordings.findOne({_id:inputId});
-      		var newFloat32Buffer = [new Float32Array(qRec.blob[0].buffer), new Float32Array(qRec.blob[1].buffer)];
-      		playRecording(newFloat32Buffer);
+      		if (qRec) {
+	      		var newFloat32Buffer = [new Float32Array(qRec.blob[0].buffer), new Float32Array(qRec.blob[1].buffer)];
+	      		playRecording(newFloat32Buffer);
+	      	} else {
+	      		alert("Sorry, this recording has been deleted");
+	      	}
       	}
 	}
 });
@@ -90,8 +95,12 @@ Template.activityCard.events({
     	var inputId = event.target.id;
     	if (Meteor.userId() != null){
       		var qRec = Recordings.findOne({_id:inputId});
-      		var newFloat32Buffer = [new Float32Array(qRec.blob[0].buffer), new Float32Array(qRec.blob[1].buffer)];
-      		playRecording(newFloat32Buffer);
+      		if (qRec) {
+	      		var newFloat32Buffer = [new Float32Array(qRec.blob[0].buffer), new Float32Array(qRec.blob[1].buffer)];
+	      		playRecording(newFloat32Buffer);
+	      	} else {
+	      		alert("Sorry, this recording has been deleted");
+	      	}
       	}
 	}
 });

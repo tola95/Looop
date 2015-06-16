@@ -85,6 +85,7 @@ Template.recording_controls.events({
     document.getElementById("record-button").style.display = "inline-block";
     document.getElementById("stop-button").style.display = "none";
     audioController.stopRecording(); 
+    // audioController.playback();
     updateSaveRecordingVisibility("block");
   }
 
@@ -383,8 +384,12 @@ Template.record_strip.events({
     var inputId = template.find('.strip').id;
     if (Meteor.userId() != null){
       var qRec = Recordings.findOne({_id:inputId});
-      var newFloat32Buffer = [new Float32Array(qRec.blob[0].buffer), new Float32Array(qRec.blob[1].buffer)];
-      playRecording(newFloat32Buffer);
+      if (qRec) {
+        var newFloat32Buffer = [new Float32Array(qRec.blob[0].buffer), new Float32Array(qRec.blob[1].buffer)];
+        playRecording(newFloat32Buffer);
+      } else {
+        alert("Sorry, this recording has been deleted");
+      }
     } else {
       var recentSessionRecordings = Session.get("sessionRecordings"); 
       for(var i = 0; i < recentSessionRecordings.length; i++){
