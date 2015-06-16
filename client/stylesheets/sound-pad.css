@@ -93,6 +93,10 @@ button:active {
   height: auto;
 }
 
+.keyboard_options {
+  font-size: 15px;
+}
+
 .inst {
   height: auto;
   width:100px;
