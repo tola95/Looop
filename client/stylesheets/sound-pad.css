@@ -262,7 +262,6 @@ button:active {
 .button-container {
     width: 368px;
     background: #2E2E2E;
-    overflow-y: auto;
     margin-right: auto;
     margin-left: auto; 
     -webkit-animation:taufik 2s;

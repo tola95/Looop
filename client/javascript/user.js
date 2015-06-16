@@ -454,15 +454,11 @@ Template.header.helpers({
 Template.suggestions.helpers({
   suggested: function() {
     var myId = Meteor.userId();
-    if (myId) {
-      var genre = Meteor.user().genres;
-    }
-    if (genre) {
-      var suggestedUsers = Meteor.users.find({_id: {$ne: myId},
-                                           genres: {$eq: genre}
+    var genre = Meteor.user().genres;
+    var suggestedUsers = Meteor.users.find({_id: {$ne: myId},
+                                           genres: genre,
+                                           followers: {$nin: [myId]}
                                            });
-    }
-    console.log(myId);
     if (suggestedUsers) {
       return suggestedUsers;
     }
