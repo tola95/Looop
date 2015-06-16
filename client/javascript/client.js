@@ -383,8 +383,12 @@ Template.record_strip.events({
     var inputId = template.find('.strip').id;
     if (Meteor.userId() != null){
       var qRec = Recordings.findOne({_id:inputId});
-      var newFloat32Buffer = [new Float32Array(qRec.blob[0].buffer), new Float32Array(qRec.blob[1].buffer)];
-      playRecording(newFloat32Buffer);
+      if (qRec) {
+        var newFloat32Buffer = [new Float32Array(qRec.blob[0].buffer), new Float32Array(qRec.blob[1].buffer)];
+        playRecording(newFloat32Buffer);
+      } else {
+        alert("Sorry, this recording has been deleted");
+      }
     } else {
       var recentSessionRecordings = Session.get("sessionRecordings"); 
       for(var i = 0; i < recentSessionRecordings.length; i++){
@@ -403,7 +407,7 @@ Template.record_strip.events({
     } else {
       var recordings = Session.get("sessionRecordings");
       recordings = recordings.filter(function(recording) {
-        return recording.createdAt !== recordingId;
+        return String(recording.createdAt) !== recordingId;
       });
       Session.set("sessionRecordings", recordings);
     }

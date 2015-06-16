@@ -4,4 +4,5 @@ Recording = function(name, user, blob){
 	this.blob = blob;
 	this.createdAt = new Date();
 	this.published = false;
+	this.activityId = null;
 }

@@ -60,9 +60,6 @@ Accounts.onCreateUser(function(options, user) {
 });
 
 Meteor.publish("sounds", function() {
-	if (!Sounds) {
-		console.log("Sound not defined yet");
-	}
 	return Sounds.find();
 });
 
@@ -146,7 +143,6 @@ Meteor.methods({
 
   findByUsername: function(userName) {
     var userr = Meteor.users.findOne({username: userName}, {fields: {'_id': 1}});
-    console.log(userr);
     return userr;
   },
 
@@ -218,10 +214,10 @@ Meteor.methods({
       return;
     }
 
-    Recordings.update({_id: recordingId}, {$set: {published: true}});
-
     var activity = new RecordingActivity(recordingId, Meteor.user().username, recording.name, Meteor.userId());
     var activityId = Activities.insert(activity);
+
+    Recordings.update({_id: recordingId}, {$set: {published: true, activityId: activityId}});
 
     var followers = Meteor.users.findOne({_id: this.userId}).followers;
     if(followers) {
@@ -250,9 +246,7 @@ Meteor.methods({
   unpublishRecording: function(recordingID) {
     var followers = Meteor.users.findOne({_id: this.userId}).followers;
     var activityId = Activities.findOne({recordingId: recordingID}, {fields: {"_id" : 1}});
-    console.log(activityId);
     var activity = activityId._id;
-    console.log(activity);
     if(followers) {
       for (var i=0; i < followers.length; i++) {
         Meteor.users.update({
