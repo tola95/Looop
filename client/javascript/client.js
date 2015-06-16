@@ -181,7 +181,7 @@ Accounts.ui.config({
 
 // Respond to events in the instrument menu
 Template.instrument_menu.events = {
-  'click .drum_options ': function(event, template) {
+  'click .drum_options': function(event, template) {
     Session.set("activeInstrumentView", DRUM_VIEW);
     document.getElementById("p-wrapper").style.display = "none";
     document.getElementById("buttoncontainer").style.display = "block";
@@ -381,13 +381,13 @@ Template.record_strip.events({
     if (Meteor.userId() != null){
       var qRec = Recordings.findOne({_id:inputId});
       var newFloat32Buffer = [new Float32Array(qRec.blob[0].buffer), new Float32Array(qRec.blob[1].buffer)];
-      audioController.playRecording(newFloat32Buffer);
+      playRecording(newFloat32Buffer);
     } else {
       var recentSessionRecordings = Session.get("sessionRecordings"); 
       for(var i = 0; i < recentSessionRecordings.length; i++){
         if(inputId == recentSessionRecordings[i].createdAt){
           var newFloat32Buffer = [new Float32Array(recentSessionRecordings[i].blob[0].buffer), new Float32Array(recentSessionRecordings[i].blob[1].buffer)];
-          audioController.playRecording(newFloat32Buffer);
+          playRecording(newFloat32Buffer);
         }
       }
     }
@@ -429,3 +429,13 @@ updatePublishRecordingVisibility = function(visibility) {
       elems[i].style.display = visibility;
   }  
 }
+
+playRecording = function( buffers ) {
+    var newSource = audioController.context.createBufferSource();
+    var newBuffer = audioController.context.createBuffer( 2, buffers[0].length, audioController.context.sampleRate );
+    newBuffer.getChannelData(0).set(buffers[0]);
+    newBuffer.getChannelData(1).set(buffers[1]);
+    newSource.buffer = newBuffer;
+    newSource.connect( audioController.context.destination );
+    newSource.start(0);
+  }

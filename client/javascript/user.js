@@ -1,9 +1,12 @@
 var TIMELINE_VIEW = "timeline_view",
     RECORDINGS_VIEW = "recordings_view",
     FEED_LENGTH_LIMIT = 10;
+    SUGGESTIONS_LIMIT = 3;
 
 Meteor.subscribe("allUserData");
 Meteor.subscribe("userData");
+
+Session.setDefault("feedView", TIMELINE_VIEW);
 
 getProfileId = function() {
   return Router.current().params.userID;
@@ -170,19 +173,13 @@ updateprofile_ListFollowingVisibility = function(visibility) {
   }
 }
 
-Session.setDefault("feedView", TIMELINE_VIEW);
-
 Template.current_usermain.events = {
    'click #timelinebutton' : function() {
       Session.set("feedView", TIMELINE_VIEW);
-      document.getElementById('recordings').style.display = "none";
-      document.getElementById('timeline').style.display = "block";
    },
 
    'click #recordingsbutton' : function() {
       Session.set("feedView", RECORDINGS_VIEW);
-      document.getElementById('recordings').style.display = "block";
-      document.getElementById('timeline').style.display = "none";
    }
 };
 
@@ -449,15 +446,23 @@ Template.suggestions.helpers({
   suggested: function() {
     var myId = Meteor.userId();
     var genre = Meteor.user().genres;
-    var followings = Meteor.users.find({followers: myId});
-    var suggestedUsers = Meteor.users.find({_id: {$ne: myId}},
-                                           {genres: genre}, 
-                                           {following: {$nin: followings}}
-                                           );
-    return suggestedUsers;
+    var suggestedUsers = Meteor.users.find({_id: {$ne: myId},
+                                           genres: genre,
+                                           followers: {$nin: [myId]}
+                                           });
+    if (suggestedUsers) {
+      return suggestedUsers;
+    }
   },
 
   userpage: function() {
     return "/user/" + this._id;
+  }
+});
+
+Template.suggestions.events({
+  'click .follow-from-popup': function() {
+    var id = this._id;
+    Meteor.call("follow", id);
   }
 });

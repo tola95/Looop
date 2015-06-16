@@ -10,33 +10,23 @@
 
 <template name="activityCard">
 <div class="activity-card" user-id={{creatorId}}>
-	<span class="profile-photo"><img class="profile-photo" src={{profile_image}} alt="Profile photo"></span>
-	<span class="card-contents">
-		<div class="activity_info"><h1>{{nameOfActivity}}</h1> - {{postedBy}}</div>
-		<div class="recording">
-			<audio controls src="sounds/drums/Crash-01.wav">
-				Your browser does not support the <code>audio</code> element.
-			</audio>
-		</div>
-	</span>
+	<div class="profile-photo"><img class="profile-photo" src={{profile_image}} alt="Profile photo"></div>
+	<div class="play"><input class="play" type="image" id="{{recordingId}}"  src="/images/play.png" width="60px" height="60px"> </div>
+	<div class="activity_info"><h1>{{nameOfActivity}}</h1> - {{postedBy}}</div>
 </div>
 </template>
 
 <template name="recordingCardContents">
-	<span class="profile-photo"><img class="profile-photo" src={{profile_image}} alt="Profile photo"></span>
-	<span class="card-contents">
-		<div class="activity_info"><h1>{{name}}</h1></div>
-		<div class="recording">
-			<input class="play" type="image" id="{{#if currentUser}}{{_id}}{{else}}{{createdAt}}{{/if}}"  src="/images/play.png" width="60px" height="60px"> 
-		</div>
-	</span>
+	<div class="profile-photo"><img class="profile-photo" src={{profile_image}} alt="Profile photo"></div>
+	<div class="play"><input class="play" type="image" id="{{#if currentUser}}{{_id}}{{else}}{{createdAt}}{{/if}}"  src="/images/play.png" width="60px" height="60px"> </div>
+	<div class="activity_info"><h1>{{name}}</h1></div>
 </template>
 
 
 <template name="ownRecordingCard">
 <div class="recording-card" id={{_id}}>
 	{{> recordingCardContents }}
-	<div class="button-cont">
+	<span class="button-cont">
 		{{#if published}}
 			<button class="unpublish-button publish-buttons"><span>Published</span></button>
 		{{else}}
@@ -45,7 +35,7 @@
 		<button class="delete-button">
 			<img class="delete" title="delete" src="/images/delete.png" width="10px" height="10px">
 		</button>
-	</div>
+	</span>
 </div>
 </template>
 
