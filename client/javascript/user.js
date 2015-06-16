@@ -1,17 +1,12 @@
 var TIMELINE_VIEW = "timeline_view",
     RECORDINGS_VIEW = "recordings_view",
-    FEED_LENGTH_LIMIT = 1;
+    FEED_LENGTH_LIMIT = 10;
 
 Meteor.subscribe("allUserData");
 Meteor.subscribe("userData");
 
 getProfileId = function() {
   return Router.current().params.userID;
-}
-
-addRecording = function() {
-  Meteor.call("addRecordings", {name: "song 1", user: Meteor.userId(), published: false, createdAt: new Date()});
-  Meteor.call("addRecordings", {name: "song 2", user: Meteor.userId(), published: false, createdAt: new Date()});
 }
 
 Template.personal.helpers({
@@ -318,7 +313,7 @@ Template.recordings_view.helpers({
   recordings: function() {
     var userId = Meteor.userId();
     if (userId) {
-      return Recordings.find({user: userId}, {}, {sort: {createdAt: -1}, limit: FEED_LENGTH_LIMIT});
+      return Recordings.find({user: userId}, {sort: {createdAt: -1}, limit: FEED_LENGTH_LIMIT});
     }
   }
 

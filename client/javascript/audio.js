@@ -53,4 +53,14 @@ AudioControl = function() {
 			this.sources[i].connect(this.gainNode);
 		};
 	};
+
+	this.playRecording = function( buffers ) {
+	  var newSource = this.context.createBufferSource();
+	  var newBuffer = this.context.createBuffer( 2, buffers[0].length, this.context.sampleRate );
+	  newBuffer.getChannelData(0).set(buffers[0]);
+	  newBuffer.getChannelData(1).set(buffers[1]);
+	  newSource.buffer = newBuffer;
+	  newSource.connect( this.context.destination );
+	  newSource.start(0);
+	}
 }
