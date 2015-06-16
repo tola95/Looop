@@ -29,8 +29,6 @@ window.onload = function() {
   audioController.addAudioSources();
 }
 
-
-
 document.addEventListener("click", function(event) { 
   var t = event.target.id;
   if (t != "searchText" && t != "results") {
@@ -189,23 +187,6 @@ Template.instrument_menu.events = {
     document.getElementById("buttoncontainer").style.display = "block";
     toggle_sidebar();
   },
-
-  // 'mouseover .drum_options': function(event) {
-  //   if (event.target.className == "drum_options") {
-  //     var id = event.target.childNodes[1].id;
-  //     document.getElementById(id).style.display = "block";
-  //   };
-
-  // },
-
-  // 'mouseover .instruments': function(event) {
-  //   var node = event.target;
-  //   // console.log("target " + node + " targetparent " + event.target.parentNode + event.target.parentNode.className);
-  //   if (node.className != "drum_options" && node.parentNode.className != "inst") {
-  //     document.getElementsByClassName("inst")[0].style.display = "none";
-  //   }
-
-  // },
 
   'click .keyboard_options': function(event, template) {
     Session.set("activeInstrumentView", KEYBOARD_VIEW);
@@ -424,8 +405,30 @@ Template.record_strip.events({
       Session.set("sessionRecordings", recordings);
     }
   },
+
+  'click .publish-button': function(event, template) {
+    if (Meteor.userId() == null){
+      updatePublishRecordingVisibility("block");
+    }else {
+      var inputId = template.find('.strip').id;
+      Meteor.call("publishRecording", inputId);      
+    }
+  }
+
 });
 
+Template.publish_recording.events({
+  'click button' : function (){
+    updatePublishRecordingVisibility("none");
+  }
+});
+
+updatePublishRecordingVisibility = function(visibility) {
+  elems = document.getElementsByClassName("publish-recording");
+  for (var i=0; i<elems.length; i++) {
+      elems[i].style.display = visibility;
+  }  
+}
 
 playRecording = function( buffers ) {
     var newSource = audioController.context.createBufferSource();
