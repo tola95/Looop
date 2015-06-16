@@ -405,4 +405,27 @@ Template.record_strip.events({
       Session.set("sessionRecordings", recordings);
     }
   },
+
+  'click .publish-button': function(event, template) {
+    if (Meteor.userId() == null){
+      updatePublishRecordingVisibility("block");
+    }else {
+      var inputId = template.find('.strip').id;
+      Meteor.call("publishRecording", inputId);      
+    }
+  }
+
 });
+
+Template.publish_recording.events({
+  'click button' : function (){
+    updatePublishRecordingVisibility("none");
+  }
+});
+
+updatePublishRecordingVisibility = function(visibility) {
+  elems = document.getElementsByClassName("publish-recording");
+  for (var i=0; i<elems.length; i++) {
+      elems[i].style.display = visibility;
+  }  
+}
