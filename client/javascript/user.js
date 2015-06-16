@@ -1,7 +1,8 @@
 var TIMELINE_VIEW = "timeline_view",
     RECORDINGS_VIEW = "recordings_view",
-    FEED_LENGTH_LIMIT = 10;
-    SUGGESTIONS_LIMIT = 3;
+    FEED_LENGTH_LIMIT = 10,
+    SUGGESTIONS_LIMIT = 3,
+    DEFAULT_PROFILE_PHOTO = "/images/dj.jpg";
 
 Meteor.subscribe("allUserData");
 Meteor.subscribe("userData");
@@ -434,6 +435,8 @@ Template.header.helpers({
       var image = Images.findOne({_id: user.profilePhotoId});
       if (image) {
         return image.url();
+      } else {
+        return DEFAULT_PROFILE_PHOTO;
       }
     }
   },
