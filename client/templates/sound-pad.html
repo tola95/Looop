@@ -49,12 +49,12 @@
 </template>
 
 <template name="record_strip">
-  <div class="strip" title={{name}}>
+  <div class="strip" title={{name}} id="{{#if currentUser}}{{_id}}{{else}}{{createdAt}}{{/if}}">
     <div class="options">
-      <button><img title="publish" src="/images/globe.png" width="12px" height="12px"></button>
-      <button><img title="delete" src="/images/delete.png" width="12px" height="12px"></button>
+      <button class="publish-button"><img title="publish" src="/images/globe.png" width="12px" height="12px"></button>
+      <button class="delete-button"><img title="delete" src="/images/delete.png" width="12px" height="12px"></button>
     </div>
-      <input class="play" type="image" id="{{#if currentUser}}{{_id}}{{else}}{{createdAt}}{{/if}}"  src="images/play.png" width="20px" height="20px">
+      <input class="play" type="image" src="images/play.png" width="20px" height="20px">
     <div class="name" title="Play {{name}}">
       {{name}}
     </div>

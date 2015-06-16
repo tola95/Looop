@@ -1,17 +1,14 @@
 var TIMELINE_VIEW = "timeline_view",
     RECORDINGS_VIEW = "recordings_view",
-    FEED_LENGTH_LIMIT = 1;
+    FEED_LENGTH_LIMIT = 10;
 
 Meteor.subscribe("allUserData");
 Meteor.subscribe("userData");
 
+Session.setDefault("feedView", TIMELINE_VIEW);
+
 getProfileId = function() {
   return Router.current().params.userID;
-}
-
-addRecording = function() {
-  Meteor.call("addRecordings", {name: "song 1", user: Meteor.userId(), published: false, createdAt: new Date()});
-  Meteor.call("addRecordings", {name: "song 2", user: Meteor.userId(), published: false, createdAt: new Date()});
 }
 
 Template.personal.helpers({
@@ -175,19 +172,13 @@ updateprofile_ListFollowingVisibility = function(visibility) {
   }
 }
 
-Session.setDefault("feedView", TIMELINE_VIEW);
-
 Template.current_usermain.events = {
    'click #timelinebutton' : function() {
       Session.set("feedView", TIMELINE_VIEW);
-      document.getElementById('recordings').style.display = "none";
-      document.getElementById('timeline').style.display = "block";
    },
 
    'click #recordingsbutton' : function() {
       Session.set("feedView", RECORDINGS_VIEW);
-      document.getElementById('recordings').style.display = "block";
-      document.getElementById('timeline').style.display = "none";
    }
 };
 
@@ -318,7 +309,7 @@ Template.recordings_view.helpers({
   recordings: function() {
     var userId = Meteor.userId();
     if (userId) {
-      return Recordings.find({user: userId}, {}, {sort: {createdAt: -1}, limit: FEED_LENGTH_LIMIT});
+      return Recordings.find({user: userId}, {sort: {createdAt: -1}, limit: FEED_LENGTH_LIMIT});
     }
   }
 

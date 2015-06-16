@@ -164,6 +164,7 @@ button:active {
   text-align: center;
   font-size: 12px;
   text-decoration: underline;
+  cursor: pointer;
 }
 
 .tracks-container .recording .tracks .name{

@@ -6,10 +6,7 @@
 	margin: 25px auto;
 	box-shadow: 2px 2px 3px #999;
 	border-radius: 5px;
-}
-
-.recording {
-	margin-top: 15px;
+	text-align: left;
 }
 
 .activity_info h1 {
@@ -18,21 +15,22 @@
 
 .button-cont {
 	float: right;
-	width: 20%;
 }
 
 .activity_info {
-	padding-top: 25px;
-	float: right;
 	font-size: 20px;
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
 }
 
-.card-contents {
-	display: inline-block;
-	vertical-align: top;
-  	margin-top: 5px;
-  	margin-left: 30px;
-  	width: 50%;
+.activity-card .activity_info {
+	width: 50%;
+}
+
+.recording-card .activity_info {
+	width: 30%;
+	text-align: center;
 }
 
 .profile-photo img {
@@ -42,8 +40,8 @@
 	margin-left: 10px;
 }
 
-.profile-photo span {
-	width: 20%;
+.profile-photo {
+	display: inline-block;
 }
 
 .recording-card .publish-buttons {
@@ -66,4 +64,14 @@
 
 .recording-card .unpublish-button:hover:before {
 	content: "Unpublish"
+}
+
+.activity-card .play, .recording-card .play {
+	float: none;
+	display: inline-block;
+}
+
+.activity-card div.play, .recording-card div.play {
+	width: 20%;
+	text-align: center;
 }
