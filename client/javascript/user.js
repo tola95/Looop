@@ -461,7 +461,6 @@ Template.suggestions.helpers({
       var followings = Meteor.user().following;
       if (followings.length > 0) {
         var suggestedUsers = Meteor.users.find({_id: {$ne: myId},
-                                             genres: genre,
                                              followers: {$nin: [myId]}
                                              }, {limit: SUGGESTIONS_LIMIT});
       } else {
