@@ -1,8 +1,9 @@
+DEFAULT_PROFILE_PHOTO = "/images/dj.jpg";
+
 var TIMELINE_VIEW = "timeline_view",
     RECORDINGS_VIEW = "recordings_view",
     FEED_LENGTH_LIMIT = 10,
-    SUGGESTIONS_LIMIT = 3,
-    DEFAULT_PROFILE_PHOTO = "/images/dj.jpg";
+    SUGGESTIONS_LIMIT = 3;
 
 Meteor.subscribe("allUserData");
 Meteor.subscribe("userData");
@@ -455,13 +456,22 @@ Template.header.helpers({
 Template.suggestions.helpers({
   suggested: function() {
     var myId = Meteor.userId();
-    var genre = Meteor.user().genres;
-    var suggestedUsers = Meteor.users.find({_id: {$ne: myId},
-                                           genres: genre,
-                                           followers: {$nin: [myId]}
-                                           });
-    if (suggestedUsers) {
-      return suggestedUsers;
+    if (myId) {
+      var genre = Meteor.user().genres;
+      var followings = Meteor.user().following;
+      if (followings.length > 0) {
+        var suggestedUsers = Meteor.users.find({_id: {$ne: myId},
+                                             genres: genre,
+                                             followers: {$nin: [myId]}
+                                             }, {limit: SUGGESTIONS_LIMIT});
+      } else {
+        var suggestedUsers = Meteor.users.find({_id: {$ne: myId}
+                                             }, {limit: SUGGESTIONS_LIMIT});
+      }
+      
+      if (suggestedUsers) {
+        return suggestedUsers;
+      }
     }
   },
 

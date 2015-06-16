@@ -60,7 +60,12 @@ Template.recordingCardContents.helpers({
 	profile_image: function() {
 		var user = Meteor.users.findOne({_id: getProfileId()});
 		if (user) {
-			return user.profilePhoto;
+			var image = Images.findOne({_id: user.profilePhotoId});
+	      if (image) {
+	        return image.url();
+	      } else {
+	        return DEFAULT_PROFILE_PHOTO;
+      }
 		}
 	}
 });
@@ -70,7 +75,12 @@ Template.activityCard.helpers({
 		var userId = Template.instance().data.creatorId;
 		var user = Meteor.users.findOne({_id: userId});
 		if (user) {
-			return user.profilePhoto;
+			var image = Images.findOne({_id: user.profilePhotoId});
+			if (image) {
+				return image.url();
+			} else {
+				return DEFAULT_PROFILE_PHOTO;
+			}
 		}
 	}
 });
