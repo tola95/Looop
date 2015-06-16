@@ -2,8 +2,6 @@ var STARTING_DRUM = "drum1",
     STARTING_KEYBOARD = "grandpiano",
     DRUM_VIEW = "drum_buttons",
     KEYBOARD_VIEW = "keys",
-    // keydown = 0,
-    // mousedownID = -1,
 
     drumcont = 0,
     keycont = 0,
@@ -302,13 +300,17 @@ Accounts.ui.config({
 
 // Respond to events in the instrument menu
 Template.instrument_menu.events = {
-  'click .drum_options ': function() {
+  'click .drum_options ': function(event, template) {
     Session.set("activeInstrumentView", DRUM_VIEW);
+    document.getElementById("p-wrapper").style.display = "none";
+    document.getElementById("buttoncontainer").style.display = "block";
     toggle_sidebar();
   },
 
-  'click .keyboard_options': function() {
+  'click .keyboard_options': function(event, template) {
     Session.set("activeInstrumentView", KEYBOARD_VIEW);
+    document.getElementById("p-wrapper").style.display = "block";
+    document.getElementById("buttoncontainer").style.display = "none";
     toggle_sidebar();
   },
 
