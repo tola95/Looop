@@ -56,7 +56,6 @@ Accounts.onCreateUser(function(options, user) {
   user.activityFeed = [];
   user.notifications = [];
   user.activities = [];
-  user.profilePhoto = "/images/dj.png";
   return user;
 });
 
@@ -86,8 +85,8 @@ Meteor.publish("userData", function () {
               'seenNotification': 1,
               'activityFeed': 1,
               'notifications': 1,
-              'profilePhoto': 1,
-              'coverPhoto': 1
+              'profilePhotoId': 1,
+              'coverPhotoId': 1
              }
     })
 });
@@ -102,8 +101,8 @@ Meteor.publish("allUserData", function () {
             'followers': 1,
             'activityFeed': 1,
             'username': 1,
-            'profilePhoto': 1,
-            'coverPhoto': 1
+            'profilePhotoId': 1,
+            'coverPhotoId': 1
            }
   })
 });
@@ -303,19 +302,6 @@ Meteor.methods({
 
     Meteor.users.update(Meteor.userId(), {$set: photo});
   },
-
-  updateProfilePhoto: function(file) {
-    Images.insert(file, function (err, fileObj) {
-      if (err) {
-         alert("failed to upload profile photo");
-      } else {
-        var imagesURL = {
-          "profilePhoto": "/cfs/files/images/" + fileObj._id
-        };
-        Meteor.users.update(Meteor.userId(), {$set: photo});
-      }
-    });
-  }
 
 });
 

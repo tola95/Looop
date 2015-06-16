@@ -9,10 +9,6 @@
 	text-align: left;
 }
 
-.activity_info h1 {
-	display: inline-block;
-}
-
 .button-cont {
 	float: right;
 }
@@ -22,6 +18,14 @@
 	display: inline-block;
 	height: 100%;
 	vertical-align: middle;
+	display: inline-block;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.activity_info .name {
+	font-size: 40px;
 }
 
 .activity-card .activity_info {
@@ -29,8 +33,7 @@
 }
 
 .recording-card .activity_info {
-	width: 30%;
-	text-align: center;
+	width: 45%;
 }
 
 .profile-photo img {

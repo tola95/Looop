@@ -1,7 +1,8 @@
 var TIMELINE_VIEW = "timeline_view",
     RECORDINGS_VIEW = "recordings_view",
-    FEED_LENGTH_LIMIT = 10;
-    SUGGESTIONS_LIMIT = 3;
+    FEED_LENGTH_LIMIT = 10,
+    SUGGESTIONS_LIMIT = 3,
+    DEFAULT_PROFILE_PHOTO = "/images/dj.jpg";
 
 Meteor.subscribe("allUserData");
 Meteor.subscribe("userData");
@@ -238,7 +239,7 @@ var updateProfilePhoto = function(file) {
        alert("failed to upload profile photo");
     } else {
       var imagesURL = {
-        "profilePhoto": "/cfs/files/images/" + fileObj._id
+        "profilePhotoId" : fileObj._id,
       };
       Meteor.call("updatePhoto", imagesURL);
     }
@@ -251,7 +252,7 @@ var updateCoverPhoto = function(file) {
        alert("failed to upload cover photo");
     } else {
       var imagesURL = {
-        "coverPhoto": "/cfs/files/images/" + fileObj._id
+        "coverPhotoId": fileObj._id
       };
       Meteor.call("updatePhoto", imagesURL);
     }
@@ -429,15 +430,24 @@ Template.profile_listofFollowers.events({
 Template.header.helpers({
   profile_src: function() {
     var user = Meteor.users.findOne({_id: getProfileId()});
+
     if (user) {
-      return user.profilePhoto;
+      var image = Images.findOne({_id: user.profilePhotoId});
+      if (image) {
+        return image.url();
+      } else {
+        return DEFAULT_PROFILE_PHOTO;
+      }
     }
   },
 
   cover_src: function() {
     var user = Meteor.users.findOne({_id: getProfileId()});
     if (user) {
-      return user.coverPhoto;
+      var image = Images.findOne({_id: user.coverPhotoId});
+      if (image) {
+        return image.url();
+      }
     }
   }
 });
