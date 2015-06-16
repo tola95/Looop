@@ -184,7 +184,7 @@ Accounts.ui.config({
 
 // Respond to events in the instrument menu
 Template.instrument_menu.events = {
-  'click .drum_options ': function(event, template) {
+  'click .drum_options': function(event, template) {
     Session.set("activeInstrumentView", DRUM_VIEW);
     document.getElementById("p-wrapper").style.display = "none";
     document.getElementById("buttoncontainer").style.display = "block";
@@ -408,8 +408,30 @@ Template.record_strip.events({
       Session.set("sessionRecordings", recordings);
     }
   },
+
+  'click .publish-button': function(event, template) {
+    if (Meteor.userId() == null){
+      updatePublishRecordingVisibility("block");
+    }else {
+      var inputId = template.find('.strip').id;
+      Meteor.call("publishRecording", inputId);      
+    }
+  }
+
 });
 
+Template.publish_recording.events({
+  'click button' : function (){
+    updatePublishRecordingVisibility("none");
+  }
+});
+
+updatePublishRecordingVisibility = function(visibility) {
+  elems = document.getElementsByClassName("publish-recording");
+  for (var i=0; i<elems.length; i++) {
+      elems[i].style.display = visibility;
+  }  
+}
 
 playRecording = function( buffers ) {
     var newSource = audioController.context.createBufferSource();

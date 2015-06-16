@@ -48,6 +48,11 @@
   </div>
 
 {{> save_recording }}
+
+{{#if currentUser}}
+{{else}}
+  {{> publish_recording}}
+{{/if}}
 </template>
 
 <template name="record_strip">
@@ -143,6 +148,8 @@
           <ul id="drums" style="display:none;">
             <button class="drum_options" id="drum1">Acoustic</button>
             <button class="drum_options" id="drum2">Electronic</button>
+            <button class="drum_options" id="drum3">Mixer</button>
+            <button class="drum_options" id="drum4">Funky</button>
           </ul>
         </li>
      
@@ -177,4 +184,15 @@
       <input id="record-button" type="image" src="images/record.png" title="Start recording" width="48px" height="48px">
       <input id="stop-button" type="image" src="images/stop.png" title="Stop recording" width="48px" height="48px">
     </div>
+</template>
+
+<template name="publish_recording">
+  <div class="publish-recording dark-background" id="publish-recording-background">
+    <div class="publish-recording" id="publish-recording-wrapper">
+      <div class="publish-recording-name">
+        <h3>Please login to publish a recording </h3> 
+      </div>
+      <button id="publish-recording-okay">Okay</button>
+    </div>
+  </div>
 </template>

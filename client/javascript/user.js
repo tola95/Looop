@@ -1,6 +1,7 @@
 var TIMELINE_VIEW = "timeline_view",
     RECORDINGS_VIEW = "recordings_view",
     FEED_LENGTH_LIMIT = 10;
+    SUGGESTIONS_LIMIT = 3;
 
 Meteor.subscribe("allUserData");
 Meteor.subscribe("userData");
@@ -445,15 +446,23 @@ Template.suggestions.helpers({
   suggested: function() {
     var myId = Meteor.userId();
     var genre = Meteor.user().genres;
-    var followings = Meteor.users.find({followers: myId});
-    var suggestedUsers = Meteor.users.find({_id: {$ne: myId}},
-                                           {genres: genre}, 
-                                           {following: {$nin: followings}}
-                                           );
-    return suggestedUsers;
+    var suggestedUsers = Meteor.users.find({_id: {$ne: myId},
+                                           genres: genre,
+                                           followers: {$nin: [myId]}
+                                           });
+    if (suggestedUsers) {
+      return suggestedUsers;
+    }
   },
 
   userpage: function() {
     return "/user/" + this._id;
+  }
+});
+
+Template.suggestions.events({
+  'click .follow-from-popup': function() {
+    var id = this._id;
+    Meteor.call("follow", id);
   }
 });

@@ -8,13 +8,17 @@ Meteor.startup(function () {
 
 // Populates Sounds DB with paths for default instruments
 var populateSounds = function() {
-  var instruments = ["drum1", "drum2", "grandpiano", "churchorgan"];
+  var instruments = ["drum1", "drum2", "drum3", "drum4", "grandpiano", "churchorgan"];
   var instrumentSounds = {
     "drum1": ["acoustic/Crash-02", "acoustic/Hat-01", "acoustic/Kick-01", "acoustic/OpHat-01", "acoustic/Hat", 
       "acoustic/SdSt-03", "acoustic/Snr-01", "acoustic/Snr-09", "acoustic/Tom-04"],
 
     "drum2": ["electro/CYCdh_ElecK02-Tom01", "electro/CYCdh_ElecK02-Kick01", "electro/CYCdh_ElecK02-FX03", "electro/CYCdh_ElecK02-Clap01", "electro/CYCdh_ElecK01-Tom01", 
       "electro/CYCdh_ElecK01-Snr01", "electro/CYCdh_ElecK01-OpHat02", "electro/CYCdh_ElecK01-ClHat01", "electro/CYCdh_ElecK01-Kick02"],
+
+    "drum3": ["LDrum/kick9", "LDrum/60key", "LDrum/kickscratch_3", "LDrum/3", "LDrum/daunt", "LDrum/hit1", "LDrum/808BONGO", "LDrum/clap1", "LDrum/simplesnare1"],
+
+    "drum4" : ["funky/FX", "funky/Perc-8", "funky/Perc-9", "funky/Perc-10", "funky/Drek22", "funky/DreStb9", "funky/JTroup", "funky/crank", "funky/kickcuku"],
 
     "grandpiano": ["piano/piano-C4", "piano/piano-Db4", "piano/piano-D4", "piano/piano-Eb4", "piano/piano-E4", 
       "piano/piano-F4", "piano/piano-Gb4", "piano/piano-G4", "piano/piano-Ab4", "piano/piano-A5", 
