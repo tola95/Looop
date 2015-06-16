@@ -33,10 +33,12 @@
               <p>You have no recordings yet</p>
             {{/each }}
           </div>
+          {{#if currentUser}}
           {{#if loadMore}}
             <div type="button" class="load">
                 Load more
             </div>
+          {{/if}}
           {{/if}}
         </div>
       </div>

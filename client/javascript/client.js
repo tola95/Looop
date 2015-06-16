@@ -6,18 +6,21 @@ var STARTING_DRUM = "drum1",
 
     drumcont = 0,
     keycont = 0,
-    audioController;
+    audioController,
+    getInstrumentSounds,
+    soundsDB;
 
-// Retrieves the array of paths for the given instrument from the database
-var getInstrumentSounds;
-
-// Once the Sounds DB is ready, set the default drum and keyboard notes
-var soundsDB = Meteor.subscribe("sounds", function() {
+Meteor.startup(function() {
+  // Retrieves the array of paths for the given instrument from the database
   getInstrumentSounds = function(instrument) {
     return Sounds.findOne({"instrument": instrument}).paths;
-  } 
-  updateDrumSounds(getInstrumentSounds(STARTING_DRUM));
-  updatePianoSounds(getInstrumentSounds(STARTING_KEYBOARD));
+  };
+
+  // Once the Sounds DB is ready, set the default drum and keyboard notes
+  soundsDB = Meteor.subscribe("sounds", function() {
+    updateDrumSounds(getInstrumentSounds(STARTING_DRUM));
+    updatePianoSounds(getInstrumentSounds(STARTING_KEYBOARD));
+  });
 });
 
 Meteor.subscribe("images");

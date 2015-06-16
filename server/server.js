@@ -52,7 +52,7 @@ Accounts.onCreateUser(function(options, user) {
   user.activityFeed = [];
   user.notifications = [];
   user.activities = [];
-  user.profilePhoto = "/images/dj.png";
+  user.profilePhoto = "/images/dj.jpg";
   return user;
 });
 
