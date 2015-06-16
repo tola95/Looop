@@ -10,7 +10,6 @@
       {{> editDetails}}
   	  {{> listFollowers}}
   	  {{> listFollowing}}
-      {{> suggestions}}
     {{else}}
       {{> other_usermain}}
       {{> profile_listFollowers}}
@@ -81,6 +80,7 @@
 </template>
 
 <template name="personaldetails">
+  <div id="personaldetailswrapper">
   <div id="personaldetails">
     {{>header}}
 
@@ -104,6 +104,11 @@
       {{> edetails}}
     {{/if}}
       
+  </div>
+
+  {{#if currentUserPage}}
+    {{> suggestions}}
+  {{/if}}
   </div>
 
 </template>

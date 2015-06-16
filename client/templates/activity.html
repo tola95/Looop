@@ -12,14 +12,16 @@
 <div class="activity-card" user-id={{creatorId}}>
 	<div class="profile-photo"><img class="profile-photo" src={{profile_image}} alt="Profile photo"></div>
 	<div class="play"><input class="play" type="image" id="{{recordingId}}"  src="/images/play.png" width="60px" height="60px"> </div>
-	<div class="activity_info"><h1>{{nameOfActivity}}</h1> - {{postedBy}}</div>
+	<div class="activity_info" title="{{nameOfActivity}} - {{postedBy}}">
+		<span class="name">{{nameOfActivity}}</span> - {{postedBy}}
+	</div>
 </div>
 </template>
 
 <template name="recordingCardContents">
 	<div class="profile-photo"><img class="profile-photo" src={{profile_image}} alt="Profile photo"></div>
 	<div class="play"><input class="play" type="image" id="{{#if currentUser}}{{_id}}{{else}}{{createdAt}}{{/if}}"  src="/images/play.png" width="60px" height="60px"> </div>
-	<div class="activity_info"><h1>{{name}}</h1></div>
+	<div class="activity_info" title="{{name}}"><span class="name">{{name}}</span></div>
 </template>
 
 
