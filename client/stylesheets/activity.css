@@ -18,10 +18,12 @@
 
 .button-cont {
 	float: right;
-	width: auto;
+	width: 20%;
 }
 
 .activity_info {
+	padding-top: 25px;
+	float: right;
 	font-size: 20px;
 }
 
@@ -30,13 +32,18 @@
 	vertical-align: top;
   	margin-top: 5px;
   	margin-left: 30px;
+  	width: 50%;
 }
 
-.profile-photo {
+.profile-photo img {
 	width: 75px;
 	height: 75px;
 	margin-top: 10px;
 	margin-left: 10px;
+}
+
+.profile-photo span {
+	width: 20%;
 }
 
 .recording-card .publish-buttons {

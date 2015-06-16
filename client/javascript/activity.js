@@ -4,7 +4,6 @@ Template.activity.helpers({
 
 	activities: function () {
 		var activities = [];
-		// var userDoc = Meteor.users.findOne({_id: Meteor.userId()}, {fields: {'activityFeed': 1}});
 		var userDoc = Meteor.user()
 		if (!userDoc) {
 			return [];
@@ -25,6 +24,9 @@ Template.activity.helpers({
 Template.ownRecordingCard.events({
 	'click .publish-button': function(event) {
 		var recordingId = event.target.parentNode.parentNode.id;
+		if(recordingId == "") {
+			recordingId = event.target.parentNode.parentNode.parentNode.id;
+		}
 		Meteor.call("publishRecording", recordingId);
 	},
 
@@ -36,7 +38,47 @@ Template.ownRecordingCard.events({
 
 	'click .delete-button': function(event) {
 		var recordingId = event.target.parentNode.parentNode.id;
-		console.log(recordingId);
+		if(recordingId == "") {
+			recordingId = event.target.parentNode.parentNode.parentNode.id;
+		}
 		Meteor.call("deleteRecording", recordingId);
+	}
+});
+
+Template.recordingCardContents.events({
+	'click .play': function(event) {
+    	var inputId = event.target.id;
+    	if (Meteor.userId() != null){
+      		var qRec = Recordings.findOne({_id:inputId});
+      		var newFloat32Buffer = [new Float32Array(qRec.blob[0].buffer), new Float32Array(qRec.blob[1].buffer)];
+      		playRecording(newFloat32Buffer);
+      	} else {
+      		var recentSessionRecordings = Session.get("sessionRecordings"); 
+      		for(var i = 0; i < recentSessionRecordings.length; i++){
+        		if(inputId == recentSessionRecordings[i].createdAt){
+          			var newFloat32Buffer = [new Float32Array(recentSessionRecordings[i].blob[0].buffer), new Float32Array(recentSessionRecordings[i].blob[1].buffer)];
+          			playRecording(newFloat32Buffer);
+        		}
+      		}
+    	}
+	}
+});
+
+Template.recordingCardContents.helpers({
+	profile_image: function() {
+		var user = Meteor.users.findOne({_id: getProfileId()});
+		if (user) {
+			return user.profilePhoto;
+		}
+	}
+});
+
+Template.activityCard.helpers({
+	profile_image: function() {
+		var userId = Template.instance().data.creatorId;
+		var user = Meteor.users.findOne({_id: userId});
+		if (user) {
+			return user.profilePhoto;
+		}
 	}
 });

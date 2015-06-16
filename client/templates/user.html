@@ -36,7 +36,6 @@
 
 <template name="current_usermain">
   <div class="main">
-    <!-- <button onclick="addRecording()">Add recording</button> -->
     <button id="timelinebutton">Timeline</button>
     <button id="recordingsbutton">Recordings</button>
     <h3 style="display:none" id="recordings">Recordings</h3>
@@ -69,12 +68,6 @@
   {{/each}}
 </template>
 
-<template name="photo">
-  <div id="photo">
-    <img id="profilephoto" src="/images/dj.png" width="90px" height="80px">
-  </div>
-</template>
-
 <template name="bio">
   <div id="bio" align="center">
     <h3 id="fullname">{{fullname}}</h3>
@@ -86,8 +79,10 @@
 </template>
 
 <template name="header">
-  <div id="header">
-    {{> photo }} 
+  <div id="header" style="background-image: url({{cover_src}})">
+    <div id="photo">
+      <img id="profilephoto" src={{profile_src}} alt="profile photo">
+    </div>
     
   </div>
 </template>
@@ -247,18 +242,17 @@
 </template>
 
 <template name="details">
-<body>
 
   <button class="closebox">X</button>
 
   <div id="edit_details">
       <fieldset>
-      <!-- <div>
+      <div>
       Add Photo <input id="addProfilePic" type="file"  />
       </div>
       <div>
       Add Header <input id="addHeaderPic" type="file" />
-      </div> -->
+      </div>
       <div>   
       <label for="fname_text">Full Name </label>
             <textarea rows="1" id="fname_text" maxlength="30">{{fullname}}</textarea>
@@ -275,6 +269,5 @@
       </fieldset>
     
       </div>
-</body>
 </template>
 

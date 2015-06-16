@@ -10,11 +10,11 @@ Meteor.startup(function () {
 var populateSounds = function() {
   var instruments = ["drum1", "drum2", "grandpiano", "churchorgan"];
   var instrumentSounds = {
-    "drum1": ["drums/Kick-01", "drums/Hat-02", "drums/Snr-02", "drums/Hat-03", "drums/Kick-02", 
-      "drums/Hat-04", "drums/Snr-03", "drums/OpHat-02", "drums/Kick-03"],
+    "drum1": ["acoustic/Crash-02", "acoustic/Hat-01", "acoustic/Kick-01", "acoustic/OpHat-01", "acoustic/Hat", 
+      "acoustic/SdSt-03", "acoustic/Snr-01", "acoustic/Snr-09", "acoustic/Tom-04"],
 
-    "drum2": ["drums/Kick-01", "drums/Hat-02", "drums/Snr-04", "drums/Hat-03", "drums/Kick-02", 
-      "drums/Hat-04", "drums/Snr-05", "drums/OpHat-03", "drums/Kick-03"],
+    "drum2": ["electro/CYCdh_ElecK02-Tom01", "electro/CYCdh_ElecK02-Kick01", "electro/CYCdh_ElecK02-FX03", "electro/CYCdh_ElecK02-Clap01", "electro/CYCdh_ElecK01-Tom01", 
+      "electro/CYCdh_ElecK01-Snr01", "electro/CYCdh_ElecK01-OpHat02", "electro/CYCdh_ElecK01-ClHat01", "electro/CYCdh_ElecK01-Kick02"],
 
     "grandpiano": ["piano/piano-C4", "piano/piano-Db4", "piano/piano-D4", "piano/piano-Eb4", "piano/piano-E4", 
       "piano/piano-F4", "piano/piano-Gb4", "piano/piano-G4", "piano/piano-Ab4", "piano/piano-A5", 
@@ -52,6 +52,7 @@ Accounts.onCreateUser(function(options, user) {
   user.activityFeed = [];
   user.notifications = [];
   user.activities = [];
+  user.profilePhoto = "/images/dj.png";
   return user;
 });
 
@@ -76,12 +77,13 @@ Meteor.publish("userData", function () {
     {fields: {'bio': 1, 
               'fullname': 1, 
               'genres': 1, 
-              'profilephoto': 1, 
               'following': 1,
               'followers': 1,
               'seenNotification': 1,
               'activityFeed': 1,
               'notifications': 1,
+              'profilePhoto': 1,
+              'coverPhoto': 1
              }
     })
 });
@@ -92,13 +94,18 @@ Meteor.publish("allUserData", function () {
   {fields: {'bio': 1, 
             'fullname': 1, 
             'genres': 1, 
-            'profilephoto': 1, 
             'following': 1,
             'followers': 1,
             'activityFeed': 1,
-            'username': 1
+            'username': 1,
+            'profilePhoto': 1,
+            'coverPhoto': 1
            }
   })
+});
+
+Meteor.publish("images", function(){ 
+  return Images.find(); 
 });
 
 Meteor.methods({
@@ -141,7 +148,7 @@ Meteor.methods({
   },
 
   // function for adding the recording to the database when the user finishes recording
-  addRecordings: function(recording) {
+  addRecording: function(recording) {
     Recordings.insert(recording);
   },
 
@@ -150,8 +157,12 @@ Meteor.methods({
     Recordings.remove(recording);
   },
 
-  getRecordings: function(userId) {
-    Recordings.find({user: userId}, {sort: {createdAt: -1}}).limit(5);
+  getRecordings: function(userId, num) {
+    Recordings.find({user: userId}, {sort: {createdAt: -1}, limit: num});
+  },
+
+  getARecording: function(id){
+    Recordings.findOne({_id:id});
   },
 
   /* Called when the current user wants to unfollow the user with id followedId */
@@ -206,7 +217,7 @@ Meteor.methods({
 
     Recordings.update({_id: recordingId}, {$set: {published: true}});
 
-    var activity = new RecordingActivity(recordingId, Meteor.user().username, recording.name);
+    var activity = new RecordingActivity(recordingId, Meteor.user().username, recording.name, Meteor.userId());
     var activityId = Activities.insert(activity);
 
     var followers = Meteor.users.findOne({_id: this.userId}).followers;
@@ -270,6 +281,7 @@ Meteor.methods({
     if (!this.userId) {
       throw new Meteor.Error("not logged in", "Please login to update profile");
     }
+
     Meteor.users.update({
         _id: Meteor.userId()
         }, {
@@ -280,31 +292,35 @@ Meteor.methods({
       });
   },
 
-
-  addProfilePhoto: function(files) {
-    for (var i = 0, ln = files.length; i < ln; i++) {
-      Images.insert(files[i], function (err, fileObj) {
-        // Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(fileObj);
-        }
-      });
+  updatePhoto: function(photo) {
+    if (!this.userId) {
+      throw new Meteor.Error("not logged in", "Please login to update profile");
     }
+
+    Meteor.users.update(Meteor.userId(), {$set: photo});
+  },
+
+  updateProfilePhoto: function(file) {
+    Images.insert(file, function (err, fileObj) {
+      if (err) {
+         alert("failed to upload profile photo");
+      } else {
+        var imagesURL = {
+          "profilePhoto": "/cfs/files/images/" + fileObj._id
+        };
+        Meteor.users.update(Meteor.userId(), {$set: photo});
+      }
+    });
   }
 
 });
 
-Meteor.publish("images", function () {
-  return Images.find();
-});
-
-RecordingActivity = function(recordingId, user, name) {
+RecordingActivity = function(recordingId, user, name, userId) {
   this.recordingId = recordingId;
   this.postedAt = new Date();
   this.postedBy = user;
   this.nameOfActivity = name;
+  this.creatorId = userId;
 }
 
 // Notification for when one user follows another. For notifying the user being followed

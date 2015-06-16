@@ -6,6 +6,10 @@ var TIMELINE_VIEW = "timeline_view",
 Meteor.subscribe("allUserData");
 Meteor.subscribe("userData");
 
+getProfileId = function() {
+  return Router.current().params.userID;
+}
+
 addRecording = function() {
   Meteor.call("addRecordings", {name: "song 1", user: Meteor.userId(), published: false, createdAt: new Date()});
   Meteor.call("addRecordings", {name: "song 2", user: Meteor.userId(), published: false, createdAt: new Date()});
@@ -13,27 +17,27 @@ addRecording = function() {
 
 Template.personal.helpers({
   currentUserPage: function() {
-    return String(Meteor.userId()) === String(Template.instance().data.userId);
+    return String(Meteor.userId()) === String(getProfileId());
   }
 });
 
 Template.personal.events({
   'click #follow-button': function(event, template) {
-    Meteor.call("follow", template.data.userId);
+    Meteor.call("follow", getProfileId());
   },
 
   'click #unfollow-button': function(event, template) {
-    Meteor.call("unfollow", template.data.userId);
+    Meteor.call("unfollow", getProfileId());
   }
 });
 
 Template.personaldetails.helpers({
   currentUserPage: function() {
-    return String(Meteor.userId()) === String(Template.instance().data.userId);
+    return String(Meteor.userId()) === String(getProfileId());
   },
 
   followingUser: function() {
-    var otherUser = Template.instance().data.userId;
+    var otherUser = getProfileId();
     var currentUser = Meteor.user();
     if (currentUser && currentUser.following) {
       return currentUser.following.indexOf(otherUser) != -1;
@@ -41,13 +45,13 @@ Template.personaldetails.helpers({
   },
 
   notOwnProfile: function() {
-    return String(Meteor.userId()) !== String(Template.instance().data.userId);
+    return String(Meteor.userId()) !== String(getProfileId());
   }
 });
 
 Template.bio.helpers({
   fullname: function() {
-    var user = Meteor.users.findOne({_id: Router.current().params.userID});
+    var user = Meteor.users.findOne({_id: getProfileId()});
     if (user) {
       if (user.fullname) {
         return user.fullname;
@@ -58,14 +62,14 @@ Template.bio.helpers({
   },
 
   bio: function() {
-    var user = Meteor.users.findOne({_id: Router.current().params.userID});
+    var user = Meteor.users.findOne({_id: getProfileId()});
     if (user) {
       return user.bio;
     }
   },
 
   genres: function() {
-    var user = Meteor.users.findOne({_id: Router.current().params.userID});
+    var user = Meteor.users.findOne({_id: getProfileId()});
     if (user) {
       return user.genres;
     }
@@ -74,7 +78,7 @@ Template.bio.helpers({
 
 Template.followings.helpers({
   numberFollowers: function() {
-    var user = Meteor.users.findOne({_id: Router.current().params.userID});
+    var user = Meteor.users.findOne({_id: getProfileId()});
     if (user && user.followers) {
       var length = user.followers.length;
       if (length > 0) {
@@ -85,7 +89,7 @@ Template.followings.helpers({
     }
   },
   numberFollowing: function() {
-    var user = Meteor.users.findOne({_id: Router.current().params.userID});
+    var user = Meteor.users.findOne({_id: getProfileId()});
     if (user && user.following) {
       var length = user.following.length;
       if (length > 0) {
@@ -99,7 +103,7 @@ Template.followings.helpers({
 
 Template.followings.events({
   'click #following' : function() {
-    if (String(Meteor.userId()) === String(Template.instance().data.userId)) {
+    if (String(Meteor.userId()) === String(getProfileId())) {
       updateListFollowingVisibility("block");
     } else {
       updateprofile_ListFollowingVisibility("block");
@@ -107,7 +111,7 @@ Template.followings.events({
   },
 
   'click #followers' : function() {
-    if (String(Meteor.userId()) === String(Template.instance().data.userId)) {
+    if (String(Meteor.userId()) === String(getProfileId())) {
       updateListFollowersVisibility("block");
     } else {
       updateprofile_ListFollowersVisibility("block");
@@ -196,7 +200,7 @@ Template.current_usermain.helpers({
 
 Template.other_usermain.helpers({
   published_recordings: function() {
-    var userId = Template.instance().data.userId;
+    var userId = getProfileId();
     return Recordings.find({user: userId, published: true}, {sort: {createdAt: -1}, limit: FEED_LENGTH_LIMIT});
   }
 });
@@ -237,28 +241,57 @@ Template.details.helpers({
   }
 });
 
-Template.details.events = {
-  'click #update' : function() {
+var updateProfilePhoto = function(file) {
+  Images.insert(file, function (err, fileObj) {
+    if (err) {
+       alert("failed to upload profile photo");
+    } else {
+      var imagesURL = {
+        "profilePhoto": "/cfs/files/images/" + fileObj._id
+      };
+      Meteor.call("updatePhoto", imagesURL);
+    }
+  });
+}
+
+var updateCoverPhoto = function(file) {
+  Images.insert(file, function (err, fileObj) {
+    if (err) {
+       alert("failed to upload cover photo");
+    } else {
+      var imagesURL = {
+        "coverPhoto": "/cfs/files/images/" + fileObj._id
+      };
+      Meteor.call("updatePhoto", imagesURL);
+    }
+  });
+}
+
+Template.details.events({
+  'click #update' : function(event, template) {
     var description = document.getElementById("desc_text").value;
     var fullname = document.getElementById("fname_text").value;
     var genres = document.getElementById("genres_text").value;
+    var profileFile = template.find("#addProfilePic").files[0];
+    var coverFile = template.find("#addHeaderPic").files[0];
 
     Meteor.call("updateProfileInfo", description, fullname, genres);
 
-    document.getElementById("desc_text").value = "";
-    document.getElementById("fname_text").value = "";
+    if (profileFile) {
+      updateProfilePhoto(profileFile)
+    }
+
+    if (coverFile) {
+      updateCoverPhoto(coverFile);
+    }
+
     updateSaveDetailsVisibility("none");
   },
 
   'click .closebox' : function() {
     updateSaveDetailsVisibility("none");
   },
-
-  'change #addProfilePic' : function(event, template) {
-    var files = event.target.files;
-    Meteor.call("addProfilePhoto", files);
-  }
-};
+});
 
 Template.listofFollowers.helpers({
   follower: function() {
@@ -308,7 +341,7 @@ Template.listofFollowing.helpers({
 
 Template.profile_listofFollowers.helpers({
   follower: function() {
-    var followers = Meteor.users.find({following: Template.instance().data.userId} );
+    var followers = Meteor.users.find({following: getProfileId()} );
     if (followers) {
       return followers;
     }
@@ -334,7 +367,7 @@ Template.profile_listofFollowers.helpers({
 
 Template.profile_listofFollowing.helpers({
   following: function() {
-    var following = Meteor.users.find({followers: Template.instance().data.userId} );
+    var following = Meteor.users.find({followers: getProfileId()} );
     if (following) {
       return following;
     }
@@ -398,6 +431,23 @@ Template.profile_listofFollowers.events({
   'click .follow-from-popup': function() {
     var id = this._id;
     Meteor.call("follow", id);
+  }
+});
+
+
+Template.header.helpers({
+  profile_src: function() {
+    var user = Meteor.users.findOne({_id: getProfileId()});
+    if (user) {
+      return user.profilePhoto;
+    }
+  },
+
+  cover_src: function() {
+    var user = Meteor.users.findOne({_id: getProfileId()});
+    if (user) {
+      return user.coverPhoto;
+    }
   }
 });
 
