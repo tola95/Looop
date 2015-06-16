@@ -103,11 +103,16 @@ createElem = function(user, elm, name) {
 };
 
 addPic = function(userID, elm) {
-  var pic = Meteor.users.findOne({_id: userID}, {fields: {'profilePhoto': 1}});
-  if (pic) {
+  var user = Meteor.users.findOne({_id: userID});
+  if (user) {
     var img = document.createElement("img");
     img.id = "pic";
-    img.src = pic.profilePhoto;
+    var image = Images.findOne({_id: user.profilePhotoId});
+    if (image) {
+      img.src = image.url();
+    } else {
+      img.src = DEFAULT_PROFILE_PHOTO;
+    }
     elm.appendChild(img);
   }
 }

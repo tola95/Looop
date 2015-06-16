@@ -1,8 +1,9 @@
+DEFAULT_PROFILE_PHOTO = "/images/dj.jpg";
+
 var TIMELINE_VIEW = "timeline_view",
     RECORDINGS_VIEW = "recordings_view",
     FEED_LENGTH_LIMIT = 10,
-    SUGGESTIONS_LIMIT = 3,
-    DEFAULT_PROFILE_PHOTO = "/images/dj.jpg";
+    SUGGESTIONS_LIMIT = 3;
 
 Meteor.subscribe("allUserData");
 Meteor.subscribe("userData");
