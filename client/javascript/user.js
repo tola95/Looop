@@ -238,7 +238,7 @@ var updateProfilePhoto = function(file) {
        alert("failed to upload profile photo");
     } else {
       var imagesURL = {
-        "profilePhoto": "/cfs/files/images/" + fileObj._id
+        "profilePhotoId" : fileObj._id,
       };
       Meteor.call("updatePhoto", imagesURL);
     }
@@ -251,7 +251,7 @@ var updateCoverPhoto = function(file) {
        alert("failed to upload cover photo");
     } else {
       var imagesURL = {
-        "coverPhoto": "/cfs/files/images/" + fileObj._id
+        "coverPhotoId": fileObj._id
       };
       Meteor.call("updatePhoto", imagesURL);
     }
@@ -429,15 +429,22 @@ Template.profile_listofFollowers.events({
 Template.header.helpers({
   profile_src: function() {
     var user = Meteor.users.findOne({_id: getProfileId()});
+
     if (user) {
-      return user.profilePhoto;
+      var image = Images.findOne({_id: user.profilePhotoId});
+      if (image) {
+        return image.url();
+      }
     }
   },
 
   cover_src: function() {
     var user = Meteor.users.findOne({_id: getProfileId()});
     if (user) {
-      return user.coverPhoto;
+      var image = Images.findOne({_id: user.coverPhotoId});
+      if (image) {
+        return image.url();
+      }
     }
   }
 });
