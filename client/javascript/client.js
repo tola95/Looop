@@ -85,7 +85,6 @@ Template.recording_controls.events({
     document.getElementById("record-button").style.display = "inline-block";
     document.getElementById("stop-button").style.display = "none";
     audioController.stopRecording(); 
-    // audioController.playback();
     updateSaveRecordingVisibility("block");
   }
 
@@ -408,7 +407,7 @@ Template.record_strip.events({
     } else {
       var recordings = Session.get("sessionRecordings");
       recordings = recordings.filter(function(recording) {
-        return recording.createdAt !== recordingId;
+        return String(recording.createdAt) !== recordingId;
       });
       Session.set("sessionRecordings", recordings);
     }

@@ -83,9 +83,23 @@ button:active {
 .tracks-container {
   background-color: white;
   height: 300px;
-  width: 40%;
-  display: inline-block;
+  min-width: 300px;
   vertical-align: top;
+}
+
+@media (min-width: 840px) {
+  .tracks-container {
+    width: 40%;
+    display: inline-block;
+  }
+}
+
+@media (max-width: 840px) {
+  .tracks-container {
+    display: block;
+    max-width: 600px;
+    margin: 30px auto 0 auto;
+  }
 }
 
 .drum_options {
@@ -268,13 +282,28 @@ button:active {
   margin-bottom: 25px;
 }
 
+@media(max-width: 840px) {
+  #recording-controls {
+    width: 100%;
+  }
+}
+
 #stop-button {
   display: none;
 }
 
 .instr_container {
   width: 57%;
+  min-width: 500px;
   display: inline-block;
+}
+
+@media(max-width: 840px) {
+  .instr_container {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 .button-container {
