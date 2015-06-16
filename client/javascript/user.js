@@ -5,6 +5,8 @@ var TIMELINE_VIEW = "timeline_view",
 Meteor.subscribe("allUserData");
 Meteor.subscribe("userData");
 
+Session.setDefault("feedView", TIMELINE_VIEW);
+
 getProfileId = function() {
   return Router.current().params.userID;
 }
@@ -170,19 +172,13 @@ updateprofile_ListFollowingVisibility = function(visibility) {
   }
 }
 
-Session.setDefault("feedView", TIMELINE_VIEW);
-
 Template.current_usermain.events = {
    'click #timelinebutton' : function() {
       Session.set("feedView", TIMELINE_VIEW);
-      document.getElementById('recordings').style.display = "none";
-      document.getElementById('timeline').style.display = "block";
    },
 
    'click #recordingsbutton' : function() {
       Session.set("feedView", RECORDINGS_VIEW);
-      document.getElementById('recordings').style.display = "block";
-      document.getElementById('timeline').style.display = "none";
    }
 };
 
