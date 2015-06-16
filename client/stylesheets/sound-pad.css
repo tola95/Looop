@@ -284,7 +284,6 @@ button:active {
 .button-container {
     width: 368px;
     background: #2E2E2E;
-    overflow-y: auto;
     margin-right: auto;
     margin-left: auto; 
     -webkit-animation:taufik 2s;
@@ -747,6 +746,43 @@ ul#piano li span:active, ul#piano li span.key-pressed {
 }
 
 #save-recording-okay {
+  margin-left: 20px;
+  background-color: #FF8F72;
+  border-width: 2px;
+}
+
+#publish-recording-wrapper {
+  z-index: 5000;
+  border: solid;
+  background-color: rgba(255, 255, 255, 1);
+  max-width: 300px;
+  height: 100px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -150px;
+  padding: 15px 20px;
+  text-align: center;
+  vertical-align: middle;
+  box-shadow: 5px 5px 3px #222;
+}
+
+.publish-recording {
+  display: none;
+}
+
+.publish-recording-name {
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+.publish-recording-name h3 {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+#publish-recording-okay {
   margin-left: 20px;
   background-color: #FF8F72;
   border-width: 2px;
