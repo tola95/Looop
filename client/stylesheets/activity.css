@@ -7,10 +7,13 @@
 	box-shadow: 2px 2px 3px #999;
 	border-radius: 5px;
 	text-align: left;
+	position: relative;
 }
 
 .button-cont {
-	float: right;
+	position: absolute;
+	top: 5px;
+	right: 5px;
 }
 
 .activity_info {
